@@ -26,7 +26,7 @@ nav{
         margin-bottom: 10px;
     }
     .item{
-        cursor: pointer;
+        cursor: remote ;
         background-color:cornflowerblue;
         color: #fff;
         padding: 10px 20px;
