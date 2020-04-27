@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 
+// lzy
+import List from '../components/lzy/List'
 
 Vue.use(VueRouter)
 
@@ -9,8 +11,15 @@ Vue.use(VueRouter)
    {
      //登录
      path: '/',
-     component: Home
-   },
+     component: Home,
+     children:[
+      {
+        path: 'list',
+        component: List
+      }
+     ]
+   }
+
 ]
 
 
