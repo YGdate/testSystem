@@ -1,26 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
+import Publisher from '../components/Publisher.vue'
 
 // lzy
 import List from '../components/lzy/List'
 
+//发布者子页面
+import Promulgator from '../components/publisher/Promulgator.vue'
+
 Vue.use(VueRouter)
 
-  const routes = [
-   {
-     //登录
-     path: '/',
-     component: Home,
-     children:[
-      {
-        path: 'list',
-        component: List
-      }
-     ]
-   }
+const routes = [{
+  //题库录入
+  path: '/',
+  component: Home,
+  children: [{
+      path: 'list',
+      component: List
+    },
 
-]
+  ]
+}, {
+  //发布者
+  path: '/publisher',
+  component: Publisher,
+  children: [{
+    //发布者首页
+    path: 'promulgator',
+    component: Promulgator
+
+  }]
+}]
 
 
 // 路由拦截
