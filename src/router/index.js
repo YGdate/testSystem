@@ -3,11 +3,14 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Publisher from '../components/Publisher.vue'
 
+
 // lzy
 import List from '../components/lzy/List'
 
 //发布者子页面
 import Promulgator from '../components/publisher/Promulgator.vue'
+import ReportStatistics from '../components/publisher/ReportStatistics.vue'
+import ReportDetails from '../components/publisher/ReportDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -29,8 +32,18 @@ const routes = [{
     //发布者首页
     path: 'promulgator',
     component: Promulgator
-
-  }]
+  },
+  {
+    //报告统计
+    path: 'reportStatistics',
+    component: ReportStatistics
+  },
+   {
+     //报告详情
+     path: 'reportDetails',
+     component: ReportDetails
+   },
+]
 }]
 
 

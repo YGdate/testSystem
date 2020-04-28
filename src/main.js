@@ -15,6 +15,10 @@ import axios from 'axios'
 // 导入qs
 import qs from 'qs'
 
+// 导入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 //设置根路径
 axios.defaults.baseURL = `http://test.com`
 
