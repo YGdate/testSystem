@@ -3,13 +3,17 @@
     <el-row class="content">
       <el-col :span="4">
         <sidebar 
-      name='试卷选择'
+      name='测评管理'
       ></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
-        <testPaper></testPaper>
+        <!-- <testPaper></testPaper> -->
+        <!-- <testSubmit></testSubmit> -->
+        <!-- <gradeInfo></gradeInfo> -->
+        <markPaper></markPaper>
+        
       </el-col>
-
+      
     </el-row>
   </div>
 </template>
@@ -17,12 +21,18 @@
 
 
 <script>
-import testPaper from './element/testPaper'
+// import testPaper from './element/testPaper'
 import sidebar from './element/sidebar'
+// import testSubmit from './element/testSubmit'
+// import gradeInfo from './element/gradeInfo'
+import markPaper from './element/markPaper'
   export default {
     components:{
-      testPaper,
-      sidebar
+      // testPaper,
+      sidebar,
+      // gradeInfo,
+      markPaper
+      // testSubmit
     },
     data(){
       return{
@@ -57,10 +67,10 @@ import sidebar from './element/sidebar'
     flex-wrap: wrap;
     align-content: flex-start;
   }
+
   .content {
     width: 100%;
     height: 350px;
-    margin-top: 20px;
-
+    margin-top: 20px; 
   }
 </style>

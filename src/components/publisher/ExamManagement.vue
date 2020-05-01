@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    
     <el-row class="content">
       <el-col :span="4">
         <sidebar 
@@ -7,46 +8,39 @@
       ></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
-        <testPaper></testPaper>
+        <!-- 报考管理 展示 -->
+        <examManageshow></examManageshow>
+        <!-- 报考管理 详情展示 -->
+        <!-- <examManageInfo></examManageInfo> -->
       </el-col>
-
     </el-row>
   </div>
 </template>
 
 
-
 <script>
-import testPaper from './element/testPaper'
 import sidebar from './element/sidebar'
+import examManageshow from './element/examManageshow'
+// import examManageInfo from './element/examManageInfo'
+
   export default {
     components:{
-      testPaper,
-      sidebar
+      sidebar,
+      examManageshow,
+      // examManageInfo
     },
-    data(){
-      return{
-        search:'',
-         options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
+    data() {
+      return {
+        
       }
-      }
-    
+    },
+    mounted() {
+     
+
+    },
+    methods: {
+    }
+
   }
 </script>
 <style lang="less" scoped>
@@ -57,10 +51,11 @@ import sidebar from './element/sidebar'
     flex-wrap: wrap;
     align-content: flex-start;
   }
+
   .content {
+    margin-top: 20px;
     width: 100%;
     height: 350px;
-    margin-top: 20px;
 
   }
 </style>

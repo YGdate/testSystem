@@ -1,11 +1,7 @@
 <template>
   <div class="main">
-    <el-row class="title">
-      <div>
-        英语测评
-      </div>
-    </el-row>
-    <el-row  class="content">
+
+    <el-row class="content">
       <el-col class="content-left" :span="4">
         <el-button icon="el-icon-back">学课选择</el-button>
       </el-col>
@@ -26,14 +22,14 @@
           <el-col :span="6">
             <el-card class="box-card">报考管理</el-card>
           </el-col>
-           <el-col :span="6">
+          <el-col :span="6">
             <el-card class="box-card">报告统计</el-card>
           </el-col>
         </el-row>
       </el-col>
       <el-col class="content-right" :span="4">
         <el-button>
-         进入题库 <i class="el-icon-arrow-right el-icon-right"></i></el-button>
+          进入题库 <i class="el-icon-arrow-right el-icon-right"></i></el-button>
       </el-col>
     </el-row>
   </div>
@@ -55,41 +51,22 @@
     align-content: flex-start;
   }
 
-  .title {
-    position: relative;
-    width: 100%;
-    height: 90px;
-    text-align: center;
-    display: flex;
-    letter-spacing: 2px;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: #333;
-    font-weight: 600;
-
-    div {
-      position: relative;
-      height: 20px;
-      display: inline-block;
-      border-bottom: 10px solid #f4c521;
-      line-height: 28px;
-    }
-  }
-
   .content {
+    margin-top: 40px;
     width: 100%;
     height: 350px;
+
     .content-left {
-      
-       .el-button {
-      color: #fff;
-      background-color: #118aff;
-      
+
+      .el-button {
+        color: #fff;
+        background-color: #118aff;
+
+      }
     }
-    }
+
     .content-center {
-      .el-card{
+      .el-card {
         width: 100%;
         height: 150px;
         background: rgb(140, 145, 143);
@@ -106,11 +83,12 @@
 
     .content-right {
       text-align: right;
-       .el-button {
-      color: #fff;
-      background-color: #f4c521;
-      
-     }
+
+      .el-button {
+        color: #fff;
+        background-color: #f4c521;
+
+      }
     }
   }
 </style>

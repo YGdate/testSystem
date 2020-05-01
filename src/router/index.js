@@ -30,116 +30,146 @@ import List from '../components/lzy/List'
 import Promulgator from '../components/publisher/Promulgator.vue'
 import ReportStatistics from '../components/publisher/ReportStatistics.vue'
 import ReportDetails from '../components/publisher/ReportDetails.vue'
+import TestPaper from '../components/publisher/TestPaper.vue'
+import AutoPaper from '../components/publisher/AutoPaper.vue'
+import ExamManagement from '../components/publisher/ExamManagement.vue'
+import TestScore from '../components/publisher/TestScore.vue'
+import PaperManagement from '../components/publisher/PaperManagement.vue'
 
 Vue.use(VueRouter)
 
 const routes = [{
-  //题库录入
-  path: '/',
-  component: Home,
-  children: [{
-      path: 'list',
-      component: List
-    },
+    //题库录入
+    path: '/',
+    component: Home,
+    children: [{
+        path: 'list',
+        component: List
+      },
 
-  ]
-}, {
-  //发布者
-  path: '/publisher',
-  component: Publisher,
-  children: [{
-    //发布者首页
-    path: 'promulgator',
-    component: Promulgator
+    ]
+  }, {
+    //发布者
+    path: '/publisher',
+    component: Publisher,
+    children: [{
+        //发布者首页
+        path: 'promulgator',
+        component: Promulgator
+      },
+      {
+        //报告统计
+        path: 'reportStatistics',
+        component: ReportStatistics
+      },
+      {
+        //报告详情
+        path: 'reportDetails',
+        component: ReportDetails
+      },
+      {
+        //手动组卷
+        path: 'testPaper',
+        component: TestPaper
+      },
+      {
+        //自动组卷
+        path: 'autoPaper',
+        component: AutoPaper
+      },
+      {
+        //自动组卷
+        path: 'examManagement',
+        component: ExamManagement
+      },
+      {
+        //试卷评分
+        path: 'testScore',
+        component: TestScore
+      },
+      {
+        //试卷管理
+        path: 'paperManagement',
+        component: PaperManagement
+      },
+    ]
   },
   {
-    //报告统计
-    path: 'reportStatistics',
-    component: ReportStatistics
-  },
-   {
-     //报告详情
-     path: 'reportDetails',
-     component: ReportDetails
-   },
+    //
+    path: '/solve',
+    redirect: '/solve/zhomepage',
+    component: Solve,
+    children: [{
+        path: 'zhomepage',
+        component: Shouye
+      },
+      {
+        path: 'testpage',
+        component: Testpage
+      },
+      {
+        path: 'pkonline',
+        component: Pkonline
+      }, {
+        path: 'evaluation',
+        component: Evaluation
+      }, {
+        path: 'pking',
+        component: Pking
+      },
+      {
+        path: 'chengji',
+        component: Chengji
+      },
+      {
+        path: 'chengjibaobiao',
+        component: Chengjibaobiao
+      },
+      // 我的考试
+      {
+        path: 'myexam',
+        component: Myexam
+      }
+      // 评测1
+      ,
+      {
+        path: 'testone',
+        component: P1
+      }
+      // 评测2
+      ,
+      {
+        path: 'testtwo',
+        component: P2
+      },
+      {
+        path: 'testthree',
+        component: P3
+      },
+      {
+        path: 'testfour',
+        component: P4
+      }
+      // 自定义考试结束
+      ,
+      {
+        path: 'ziexamover',
+        component: Ziexamover
+      },
+      // 考试结束
+      {
+        path: 'examover',
+        component: Examover
+      }
+      // 考试详情
+      ,
+      {
+        path: 'examdetails',
+        component: Examdetails
+      }
+    ]
+  }
 ]
-},
-{
-  //
-  path: '/solve',
-  redirect: '/solve/zhomepage',
-  component: Solve,
-  children: [
-    {
-      path:'zhomepage',
-      component:Shouye
-  },
-  {
-    path:'testpage',
-    component:Testpage
-},
-{
-  path:'pkonline',
-  component:Pkonline
-},{
-  path:'evaluation',
-  component:Evaluation
-},{
-  path:'pking',
-  component:Pking
-},
-{
-  path:'chengji',
-  component:Chengji
-},
-{
-  path:'chengjibaobiao',
-  component:Chengjibaobiao
-},
-// 我的考试
-{
-  path:'myexam',
-  component:Myexam
-}
-// 评测1
-,
-{
-  path:'testone',
-  component:P1
-}
-// 评测2
-,
-{
-  path:'testtwo',
-  component:P2
-},
-{
-  path:'testthree',
-  component:P3
-},
-{
-  path:'testfour',
-  component:P3
-}
-// 自定义考试结束
-,
-{
-  path:'ziexamover',
-  component:Ziexamover
-},
-// 考试结束
-{
-  path:'examover',
-  component:Examover
-}
-// 考试详情
-,
-{
-  path:'examdetails',
-  component:Examdetails
-}
-  ]
-}]
 
 
 // 路由拦截

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav></Nav>
-    <!-- <Tiku></Tiku> -->
+    <Tiku></Tiku>
   </div>
 </template>
 <script>

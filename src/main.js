@@ -8,6 +8,7 @@ import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/js/global'
 
+
 // 导入axios
 import axios from 'axios'
 // import Message from 'element-ui'

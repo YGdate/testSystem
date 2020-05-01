@@ -1,17 +1,9 @@
 <template>
   <div class="main">
     <el-container>
-
       <el-header>
-        <div class="nav">
-          <div class="title">在线考试系统</div>
-          <div class="right">
-            <img class="autor" src="" alt="">
-            <div class="name">lisa</div>
-          </div>
-        </div>
+        <Header @skipPage="skip($event)"></Header>
       </el-header>
-
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -20,21 +12,61 @@
   </div>
 </template>
 <script>
+  import Header from './publisher/element/header'
   export default {
-    components: {},
-    methods: {},
+    components: {
+      Header
+    },
+    methods: {
+      index() {
+        this.$router.push('/publisher/promulgator')
+      },
+      skip(index) {
+        
+        switch (index) {
+          case 1:
+            this.$router.push('/publisher/promulgator')
+            break;
+          case 2:
+            this.$router.push('/publisher/testScore')
+            break;
+          case 3:
+            this.$router.push('/publisher/testPaper')
+            break;
+          case 4:
+            this.$router.push('/publisher/autoPaper')
+            break;
+          case 5:
+            this.$router.push('/publisher/paperManagement')
+            break;
+          case 6:
+            this.$router.push('/publisher/examManagement')
+            break;
+          case 7:
+            this.$router.push('/publisher/reportStatistics')
+            break;
+          default:
+            break;
+        }
+      }
+    },
   }
 </script>
 
 <style lang="less" scoped>
+  // 蓝:# 24c9e3  黄：#f4c521  border-bottom: 3px solid #f4c521;
   .el-header {
-    background-color: #B3C0D1;
-    color: #333;
+    color: #fff;
     text-align: center;
-    height: 80px !important;
-    background-color: blue;
+    height: 60px;
+    background-color: #24c9e3;
     z-index: 10;
     box-shadow: 0 0 20px rgb(97, 97, 97);
+
+    .header {
+      height: 100%;
+      width: 100%;
+    }
   }
 
   .main {
@@ -44,7 +76,7 @@
 
   .el-main {
     min-height: 500px;
-    // background-color: #E9EEF3;
+
     color: #333;
   }
 
@@ -58,39 +90,4 @@
   }
 
   // 标题
-
-  .nav {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
-    font-weight: 500;
-
-    .title {
-      width: 50%;
-      font-size: 22px;
-      letter-spacing: 5px;
-      color: #fff;
-    }
-
-    .right {
-      font-size: 18px;
-      display: flex;
-      width: 50%;
-      justify-content: center;
-
-      .autor {
-        height: 20px;
-        width: 20px;
-        border-radius: 50%;
-        margin-right: 5px;
-      }
-
-      .name {
-        color: #fff;
-      }
-    }
-  }
 </style>
