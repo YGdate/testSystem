@@ -5,13 +5,14 @@
                 <router-link class="item" tag="div" to="/list">题库列表</router-link>
             </div>
             <div class="list-item">
-                <router-link class="item" tag="div" to="">题库录入</router-link>
+                <router-link class="item" tag="div" to="/write">题库录入</router-link>
             </div>
             <div class="list-item">
-                <router-link class="item" tag="div" to="">日志记录</router-link>
+                <router-link class="item" tag="div" to="/log">日志记录</router-link>
             </div>
         </nav>
-        <div class="content">
+        
+        <div class="main">
             <router-view></router-view>
         </div>
     </div>
@@ -24,6 +25,7 @@ nav{
     top: 200px;
     .list-item{
         margin-bottom: 10px;
+        cursor: pointer;
     }
     .item{
         cursor: remote ;
@@ -32,15 +34,11 @@ nav{
         padding: 10px 20px;
     }
 }
-.content{
-    position: absolute;
-    top: 150px;
-    left: 300px;
-}
 </style>
 
 <script>
+
 export default {
-    
+
 }
 </script>
