@@ -8,12 +8,17 @@ import './plugins/element.js'
 import './assets/css/global.css'
 import './assets/js/global'
 
+
 // 导入axios
 import axios from 'axios'
 // import Message from 'element-ui'
 
 // 导入qs
 import qs from 'qs'
+
+// 导入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 
 //设置根路径
 axios.defaults.baseURL = `http://test.com`
