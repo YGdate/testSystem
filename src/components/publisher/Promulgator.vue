@@ -5,30 +5,64 @@
       <el-col class="content-left" :span="4">
         <el-button icon="el-icon-back">学课选择</el-button>
       </el-col>
+      
       <el-col class="content-center" :span="16">
         <el-row :gutter="80">
           <el-col :span="8">
             <el-card class="box-card">
-              <img src="../../assets/img/icon/自动组卷.png" alt="">
+              <div>
+                <img src="../../assets/img/icon/自动组卷.png" alt="">
               <div>
                 自动组卷
+              </div>
               </div>
             </el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">手动组卷</el-card>
+            <el-card class="box-card">
+               <div>
+                <img src="../../assets/img/icon/手动组卷.png" alt="">
+              <div>
+                手动组卷
+              </div>
+              </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">试卷管理</el-card>
+            
+            <el-card class="box-card">
+               <div>
+                <img src="../../assets/img/icon/试卷管理.png" alt="">
+              <div>
+                试卷管理
+              </div>
+              </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">试卷阅评</el-card>
+            <el-card class="box-card">
+               <div>
+                <img src="../../assets/img/icon/试卷评阅.png" alt="">
+              <div>
+                试卷阅评
+              </div>
+              </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">报考管理</el-card>
+            <el-card class="box-card">
+               <div>
+                <img src="../../assets/img/icon/报考管理.png" alt="">
+              <div>
+                报考管理
+              </div>
+              </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">报告统计</el-card>
+             <el-card class="box-card">
+               <div>
+                <img src="../../assets/img/icon/报考统计.png" alt="">
+              <div>
+                报考统计
+              </div>
+              </div></el-card>
           </el-col>
         </el-row>
       </el-col>
@@ -65,7 +99,7 @@
 
       .el-button {
         color: #fff;
-        background-color: #118aff;
+        background-color: #24c9e3;
 
       }
     }
@@ -85,10 +119,12 @@
         height: 200px;
         cursor: pointer;
         img{
-          width: 50%;
+          margin: 0 auto;
+          width: 65%;
         }
-        span{
-
+        div{
+          width: 100%;
+          text-align: center;
         }
       }
     }

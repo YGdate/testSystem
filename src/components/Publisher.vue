@@ -61,7 +61,7 @@
     height: 60px;
     background-color: #24c9e3;
     z-index: 10;
-    box-shadow: 0 0 20px rgb(97, 97, 97);
+    box-shadow: 0 0 15px rgb(97, 97, 97);
 
     .header {
       height: 100%;

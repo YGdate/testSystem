@@ -52,7 +52,7 @@
     cursor: pointer;
     width: 130px;
     border-radius: 5px;
-    height: 150px;
+    height: 50px;
     color: #fff;
     background-color: cornflowerblue;
     display: flex;

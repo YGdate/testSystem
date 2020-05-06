@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Publisher from '../components/Publisher.vue'
+import LoginReg from '../components/LoginReg.vue'
 
 
 // 以下部分是张傲引入的
@@ -56,6 +57,10 @@ import PaperManagement from '../components/publisher/PaperManagement.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/login',
+    component: LoginReg
+  },
   {
     //发布者
     path: '/publisher',
