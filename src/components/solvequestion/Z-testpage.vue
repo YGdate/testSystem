@@ -151,6 +151,8 @@ methods:{
   padding: 10px;
   color: rgb(183,183,183);
   font-weight: 600;
+  background-image: url("../../assets/img/tipbg.png");
+  background-size: cover;
 }
 
 </style>
