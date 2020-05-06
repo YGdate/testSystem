@@ -9,7 +9,31 @@
           <p>Chinese</p>
           <div></div>
         </li>
-
+<li class="sub" @click="test()">
+          <p>语文</p>
+          <p>Chinese</p>
+          <div></div>
+        </li>
+        <li class="sub" @click="test()">
+          <p>语文</p>
+          <p>Chinese</p>
+          <div></div>
+        </li>
+        <li class="sub" @click="test()">
+          <p>语文</p>
+          <p>Chinese</p>
+          <div></div>
+        </li>
+         <li class="sub" @click="test()">
+          <p>语文</p>
+          <p>Chinese</p>
+          <div></div>
+        </li>
+        <li class="sub" @click="test()">
+          <p>语文</p>
+          <p>Chinese</p>
+          <div></div>
+        </li>
       </ul>
     </div>
     <div class="tip">
@@ -91,16 +115,19 @@ color: rgb(115,115,115);
   padding: 0;
 }
 .sub{
-  width: 330px;
-  height: 220px;
+  width: 190px;
+  height: 227px;
  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
   background-color: rgb(158,201,229);
   margin-left: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 30px;
    cursor: pointer;
    border-radius: 5px;
    box-sizing: border-box;
    padding-top: 32px;
+    background-image: url("../../assets/img/subbg.png");
+   background-size: cover;
+   margin-right: 50px;
 }
 .sub p{
   text-align: center;
