@@ -91,7 +91,7 @@ methods:{
     float: left;
     padding: 10px;
     position: relative;
-    box-shadow: 0 0 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 .fu{
     margin-left: 240px;
@@ -101,7 +101,7 @@ methods:{
     min-height: 400px;
     padding: 10px;
     background: rgb(67,164,247);
-    box-shadow: 0 0 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
     float: right;
     text-align: center;
 }

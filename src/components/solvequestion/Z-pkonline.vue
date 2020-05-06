@@ -1,5 +1,12 @@
 <template>
 <div class="bbooxx">
+  <!-- 定位 -->
+    <div class="backs" @click="$router.go(-1)">
+      返回
+    </div>
+
+
+
   <div class="cover">
     <div class="srool">
       <p>正在加载中.......</p>
@@ -74,6 +81,20 @@ data() {
   }
 </script>
 <style lang="less" scoped>
+.backs{
+    height: 40px;
+  width: 115px;
+  background: rgb(51,77,148);
+  color: white;
+  position: fixed;
+  top: 200px;
+  left: 0;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+}
 .srool{
       	height: 200px;
 				width: 400px;
@@ -164,7 +185,7 @@ padding:20px
 .intop{
     width: 300px;
     height: 200px;
-    background: orchid;
+    background: rgb(108,180,246);
     box-sizing: border-box;
     text-align: center;
     padding-top: 25px;

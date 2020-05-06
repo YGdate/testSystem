@@ -91,12 +91,14 @@ color: rgb(115,115,115);
 .sub{
   width: 330px;
   height: 220px;
-  box-shadow: 0 0 7px 0;
+ box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
   background-color: rgb(158,201,229);
   margin-left: 3px;
   margin-bottom: 5px;
    cursor: pointer;
    border-radius: 5px;
+   box-sizing: border-box;
+   padding-top: 32px;
 }
 .sub p{
   text-align: center;
