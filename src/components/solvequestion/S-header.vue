@@ -24,7 +24,7 @@
   height: 60px;
   min-width: 1000px;
   width: 100%;
-  background: rgb(51,77,148);
+  background: #24c9e3 ;
 }
 .content{
   width: 60%;

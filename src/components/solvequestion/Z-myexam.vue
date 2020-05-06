@@ -75,7 +75,7 @@ methods:{
     width: 100%;
     height: 200px;
     border-radius: 7px;
-        box-shadow: 0 0 7px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 .cheng p{
     padding-left: 20px;

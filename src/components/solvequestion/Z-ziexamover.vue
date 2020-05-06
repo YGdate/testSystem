@@ -48,7 +48,7 @@
 .occ{
     width: 90%;
     height: 400px;
-        box-shadow: 0 0 7px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
         padding-top: 80px;
         margin:  0 auto;
 }

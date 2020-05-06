@@ -1,5 +1,8 @@
 <template>
 <div class="evaluation">
+  <div class="backs" @click="$router.go(-1)">
+      返回
+    </div>
      <p class="c1">英语评测</p>
     <div class="c2"></div>
     <div class="e-top">
@@ -32,7 +35,8 @@
          <el-input
     placeholder="请输入内容"
     prefix-icon="el-icon-search"
-    v-model="input2">
+    style="width: 440px;margin-left:270px"
+    >
   </el-input>
   <div class="bcon">
       <p>考试进行中.......</p>
@@ -86,6 +90,20 @@
   }
 </script>
 <style lang="less" scoped>
+.backs{
+    height: 40px;
+  width: 115px;
+  background: rgb(51,77,148);
+  color: white;
+  position: fixed;
+  top: 200px;
+  left: 0;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 5px;
+}
 .ep{
     text-align: center;
 }
@@ -119,7 +137,7 @@
     height: 150px;
     background: white;
     border-radius: 7px;
-    box-shadow: 0 0 7px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 .e-tt{
     height: 30px;
@@ -141,7 +159,7 @@
     border-radius: 7px;
     margin-top: 20px;
     box-sizing: border-box;
-    box-shadow: 0 0 7px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 .bcon{
      width: 600px;

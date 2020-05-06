@@ -112,7 +112,7 @@ methods:{
     float: left;
     padding: 10px;
     position: relative;
-    box-shadow: 0 0 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 .fu{
     margin-left: 240px;
@@ -122,7 +122,7 @@ methods:{
     min-height: 449px;
     padding: 10px;
     background: rgb(67,164,247);
-    box-shadow: 0 0 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
     float: right;
     text-align: center;
 }
@@ -217,7 +217,7 @@ font-weight: 600;
     float: left;
     padding: 10px;
     position: relative;
-    box-shadow: 0 0 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
     padding: 10px;
     font-weight: 600;
 }
@@ -226,7 +226,7 @@ font-weight: 600;
     min-height: 400px;
     padding: 10px;
     background: white;
-    box-shadow: 0 0 8px 0;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
     float: right;
     padding: 10px;
      font-weight: 600;
