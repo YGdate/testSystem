@@ -8,7 +8,7 @@
 
 <style lang="less" scoped>
 .top-container{
-  margin-bottom: 80px;
+  margin-bottom: 50px;
   display: flex;
   justify-content: center;
 }

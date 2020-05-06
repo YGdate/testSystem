@@ -7,7 +7,7 @@
       <div class="bgr">多选题</div>
     </router-link>
     <router-link tag="div" to="/bdx" class="img-bd item">
-      <div class="bgr">不定项</div>选择
+      <div class="bgr">不定项选择</div>
     </router-link>
     <router-link tag="div" to="/panduan" class="img-pd item">
       <div class="bgr">判断题</div>
@@ -19,19 +19,19 @@
       <div class="bgr">7选5</div>
     </router-link>
     <router-link tag="div" to="/wxtk" class="img-wx item">
-      <div class="bgr">完型填</div>空
+      <div class="bgr">完型填空</div>
     </router-link>
     <router-link tag="div" to="/xuanci" class="img-xc item">
-      <div class="bgr">选词填</div>空
+      <div class="bgr">选词填空</div>
     </router-link>
     <router-link tag="div" to="/dwgc" class="img-dw item">
-      <div class="bgr">短文改</div>错
+      <div class="bgr">短文改错</div>
     </router-link>
     <router-link tag="div" to="/fanyi" class="img-fy item">
       <div class="bgr">翻译</div>
     </router-link>
     <router-link tag="div" to="/ydlj" class="img-yd item">
-      <div class="bgr">阅读理</div>解
+      <div class="bgr">阅读理解</div>
     </router-link>
     <router-link tag="div" to="/zuowen" class="img-zw item">
       <div class="bgr">作文</div>
@@ -63,107 +63,133 @@
 }
 
 .img-danx {
-  background: #118aff;
+  background: url("./img/danxuan.png") no-repeat;
+  background-size: 60px 60px;
+  background-position: 30px 10px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
   .bgr {
-    padding: 15px 5px;
-    background: url("./img/danxuan.png") no-repeat;
-    background-size: cover;
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-duox {
-  background: #118aff;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
+  background: url("./img/duoxuan.png") no-repeat;
+  background-size: 60px 60px;
+  background-position: 30px 10px;
   .bgr {
-    padding: 15px 5px;
-    background: url("./img/duoxuan.png") no-repeat;
-    background-size: cover;
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-bd {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/budingxiang.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-pd {
-  background: #118aff;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
+    background: url('./img/panduanti.png') no-repeat;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
   .bgr {
-      padding: 15px 5px;
-    background: url("./img/panduanti.png") no-repeat;
-    background-size: cover;
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-tk {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/tiankong.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-qxw {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/qixuan5.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-wx {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/wanxing.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-xc {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/xuancitiankong.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-dw {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/duanwengaicuo.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-fy {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/fanyi.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-yd {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/yuedulijie.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-zw {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/zuowen.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 .img-tl {
-  background: #118aff;
-  .bgr {
-      padding: 15px 5px;
+  box-shadow: 1px 1px 2px gainsboro, -1px -1px 2px gainsboro;
     background: url("./img/tingli.png") no-repeat;
-    background-size: cover;
+    background-size: 60px 60px;
+  background-position: 30px 10px;
+  .bgr {
+    margin-top: 60px;
+    color: black;
   }
 }
 </style>
