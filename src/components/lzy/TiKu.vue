@@ -19,6 +19,10 @@
 </template>
 
 <style lang="less" scoped>
+.main{
+  width: 1000px;
+  margin: 50px auto;
+}
 nav{
     position: absolute;
     left: 50px;
