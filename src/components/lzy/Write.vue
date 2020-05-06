@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .write-container {
   width: 900px;
   .top { 

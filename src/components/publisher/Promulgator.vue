@@ -6,23 +6,28 @@
         <el-button icon="el-icon-back">学课选择</el-button>
       </el-col>
       <el-col class="content-center" :span="16">
-        <el-row :gutter="20">
-          <el-col :span="6">
-            <el-card class="box-card">自动组卷</el-card>
+        <el-row :gutter="80">
+          <el-col :span="8">
+            <el-card class="box-card">
+              <img src="../../assets/img/icon/自动组卷.png" alt="">
+              <div>
+                自动组卷
+              </div>
+            </el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-card class="box-card">手动组卷</el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-card class="box-card">试卷管理</el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-card class="box-card">试卷阅评</el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-card class="box-card">报考管理</el-card>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="8">
             <el-card class="box-card">报告统计</el-card>
           </el-col>
         </el-row>
@@ -69,15 +74,22 @@
       .el-card {
         width: 100%;
         height: 150px;
-        background: rgb(140, 145, 143);
-        color: #fff;
+        color: #333;
         font-size: 25px;
         font-weight: 600px;
         display: flex;
-        align-items: center;
+        flex-wrap: wrap;
+        align-content: space-around;
         justify-content: center;
         margin-bottom: 20px;
+        height: 200px;
         cursor: pointer;
+        img{
+          width: 50%;
+        }
+        span{
+
+        }
       }
     }
 

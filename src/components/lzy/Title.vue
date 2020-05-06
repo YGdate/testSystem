@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .top-container{
   margin-bottom: 80px;
   display: flex;

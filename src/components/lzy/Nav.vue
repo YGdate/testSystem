@@ -8,7 +8,7 @@
     </div>
 </template>
 
-<style lang="less" scope>
+<style lang="less" scoped>
  .nav{
      height: 60px;
      width: 100%;

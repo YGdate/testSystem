@@ -35,7 +35,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 .top-list {
   display: flex;
   margin-bottom: 20px;

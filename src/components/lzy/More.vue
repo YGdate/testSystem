@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 .el-card__body{
   display: flex;
   .left {

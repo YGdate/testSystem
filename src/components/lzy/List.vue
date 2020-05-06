@@ -34,7 +34,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @import url('./fun-page/common.less');
 .blue {
   color: #409eff;
