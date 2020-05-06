@@ -67,6 +67,8 @@
   right: 0;
   top: 127px;
   padding: 10px;
+  background-image: url("../../assets/img/tipbg.png");
+  background-size: cover;
  
 }
 .tip p{
