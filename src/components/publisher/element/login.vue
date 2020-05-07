@@ -1,8 +1,8 @@
 <template>
     <el-row>
       <el-form ref="resetLoginRef" :rules="loginFormRules" :model="loginForm" label-width="80px">
-              <el-form-item label="账号:" prop="email" style="width:340px;">
-                <el-input placeholder="email" v-model="loginForm.email"></el-input>
+              <el-form-item label="账号:" prop="phone_number" style="width:340px;">
+                <el-input placeholder="number" v-model="loginForm.phone_number"></el-input>
               </el-form-item>
               <el-form-item label="密码:" prop="password" style="width:340px;">
                 <el-input placeholder="Password" type="password" v-model="loginForm.password" show-password></el-input>
@@ -25,21 +25,21 @@
         checked:false,
         // 登录表单数据
         loginForm: {
-          email: 'user5@qq.com',
-          password: '000000'
+          phone_number: '13155169239',
+          password: '123456'
         },
         // 表单验证规则
         loginFormRules: {
-           email: [{
+           phone_number: [{
               required: true,
-              message: '请输入邮箱',
+              message: '请输入账号',
               trigger: 'blur'
             },
-            {
-              type: 'email',
-              message: '请输入合法邮箱',
-              trigger: 'blur'
-            }
+            // {
+            //   type: 'email',
+            //   message: '请输入合法邮箱',
+            //   trigger: 'blur'
+            // }
           ],
           password: [{
               required: true,
@@ -56,23 +56,21 @@
         }
       }
     },
+    created(){
+      window.sessionStorage.clear()
+    },
     methods: {
       // 点击登录
       loginSubmit() {
         this.$refs.resetLoginRef.validate(async valid => {
-          // 判断验证是否通过
           if (!valid) return;
-          //  发起请求
-          this.$http.post('oAuth/login', this.loginForm)
+          this.$http.post('login', this.$qs.stringify(this.loginForm))
             .then(res => {
-              if (res.data.code !== 200) return this.$message.error(res.data.msg)
-              //1.将登陆之后的token，保存到客户端的sessionStorage中
-              window.sessionStorage.setItem("token", "Bearer " + res.data.data.token)
-              // 给token设置时效
-              window.sessionStorage.setItem("tokenDate", (Date.parse(new Date())+res.data.data.expires_in*1000-600000))
+               console.log(res);
+              if (res.status != 200) return this.$message.error(res.data.msg)
+              window.sessionStorage.setItem("token", "" + res.data.data)
               this.$message.success(res.data.msg);
-              //2.通过编程式导航跳转到主页
-              this.$router.push('/home');
+              this.$router.push('/list');
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,

@@ -13,43 +13,14 @@
 </template>
 <script>
   import Header from './publisher/element/header'
+  import mixin from '../mixins/skip'
   export default {
+    mixins: [mixin],
+    methods: {
+    },
     components: {
       Header
-    },
-    methods: {
-      index() {
-        this.$router.push('/publisher/promulgator')
-      },
-      skip(index) {
-        
-        switch (index) {
-          case 1:
-            this.$router.push('/publisher/promulgator')
-            break;
-          case 2:
-            this.$router.push('/publisher/testScore')
-            break;
-          case 3:
-            this.$router.push('/publisher/testPaper')
-            break;
-          case 4:
-            this.$router.push('/publisher/autoPaper')
-            break;
-          case 5:
-            this.$router.push('/publisher/paperManagement')
-            break;
-          case 6:
-            this.$router.push('/publisher/examManagement')
-            break;
-          case 7:
-            this.$router.push('/publisher/reportStatistics')
-            break;
-          default:
-            break;
-        }
-      }
-    },
+    }
   }
 </script>
 

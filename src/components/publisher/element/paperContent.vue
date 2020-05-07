@@ -210,7 +210,27 @@ import addPaperDialog  from './addPaperDialog'
         }]
       }
     },
+    created(){
+      this.getTestScore()
+    },
     methods:{
+      //获取试卷数据
+      getTestScore(){
+        this.$http.get('api/testPaper/getTestScore')
+            .then(res => {
+             
+              if (res.data.code !=0) return this.$message.error(res.data.msg)
+               console.log(res.data.data);
+            }).catch(err => {
+              console.log(err);
+              this.$message({
+                dangerouslyUseHTMLString: true,
+                showClose: true,
+                message: err.response.data.data.join('<br><br>'),
+                type: 'error'
+              });
+            })
+      },
       //试卷共享
       paperShare(){
         this.isVisible = true

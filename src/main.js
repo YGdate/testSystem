@@ -28,15 +28,20 @@ Vue.prototype.$qs = qs
 
 
 // 给请求头设置拦截器,将token放入Authorization中，传入服务器
-// axios.interceptors.request.use(
-//   config => {
-//     config.headers.Authorization = window.sessionStorage.getItem('token')
-//     return config
+axios.interceptors.request.use(
+  config => {
+    config.headers.Authorization = window.sessionStorage.getItem('token')
 
-//   }, err => {
-//     // 设置请求出错的信息。
-//     return Promise.reject(err.response.data)
-//   })
+    if (!window.sessionStorage.getItem('token')) {
+      config.baseURL = 'http://login.myxy99.cn/api/'
+    }
+    // 根据vuex store内容动态设置baseurl
+    
+    return config
+  }, err => {
+    // 设置请求出错的信息。
+    return Promise.reject(err.response.data)
+  })
 
 
 

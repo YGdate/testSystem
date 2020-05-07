@@ -4,12 +4,11 @@
     <el-row class="content">
       <el-col class="content-left" :span="4">
         <el-button icon="el-icon-back">学课选择</el-button>
-      </el-col>
-      
+      </el-col>   
       <el-col class="content-center" :span="16">
         <el-row :gutter="80">
-          <el-col :span="8">
-            <el-card class="box-card">
+          <el-col :span="8"  >
+            <el-card class="box-card" @click.native="skip(4)">
               <div>
                 <img src="../../assets/img/icon/自动组卷.png" alt="">
               <div>
@@ -19,7 +18,7 @@
             </el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">
+            <el-card class="box-card"  @click.native="skip(3)">
                <div>
                 <img src="../../assets/img/icon/手动组卷.png" alt="">
               <div>
@@ -29,7 +28,7 @@
           </el-col>
           <el-col :span="8">
             
-            <el-card class="box-card">
+            <el-card class="box-card"  @click.native="skip(5)">
                <div>
                 <img src="../../assets/img/icon/试卷管理.png" alt="">
               <div>
@@ -38,7 +37,7 @@
               </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">
+            <el-card class="box-card"  @click.native="skip(2)">
                <div>
                 <img src="../../assets/img/icon/试卷评阅.png" alt="">
               <div>
@@ -47,7 +46,7 @@
               </div></el-card>
           </el-col>
           <el-col :span="8">
-            <el-card class="box-card">
+            <el-card class="box-card"  @click.native="skip(6)">
                <div>
                 <img src="../../assets/img/icon/报考管理.png" alt="">
               <div>
@@ -56,7 +55,7 @@
               </div></el-card>
           </el-col>
           <el-col :span="8">
-             <el-card class="box-card">
+             <el-card class="box-card"  @click.native="skip(7)">
                <div>
                 <img src="../../assets/img/icon/报考统计.png" alt="">
               <div>
@@ -75,10 +74,16 @@
 </template>
 
 
-
 <script>
+  import mixin from '../../mixins/skip'
   export default {
-
+    mixins: [mixin],
+    created(){
+     
+    },
+    methods:{
+      
+    }
   }
 </script>
 <style lang="less" scoped>
