@@ -19,14 +19,14 @@
 
 <script>
   import paperContent from './element/paperContent'
-  import publishPaper from './element/publishPaper'
+  // import publishPaper from './element/publishPaper'
   import sidebar from './element/sidebar'
   
   export default {
     components: {
       sidebar,
       paperContent,
-      publishPaper
+      // publishPaper
 
     },
     data() {

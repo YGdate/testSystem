@@ -5,8 +5,8 @@ import store from './store'
 import './plugins/element.js'
 
 // 引入全局样式、js
-import './assets/css/global.css'
-import './assets/js/global'
+import  './assets/css/global.css'
+import JS from './assets/js/global'
 
 
 import axios from 'axios'
@@ -16,6 +16,16 @@ import qs from 'qs'
 
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
+
+import {JSEncrypt} from 'jsencrypt'
+
+//解密方法
+Vue.prototype.$decryptData = function (data) {
+  let decrypt = new JSEncrypt()
+  decrypt.setPrivateKey(JS.private_key)
+  let result = decrypt.decrypt(data)
+  return JSON.parse(result)
+}
 
 //设置根路径
 axios.defaults.baseURL = `http://47.113.121.50/api/`

@@ -212,15 +212,34 @@ import addPaperDialog  from './addPaperDialog'
     },
     created(){
       this.getTestScore()
+      this.getdropDown()
     },
     methods:{
       //获取试卷数据
       getTestScore(){
         this.$http.get('testPaper/getTestScore')
             .then(res => {
-             
               if (res.data.code !=0) return this.$message.error(res.data.msg)
                console.log(res.data.data);
+              //  let {}
+            }).catch(err => {
+              console.log(err);
+              this.$message({
+                dangerouslyUseHTMLString: true,
+                showClose: true,
+                message: err.response.data.data.join('<br><br>'),
+                type: 'error'
+              });
+            })
+      },
+      //获取下拉数据
+      getdropDown(){
+        this.$http.get('testPaper/dropDown')
+            .then(res => {
+              console.log(res);
+              if (res.data.code !=0) return this.$message.error(res.data.msg)
+               console.log(res.data.data);
+              //  let {}
             }).catch(err => {
               console.log(err);
               this.$message({

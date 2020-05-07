@@ -20,6 +20,9 @@
     },
     components: {
       Header
+    },
+    created(){
+      console.log(this.$decryptData('XgJ6Tjj0sItCmrE6iuhqHnZ9nNJ0sIkD6up/8PMULvLqfCY9qsymng+M2eg1fHQBPLDBIFiuvLH62DXYuVpz/C5OBujDC4HJ5STR8BFwcVUivFqkzqZjK22y1lIKeT406KKYeYTn1LWhzTksiwEVS829BQJDrNlfuzVQ6ptg2eY='));
     }
   }
 </script>
