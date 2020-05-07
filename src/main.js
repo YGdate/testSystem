@@ -26,6 +26,24 @@ Vue.prototype.$http = axios
 Vue.prototype.$qs = qs
 
 
+
+// 给请求头设置拦截器,将token放入Authorization中，传入服务器
+// axios.interceptors.request.use(
+//   config => {
+//     config.headers.Authorization = window.sessionStorage.getItem('token')
+//     return config
+
+//   }, err => {
+//     // 设置请求出错的信息。
+//     return Promise.reject(err.response.data)
+//   })
+
+
+
+
+
+
+
 Vue.config.productionTip = false
 new Vue({
   router,
