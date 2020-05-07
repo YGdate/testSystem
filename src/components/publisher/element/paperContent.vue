@@ -216,7 +216,7 @@ import addPaperDialog  from './addPaperDialog'
     methods:{
       //获取试卷数据
       getTestScore(){
-        this.$http.get('api/testPaper/getTestScore')
+        this.$http.get('testPaper/getTestScore')
             .then(res => {
              
               if (res.data.code !=0) return this.$message.error(res.data.msg)

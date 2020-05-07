@@ -46,7 +46,7 @@ module.exports = {
       '/article': {
         //你要跨域的域名(包含host、端口号,切记：一定要带上http头);
         //同一个域名只能设置一次跨域，否则重复报错！
-        target: 'http://47.113.121.50:80/',
+        target: 'http://47.113.121.50/api/',
         changeOrigin: true, //是否跨域，设置为true;(必须)
         /* 对应的axios路径设置：
         axios.get( "/article/d4666d640e2e478d283d8c7f.htm" )

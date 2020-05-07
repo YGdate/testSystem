@@ -18,7 +18,7 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
 //设置根路径
-axios.defaults.baseURL = `http://47.113.121.50/`
+axios.defaults.baseURL = `http://47.113.121.50/api/`
 
 // 挂载到vue的原型上
 Vue.prototype.$http = axios
