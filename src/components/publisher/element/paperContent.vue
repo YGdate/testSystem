@@ -53,7 +53,7 @@
                 </el-row>
                 <el-row class="expand-info" type="flex" justify="space-between">
                   <el-col :span="8"> 45分中完成 | 总分100 | </el-col>
-                  <el-col  :span="14">
+                  <el-col :span="14">
                     <el-tag size="small">考试结束</el-tag>
                     <el-tag size="small">试卷修改</el-tag>
                     <el-tag size="small">发布测评</el-tag>
@@ -124,10 +124,11 @@
 
     .el-table {
       margin-top: 20px;
-      .demo-table-expand{
-       .el-row{
+
+      .demo-table-expand {
+        .el-row {
           margin-top: 20px;
-       }
+        }
       }
 
       .expand-title {
@@ -137,31 +138,38 @@
         }
 
         .el-col:nth-of-type(1) {
-           justify-content: flex-start;
+          justify-content: flex-start;
           font-weight: 600;
-          >*{
-          margin-right: 10px;
+
+          >* {
+            margin-right: 10px;
+          }
         }
-        }
+
         .el-col:nth-of-type(2) {
-         justify-content: flex-end;
-          >*{
-          margin-left: 10px;
-        }
+          justify-content: flex-end;
+
+          >* {
+            margin-left: 10px;
+          }
         }
 
       }
-      .expand-info .el-col:nth-of-type(1){
+
+      .expand-info .el-col:nth-of-type(1) {
         display: flex;
         justify-content: flex-start;
-        >*{
+
+        >* {
           margin-right: 10px;
         }
       }
-      .expand-info .el-col:nth-of-type(2){
+
+      .expand-info .el-col:nth-of-type(2) {
         display: flex;
         justify-content: flex-end;
-        >*{
+
+        >* {
           margin-left: 10px;
         }
       }
@@ -171,10 +179,10 @@
 </style>
 
 <script>
-import shareDialog  from './shareDialog'
-import addPaperDialog  from './addPaperDialog'
+  import shareDialog from './shareDialog'
+  import addPaperDialog from './addPaperDialog'
   export default {
-    components:{
+    components: {
       shareDialog,
       addPaperDialog
     },
@@ -197,8 +205,8 @@ import addPaperDialog  from './addPaperDialog'
           label: '北京烤鸭'
         }],
         value: '',
-        isVisible:false,
-        addVisible:false,
+        isVisible: false,
+        addVisible: false,
         tableData: [{
           status: '正在考试...',
           id: '123456',
@@ -210,52 +218,53 @@ import addPaperDialog  from './addPaperDialog'
         }]
       }
     },
-    created(){
+    created() {
       this.getTestScore()
       this.getdropDown()
     },
-    methods:{
+    methods: {
       //获取试卷数据
-      getTestScore(){
+      getTestScore() {
         this.$http.get('testPaper/getTestScore')
-            .then(res => {
-              if (res.data.code !=0) return this.$message.error(res.data.msg)
-               console.log(res.data.data);
-              //  let {}
-            }).catch(err => {
-              console.log(err);
-              this.$message({
-                dangerouslyUseHTMLString: true,
-                showClose: true,
-                message: err.response.data.data.join('<br><br>'),
-                type: 'error'
-              });
-            })
+          .then(res => {
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            console.log(res);
+            console.log(11111)
+            //  let {}
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
       },
       //获取下拉数据
-      getdropDown(){
+      getdropDown() {
         this.$http.get('testPaper/dropDown')
-            .then(res => {
-              console.log(res);
-              if (res.data.code !=0) return this.$message.error(res.data.msg)
-               console.log(res.data.data);
-              //  let {}
-            }).catch(err => {
-              console.log(err);
-              this.$message({
-                dangerouslyUseHTMLString: true,
-                showClose: true,
-                message: err.response.data.data.join('<br><br>'),
-                type: 'error'
-              });
-            })
+          .then(res => {
+            console.log(res);
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            console.log(this.$decryptData(res.data.data));
+            //  let {}
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
       },
       //试卷共享
-      paperShare(){
+      paperShare() {
         this.isVisible = true
       },
       //添加试卷
-      addPaper(){
+      addPaper() {
         this.addVisible = true
       }
     }

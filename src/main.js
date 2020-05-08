@@ -5,7 +5,7 @@ import store from './store'
 import './plugins/element.js'
 
 // 引入全局样式、js
-import  './assets/css/global.css'
+import './assets/css/global.css'
 import JS from './assets/js/global'
 
 
@@ -17,14 +17,19 @@ import qs from 'qs'
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
-import {JSEncrypt} from 'jsencrypt'
+import { JSEncrypt } from 'jsencrypt'
 
 //解密方法
-Vue.prototype.$decryptData = function (data) {
-  let decrypt = new JSEncrypt()
-  decrypt.setPrivateKey(JS.private_key)
-  let result = decrypt.decrypt(data)
-  return JSON.parse(result)
+Vue.prototype.$decryptData = function(data) {
+    let decrypt = new JSEncrypt()
+    decrypt.setPrivateKey(JS.private_key)
+    var uncrypted = '';
+    data.split('__&_&__').forEach(function(a) {
+        if (decrypt.decrypt(a) != null) {
+            uncrypted += decrypt.decrypt(a);
+        }
+    });
+    return JSON.parse(uncrypted)
 }
 
 //设置根路径
@@ -32,26 +37,26 @@ axios.defaults.baseURL = `http://47.113.121.50/api/`
 
 // 挂载到vue的原型上
 Vue.prototype.$http = axios
-// 挂载qs到全局
+    // 挂载qs到全局
 Vue.prototype.$qs = qs
 
 
 
 // 给请求头设置拦截器,将token放入Authorization中，传入服务器
 axios.interceptors.request.use(
-  config => {
-    config.headers.Authorization = window.sessionStorage.getItem('token')
+    config => {
+        config.headers.Authorization = window.sessionStorage.getItem('token')
 
-    if (!window.sessionStorage.getItem('token')) {
-      config.baseURL = 'http://login.myxy99.cn/api/'
-    }
-    // 根据vuex store内容动态设置baseurl
-    
-    return config
-  }, err => {
-    // 设置请求出错的信息。
-    return Promise.reject(err.response.data)
-  })
+        if (!window.sessionStorage.getItem('token')) {
+            config.baseURL = 'http://login.myxy99.cn/api/'
+        }
+        // 根据vuex store内容动态设置baseurl
+
+        return config
+    }, err => {
+        // 设置请求出错的信息。
+        return Promise.reject(err.response.data)
+    })
 
 
 
@@ -61,7 +66,7 @@ axios.interceptors.request.use(
 
 Vue.config.productionTip = false
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app')

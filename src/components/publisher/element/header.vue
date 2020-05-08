@@ -6,13 +6,13 @@
       </el-col>
       <el-col :span="12">
         <div class="header-nav">
-          <div @click="skipPage(1)">首页</div>
-          <div @click="skipPage(2)">试卷评阅</div>
-          <div @click="skipPage(3)">手动组卷</div>
-          <div @click="skipPage(4)">自动组卷</div>
-          <div @click="skipPage(5)">试卷管理</div>
-          <div @click="skipPage(6)">报考管理</div>
-          <div @click="skipPage(7)">成绩报告</div>
+          <div :class="val==1?'yellowStyle':''"  @click="skipPage(1)">首页</div>
+          <div :class="val==2?'yellowStyle':''" @click="skipPage(2)">试卷评阅</div>
+          <div :class="val==3?'yellowStyle':''" @click="skipPage(3)">手动组卷</div>
+          <div :class="val==4?'yellowStyle':''" @click="skipPage(4)">自动组卷</div>
+          <div :class="val==5?'yellowStyle':''" @click="skipPage(5)">试卷管理</div>
+          <div :class="val==6?'yellowStyle':''" @click="skipPage(6)">报考管理</div>
+          <div :class="val==7?'yellowStyle':''" @click="skipPage(7)">成绩报告</div>
         </div>
       </el-col>
       <el-col :span="6">
@@ -25,11 +25,22 @@
 </template>
 <script>
   export default {
+    data(){
+      return{
+        val:1,
+      }
+    },
+    created(){
+      this.val = window.sessionStorage.getItem('index')
+    },
     components: {},
     methods: {
       skipPage(index) {
+        window.sessionStorage.setItem('index',index)
+        this.val = index
         this.$emit('skipPage', index)
       },
+     
     },
   }
 </script>
@@ -65,9 +76,13 @@
         div {
           cursor: pointer;
           height: 50%;
+          padding: 0 10px;
           display: flex;
           align-items: center;
         }
+      }
+      .yellowStyle{
+        border-bottom: 3px solid #f4c521;
       }
 
     }

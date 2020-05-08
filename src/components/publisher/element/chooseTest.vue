@@ -7,7 +7,7 @@
         <div class="choose-type">
           <transition name="slide-fade">
             <div ref="chooseItem" class="choose-type-item">
-              <el-card v-for="(item,index) in imgData" :key="index">
+              <el-card :class="categoryIndex==index?'stylecategory':''" v-for="(item,index) in imgData"  @click.native="categoryIndex = index" :key="index">
                 <img style="width:60px;height:60px" :src="item.path" alt="">
                 <span>单选题</span>
               </el-card>
@@ -65,20 +65,20 @@
             <!-- 题库 -->
             <el-tab-pane label="题库">
               <el-row class="choose-test-title">
-                <el-select size="mini" v-model="value" placeholder="年纪选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                <el-select size="mini" v-model="gradeValue" placeholder="年级选择">
+                  <el-option v-for="item in gradeOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="value" placeholder="章节选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                <el-select size="mini" v-model="semesterValue" placeholder="章节选择">
+                  <el-option v-for="item in semesterOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="value" placeholder="知识点选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                <el-select size="mini" v-model="questionValue" placeholder="知识点选择">
+                  <el-option v-for="item in questionOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="value" placeholder="难度选择">
-                  <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                <el-select size="mini" v-model="diffValue" placeholder="难度选择">
+                  <el-option v-for="item in diffValueOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-row>
@@ -127,11 +127,11 @@
         </el-col>
       </el-row>
     </el-row>
-     <!-- 下一步 -->
-        <el-row class="content-footer">
-          <el-button size="small">下一步</el-button>
-          <el-button size="small">去发布</el-button>
-        </el-row>
+    <!-- 下一步 -->
+    <el-row class="content-footer">
+      <el-button size="small">下一步</el-button>
+      <el-button size="small">去发布</el-button>
+    </el-row>
   </div>
 </template>
 
@@ -141,27 +141,86 @@
   export default {
     data() {
       return {
+        // 当前题型
+        categoryIndex:0,
         // tabledata
         tableData: [
 
         ],
-        value: '',
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        gradeValue: null,
+        gradeOptions: [{
+            value: 0,
+            label: '一年级'
+          }, {
+            value: 1,
+            label: '二年级'
+          }, {
+            value: 2,
+            label: '三年级'
+          }, {
+            value: 3,
+            label: '四年级'
+          }, {
+            value: 4,
+            label: '五年级'
+          },
+          {
+            value: 5,
+            label: '六年级'
+          }, {
+            value: 6,
+            label: '七年级'
+          }, {
+            value: 7,
+            label: '八年级'
+          }, {
+            value: 8,
+            label: '九年级'
+          }, {
+            value: 9,
+            label: '大学一年级'
+          }, {
+            value: 10,
+            label: '大学二年级'
+          }, {
+            value: 11,
+            label: '大学三年级'
+          }, {
+            value: 12,
+            label: '大学四年级'
+          }
+        ],
+        semesterValue: null,
+        semesterOptions: [{
+            value: 0,
+            label: '上学期'
+          }, {
+            value: 1,
+            label: '下学期'
+          }],
+          questionValue: null,
+        questionOptions: [],
+        diffValue:'',
+        diffValueOptions:[
+          {
+            value: 0,
+            label: '简单'
+          }, {
+            value: 1,
+            label: '一般'
+          },
+          {
+            value: 2,
+            label: '适中'
+          }, {
+            value: 3,
+            label: '困难'
+          },
+           {
+            value: 4,
+            label: '艰难'
+          }
+        ],
         //图标资源
         imgData: [{
             name: '单选题',
@@ -226,6 +285,34 @@
       this.drawgrade()
     },
     methods: {
+      
+      //获取题库信息
+      getAllTopicAndStem() {
+
+        this.$http.get('questionInfo/getAllTopicAndStem', {
+            params: {
+              grade: this.gradeValue,
+              semester: this.semesterValue,
+              question_point: '',
+              diff: '',
+              category: ''
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+
+            //  let {}
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
       // 报表
       drawgrade() {
         // 绘制图表
@@ -271,7 +358,7 @@
       tableHeaderStyle() {
         return 'text-align: center;background:#24c9e3;color:#fff;'
       },
-      
+
       leftSlide() {
         console.log(this.$refs.chooseItem.style.marginLeft);
         let len = parseInt(this.$refs.chooseItem.style.marginLeft)
@@ -308,6 +395,10 @@
   }
 </script>
 <style lang="less" scoped>
+  //题型选择样式
+  .stylecategory{
+    background: rgb(241, 241, 241);
+  }
   //题型选择
   .content-container {
     height: 120px;
