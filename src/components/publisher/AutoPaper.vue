@@ -21,7 +21,7 @@
         </el-row>
         <!-- 已选试题 -->
         <autoChooseTest @nextStep="step($event)" ref="autoChooseTest" v-show="ischeck"></autoChooseTest>
-         <InfoSet v-show="!ischeck"></InfoSet>
+         <InfoSet @forceUpdate="forceUpdate" v-show="!ischeck"></InfoSet>
       </el-col>
     </el-row>
   </div>
@@ -45,6 +45,11 @@ import InfoSet from './element/InfoSet'
      
     },
     methods: {
+      forceUpdate(){
+         setTimeout(()=>{
+           this.ischeck = true
+         },1000)
+      },
       step(){
         this.ischeck = false
       },

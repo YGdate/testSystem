@@ -6,6 +6,8 @@ const mixin = {
     },
     methods: {
         skip(index) {
+            window.sessionStorage.setItem('index', index)
+            this.val = index
             switch (index) {
                 case 1:
                     this.$router.push('/publisher/promulgator')

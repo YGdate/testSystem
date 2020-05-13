@@ -38,7 +38,7 @@
               <el-button
           size="mini"
           icon="el-icon-delete"
-          @click="deleteInfo(scope.row.id)">移除</el-button>
+          @click="deleteInfo(scope.row.user_id[0])">移除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -92,8 +92,9 @@
         })
           .then(res => {
             if (res.data.code != 0) return this.$message.error(res.data.msg)
-             console.log(this.$decryptData(res.data.data));
-              this.getdata(this.user_id,this.current_page)
+            //  console.log(this.$decryptData(res.data.data));
+            this.$message.success(res.data.msg)
+            this.getdata(this.user_id,this.current_page)
           }).catch(err => {
             console.log(err);
             this.$message({
@@ -110,6 +111,7 @@
         this.getInfo(page)
       },
       getdata(id,pages = 1){
+        console.log(id);
         this.user_id = id
         this.$http.get('testPaper/getApplicationManageInfo?page='+pages,{
           params:{

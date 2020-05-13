@@ -2,8 +2,8 @@
   <div class="main">
     <el-row class="content">
       <el-col :span="4">
-        <sidebar 
-      name='测评管理'
+        <sidebar  @skipBtn="skipBtn($event)"
+      :name='leftSkip'
       ></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
@@ -37,12 +37,20 @@ import testSubmit from './element/testSubmit'
       return{
         isshow:true,
         paperID:0,
+        leftSkip:'测评管理'
       }
       },
       methods:{
         paperInfo(id){
           this.isshow = false
-          this.paperID = id
+          this.paperID = id,
+          this.leftSkip = '返回'
+        },
+        skipBtn(text){
+          if(text=='返回'){
+             this.isshow = true
+             this.leftSkip = '测评管理'
+          }
         }
       }
     

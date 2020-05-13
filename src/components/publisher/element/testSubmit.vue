@@ -52,7 +52,7 @@
       </el-tab-pane>
       
     </el-tabs>
-    <markPaper v-if="!isshow"></markPaper>
+    <markPaper @quitScore="quitScore" v-if="!isshow"></markPaper>
 
   </div>
 </template>
@@ -84,6 +84,9 @@ import markPaper from './markPaper'
       this.getNoSubmit()
     },
     methods:{
+      quitScore(){
+        this.isshow = true
+      },
       scoreEdit(id){
         this.isshow = false
         this.userID = id

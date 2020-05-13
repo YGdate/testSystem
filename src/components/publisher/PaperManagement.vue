@@ -2,11 +2,10 @@
   <div class="main">
     <el-row class="content">
       <el-col :span="4">
-        <sidebar name='返回'></sidebar>
+        <sidebar name='测评管理'></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
         <paperContent></paperContent>
-        <!-- <publishPaper></publishPaper> -->
       </el-col>
 
     </el-row>
@@ -19,15 +18,12 @@
 
 <script>
   import paperContent from './element/paperContent'
-  // import publishPaper from './element/publishPaper'
   import sidebar from './element/sidebar'
   
   export default {
     components: {
       sidebar,
       paperContent,
-      // publishPaper
-
     },
     data() {
       return {

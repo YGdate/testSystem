@@ -20,8 +20,8 @@
           </el-col>
         </el-row>
         <!-- 手动选题 -->
-        <ChooseTest @nextStep="nextStep($event)" v-show="ischeck"></ChooseTest>
-        <InfoSet  v-show="!ischeck"></InfoSet>
+        <ChooseTest @nextStep="nextStep($event)" v-if="ischeck"></ChooseTest>
+        <InfoSet @forceUpdate="forceUpdate"  v-if="!ischeck"></InfoSet>
        
       </el-col>
     </el-row>
@@ -122,6 +122,11 @@ import InfoSet from './element/InfoSet'
 
     },
     methods: {
+      forceUpdate(){
+         setTimeout(()=>{
+           this.ischeck = true
+         },1000)
+      },
       ischecked(num) {
         if (num == 0) this.ischeck = true
         else this.ischeck = false
@@ -154,7 +159,7 @@ import InfoSet from './element/InfoSet'
     .content-left {
       .el-button {
         color: #fff;
-        background-color: #118aff;
+        background-color: #24c9e3;
       }
     }
 

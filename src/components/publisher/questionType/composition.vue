@@ -1,13 +1,11 @@
 <template>
 
   <el-row class="question-content">
-    <el-row class="questionTitle" style="text-align: justify;text-justify:inter-ideograph;" :gutter="10">
-      <el-col :span="20">
+    <el-row class="questionTitle"  :gutter="10">
+      <el-col :span="20" style="text-align: justify;text-justify:inter-ideograph;">
         {{title}}（{{score}}分）
       </el-col>
       <el-col :span="4">
-        <!-- <el-button size="mini" :class="isright ?'':'falsebg'" icon="el-icon-check" circle></el-button>
-        <el-button size="mini" :class="!isright ?'':'truebg'" icon="el-icon-close" circle></el-button> -->
         <div style="display:flex;justify-content:flex-end;align-items:center">
           <el-input @blur="changeValue" size="mini"  maxlength="3" type="number" style="width:80%;margin:0 5px" v-model="scoreALL"
             placeholder="0.0">
@@ -21,7 +19,7 @@
     <el-row class="answer">
       答题内容：
     </el-row>
-    <el-row class="analysis">
+    <el-row class="analysis" style="text-align: justify;text-justify:inter-ideograph;">
       {{answer}}
     </el-row>
   </el-row>

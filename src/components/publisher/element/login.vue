@@ -70,6 +70,7 @@
             .then(res => {
                console.log(res);
               if (res.status != 200) return this.$message.error(res.data.msg)
+
               window.sessionStorage.setItem("token", "" + res.data.data)
               this.$message.success(res.data.msg);
               this.$router.push('/list');
@@ -83,6 +84,23 @@
             })
         })
       },
+      // getName(){
+      //   this.$http.post('info')
+      //     .then(res => {
+      //         console.log(res);
+      //       if (res.status != 200) return this.$message.error(res.data.msg)
+      //       window.sessionStorage.setItem("token", "" + res.data.data)
+      //       this.$message.success(res.data.msg);
+      //       this.$router.push('/list');
+      //     }).catch(err => {
+      //       this.$message({
+      //         dangerouslyUseHTMLString: true,
+      //         showClose: true,
+      //         message: err.response.data.data.join('<br><br>'),
+      //         type: 'error'
+      //       });
+      //     })
+      // },
     //设置cookie
     setCookie(c_name, c_pwd, exdays) {
       var exdate = new Date(); //获取时间

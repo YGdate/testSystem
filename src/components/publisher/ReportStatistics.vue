@@ -2,7 +2,7 @@
   <div class="main">
     <el-row class="content">
       <el-col :span="4">
-        <sidebar name='试卷选择'></sidebar>
+        <sidebar @skipBtn="skipBtn" :name='leftName'></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
         <testPaper v-if="isshow" @paperInfo="paperInfo"></testPaper>
@@ -28,11 +28,16 @@
     data() {
       return {
         isshow:true,
-        paperId:0
+        paperId:0,
+        leftName:'报考管理'
       }
     },
     methods: {
+      skipBtn(){
+        this.isshow = true
+      },
       paperInfo(id){
+        this.leftName="返回"
         this.isshow = false
         this.paperId = id
       }

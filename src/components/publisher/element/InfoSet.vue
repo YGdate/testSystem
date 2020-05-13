@@ -273,6 +273,8 @@
               console.log(res);
               if (res.data.code != 0) return this.$message.error(res.data.msg)
               this.$message.success(res.data.msg)
+              console.log(11111);
+              this.$emit('forceUpdate')
 
             }).catch(err => {
               console.log(err);

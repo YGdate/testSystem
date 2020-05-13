@@ -194,10 +194,18 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+         
+          
+          console.log(11);
+          setTimeout(()=>{
+            
+            this.$emit('quitScore')
+          },1000)
           this.$message({
             type: 'success',
             message: '退出成功!'
           });
+
         }).catch(() => {
           this.$message({
             type: 'info',

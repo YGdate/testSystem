@@ -2,7 +2,7 @@
 
   <el-row class="question-content">
     <el-row class="questionTitle" :gutter="10">
-      <el-col :span="20">
+      <el-col :span="20" style="text-align: justify;text-justify:inter-ideograph;">
         {{title}}（{{scoer}}分）
       </el-col>
       <el-col :span="4">
@@ -20,7 +20,7 @@
     <el-row class="answer">
       答题内容：
     </el-row>
-    <el-row class="analysis">
+    <el-row class="analysis" style="text-align: justify;text-justify:inter-ideograph;">
       {{answer}}
     </el-row>
   </el-row>

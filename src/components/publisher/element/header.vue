@@ -24,10 +24,18 @@
   </div>
 </template>
 <script>
+  import mixin from '../../../mixins/skip'
   export default {
+    mixins: [mixin],
     data(){
       return{
         val:1,
+      }
+    },
+    // 监听路由改变
+    watch: {
+      '$route.path': function () {
+        this.val = window.sessionStorage.getItem('index')
       }
     },
     created(){
@@ -36,9 +44,7 @@
     components: {},
     methods: {
       skipPage(index) {
-        window.sessionStorage.setItem('index',index)
-        this.val = index
-        this.$emit('skipPage', index)
+        this.skip(index)
       },
      
     },

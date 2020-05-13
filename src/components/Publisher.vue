@@ -2,7 +2,7 @@
   <div class="main">
     <el-container>
       <el-header>
-        <Header @skipPage="skip($event)"></Header>
+        <Header></Header>
       </el-header>
       <el-main>
         <router-view></router-view>
@@ -13,9 +13,9 @@
 </template>
 <script>
   import Header from './publisher/element/header'
-  import mixin from '../mixins/skip'
+
   export default {
-    mixins: [mixin],
+    
     methods: {
     },
     components: {
