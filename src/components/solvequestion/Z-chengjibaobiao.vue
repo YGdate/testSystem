@@ -15,13 +15,13 @@
        </p>
        <ul class="oul">
       <li>
-        <span class="zh zco">考生</span><span class="infor">啊啊啊</span>
+        <span class="zh zco">考生</span><span class="infor">{{allmsg.user_id}}</span>
       </li>
        <li>
-         <span class="zh zco">总分</span><span class="infor">999</span>
+         <span class="zh zco">总分</span><span class="infor">{{allmsg.fullScore}}</span>
        </li>
        <li>
-         <span class="zh zco">成绩</span><span class="infor">666</span>
+         <span class="zh zco">成绩</span><span class="infor">{{allmsg.finalScore}}</span>
        </li>
        <li>
          <span class="zh zco">绝对位置排行</span><span class="infor">30%</span></li>
@@ -35,10 +35,7 @@
            <div class="kleft">
              <p class="l1">
                <span class="zh">知识点得分</span>
-               <span class="lspan">动词:100分</span><span  class="lspan">动词:100分</span>
-             </p>
-              <p class="l2">
-               <span class="lspan">动词:100分</span><span  class="lspan">动词:100分</span>
+               <span class="lspan" v-for="(item,i) in allmsg.knowledegePointsFullScore" :key="i">{{allmsg.knowledegePointsList[i]}}:{{item}}分</span>
              </p>
            </div>
            <div class="kright" id="bingone"></div>
@@ -130,12 +127,36 @@
 
 <script>
   export default {
+       data() {
+      return {
+       //获取数据的id
+       bbid:'',
+       allmsg:''
+      }
+    },
+    created(){
+      this.getmsg();
+    },
 mounted(){
 this.tuone();
 this.tutwo();
 this.zoushi();
 },
 methods:{
+  // 获取开局信息
+  async getmsg(){
+      var storage = window.sessionStorage; 
+      this.bbid=storage.getItem("bgid");
+      let msg = await this.$http.get('report/'+this.bbid);
+      //console.log(msg)
+      if(msg.data.code==0){
+          let ms = this.$decryptData(msg.data.data);
+          this.allmsg = ms;
+          console.log(this.allmsg)
+      }else{
+        this.$message.error("获取数据失败");
+      }
+  },
   tuone:function(){
     let myChart = this.$echarts.init(document.getElementById("bingone"));
     let option = {

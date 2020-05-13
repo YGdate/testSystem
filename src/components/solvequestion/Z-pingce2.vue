@@ -1,70 +1,235 @@
 <template>
 
 
-    <div class="ingcon">
-        <div class="rile">
-               <div class="conleft">
-        <p class="lefttop"><span>在线考试</span> <span>剩余时间:<span>30分0秒</span></span>
-        <el-button type="primary" class="quit">放弃考试</el-button>
+<div class="ingcon">
+    <div class="con-left">
+        <p class="headp">
+            题目类型
         </p>
-        <p class="classqus">
-            <span>一年级</span><span>| 单选题 |</span><span>| 4分 |</span>
-        </p>
-        <div class="quscon">
-            <div class="quesleft">
-                <p>1.这里是水水水水水水水水水水水水水水水水水水水</p>
-        <ul>
-            <li>1.毛衣</li>
-            <li>2.疲于</li>
-            <li>3.牛皮</li>
-            <li>4.真的厉害</li>
+        <ul class="qc">
+            <li :class="tab==tabs[0]?'lactive':''" data-aid="1" @click="qian($event.srcElement.dataset.aid)">单选题({{allmsg.single_select[0].score}}分一个)</li>
+            <li :class="tab==tabs[1]?'lactive':''" data-aid="2" @click="qian($event.srcElement.dataset.aid)">多选题({{allmsg.multi_select[0].score}}分一个)</li>
+            <li :class="tab==tabs[2]?'lactive':''" data-aid="3" @click="qian($event.srcElement.dataset.aid)">七选五({{allmsg.seven_selected_five[0].score}}分一个)</li>
+            <li :class="tab==tabs[3]?'lactive':''" data-aid="4" @click="qian($event.srcElement.dataset.aid)">判断题({{allmsg.true_or_false[0].score}}分一个)</li>
+            <li :class="tab==tabs[4]?'lactive':''" data-aid="5" @click="qian($event.srcElement.dataset.aid)">填空题({{allmsg.fill[0].score}}分一个)</li>
+            <li :class="tab==tabs[5]?'lactive':''" data-aid="6" @click="qian($event.srcElement.dataset.aid)">选词填空({{allmsg.choose_fill_blank[0].score}}分一个)</li>
+            <li :class="tab==tabs[6]?'lactive':''" data-aid="7" @click="qian($event.srcElement.dataset.aid)">完型填空({{allmsg.fill_blank[0].score}}分一个)</li>
+            <li :class="tab==tabs[7]?'lactive':''" data-aid="8" @click="qian($event.srcElement.dataset.aid)">听力({{allmsg.listening[0].score}}分一个)</li>
+            <li :class="tab==tabs[8]?'lactive':''" data-aid="9" @click="qian($event.srcElement.dataset.aid)">非定向选择({{allmsg.non_directional_select[0].score}}分一个)</li>
+            <li :class="tab==tabs[9]?'lactive':''" data-aid="10" @click="qian($event.srcElement.dataset.aid)">阅读理解({{allmsg.read_understand[0].score}}分)</li>
+            <li :class="tab==tabs[10]?'lactive':''" data-aid="11" @click="qian($event.srcElement.dataset.aid)">短文改错({{allmsg.text_mistake[0].score}}分一个)</li>
+             <li :class="tab==tabs[11]?'lactive':''" data-aid="12" @click="qian($event.srcElement.dataset.aid)">翻译({{allmsg.translation[0].score}}分)</li>
+              <li :class="tab==tabs[12]?'lactive':''" data-aid="13" @click="qian($event.srcElement.dataset.aid)">作文({{allmsg.composition[0].score}}分)</li>
         </ul>
+    </div>
+    <div class="con-center">
+        <!-- 剩余时间 -->
+        <span class="time">剩余时间{{fen}}分{{miao}}秒</span>
+        <!-- 开始考试 -->
+          <el-button type="primary" class="star" :class="{ hidden: ishidden }" @click="starexam">开始考试</el-button>
+          <!-- 放弃考试 -->
+            <el-button type="primary" class="end">放弃考试</el-button>
+            <!-- 提交试卷 -->
+ <el-button type="primary" class="star" :class="{ hidden: !ishidden }" >提交考试</el-button>
+
+            <!-- 单选题demo -->
+            <div class="dxs" :class="tab!=tabs[0]?'tt':''">
+                <p class="headp">单选题</p>
+                           <div class="danxuan zong"  v-for="(item,i) in allmsg.single_select" :key="i">
+                <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                <template>
+            <el-radio v-model="dan[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
+            <el-radio v-model="dan[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-radio>
+            <el-radio v-model="dan[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-radio>
+            <el-radio v-model="dan[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-radio>
+                </template>
             </div>
-            <div class="quesright">
-                <img src="../../assets/img/z-moren.jpg" alt="">
+            
             </div>
+
+            <!-- 多选题demo -->
+            <div class="dxs" :class="tab!=tabs[1]?'tt':''">
+                <p class="headp" >多选题</p>
+                <div class="duoxuan zong" v-for="(item,i) in allmsg.multi_select" :key="i">
+                     <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+   <template>
+  <el-checkbox v-model="duo[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
+  <el-checkbox v-model="duo[i]" label="B" class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
+  <el-checkbox v-model="duo[i]" label="C" class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
+  <el-checkbox v-model="duo[i]" label="D" class="xuanze">{{item.topic_and_stem.options.D}}</el-checkbox>
+</template>
+                </div>
+
+
+            </div>
+             <!-- 七选五demo --> 
+             <div class="qiwus" :class="tab!=tabs[2]?'tt':''">
+                  <p class="headp">7选五</p>
+                    <div class="qiwu zong" v-for="(item,i) in allmsg.seven_selected_five" :key="i">
+                   <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                                       <template>
+                <el-checkbox-group 
+                 v-model="qi[i]"
+                :max="6">
+                    <el-checkbox  label="A" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
+                     <el-checkbox  label="B" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
+                     <el-checkbox  label="C" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
+                     <el-checkbox  label="D" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.D}}</el-checkbox>
+                     <el-checkbox  label="E" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.E}}</el-checkbox>
+                    <el-checkbox  label="F" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.F}}</el-checkbox>
+                     <el-checkbox  label="G" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.G}}</el-checkbox>
+                     </el-checkbox-group>
+                        </template> 
+                  </div>
+       
+             </div>
+                <!-- 判断题 -->
+            <div class="dxs" :class="tab!=tabs[3]?'tt':''">
+                <p class="headp">判断题</p>
+                  <div class="danxuan zong" v-for="(item,i) in allmsg.true_or_false" :key="i">
+                <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                <template>
+            <el-radio v-model="pan[i]" label="true" class="xuanze">对</el-radio>
+            <el-radio v-model="pan[i]" label="false"  class="xuanze">错</el-radio>
+                </template>
+            </div>
+            
+            </div>
+                <!-- 填空题demo -->
+                <div class="tks" :class="tab!=tabs[4]?'tt':''">
+                    <p class="headp">填空题</p>
+                      <div class="tk zong" v-for="(item,i) in allmsg.fill" :key="i">
+                        <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                             <!-- <p>解析:{{item.knowledge_point}}</p> -->
+                </div>
+                </div>
+
+                <!-- 选词填空demo -->
+                <div class="xctks" :class="tab!=tabs[5]?'tt':''">
+                     <p class="headp">选词填空</p>
+                    <div clas="xctk zong" v-for="(item,i) in allmsg.choose_fill_blank" :key="i">
+                        <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                          <!-- <div v-for="(item, key, x) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="x">{{key}}:{{item}}</div>           
+           <el-input v-model="xuan[y]" maxlength=1 style="width:40px;" v-for="(item, key, y) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="y"></el-input> -->
+                    </div>
+                </div>
+
+
+                <!-- 完形填空demo -->
+                <div class="wxtks" :class="tab!=tabs[6]?'tt':''">
+                     <p class="headp">完型填空</p>
+                     <div class="wxtk zong" v-for="(item,i) in allmsg.fill_blank" :key="i">
+                         <p>{{allmsg.fill_blank[0].topic_and_stem[0]}}
+                         <div v-for="(nei,key,i) in allmsg.fill_blank[0].topic_and_stem[1]" :key="i">
+                             <p>第{{i+1}}题</p>
+                             <el-radio v-model="wan[i]" label="A" class="xuanze">{{nei.A}}</el-radio>
+                             <el-radio v-model="wan[i]" label="B" class="xuanze">{{nei.B}}</el-radio>
+                            <el-radio v-model="wan[i]" label="C" class="xuanze">{{nei.C}}</el-radio>
+                        <el-radio v-model="wan[i]" label="D" class="xuanze">{{nei.D}}</el-radio>
+                         </div>
+                     </div>
+                </div>
+                <!-- 听力demo -->
+                <div class="tinglis" :class="tab!=tabs[7]?'tt':''">
+                    <p class="headp">听力</p>
+                    <audio :src="mp3" controls="controls">
+Your browser does not support the audio element.
+</audio>
+                    <div class="tingli zong" v-for="(item,i) in allmsg.listening[0].topic_and_stem.title" :key="i">
+                        <p>1.{{item.title}}</p>
+                         <template>
+            <el-radio v-model="ting" label="A" class="xuanze">备选项</el-radio>
+            <el-radio v-model="ting" label="B"  class="xuanze">备选项</el-radio>
+            <el-radio v-model="ting" label="C"  class="xuanze">备选项</el-radio>
+            <el-radio v-model="ting" label="D"  class="xuanze">备选项</el-radio>
+                </template>
+                    </div>
+                </div>
+        <!-- 非定向demo -->
+        <div class="fdxs" :class="tab!=tabs[8]?'tt':''">
+                    <p class="headp">非定向选择</p>
+                    <div class="fdx zong" v-for="(item,i) in allmsg.non_directional_select" :key="i">
+                        <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                         <template>
+            <el-radio v-model="fei[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
+            <el-radio v-model="fei[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-radio>
+            <el-radio v-model="fei[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-radio>
+            <el-radio v-model="fei[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-radio>
+                </template>
+                    </div>
         </div>
-        <div class="change">
-            <el-row class="fu">
-  <el-button type="primary">上一题</el-button> <el-button type="primary">下一题</el-button>
-   <el-button type="primary" @click="examover()">提交试卷</el-button>
-</el-row>
+<!-- 阅读理解的demo -->
+<div class="rdljs" :class="tab!=tabs[9]?'tt':''">
+    <p class="headp">阅读理解</p>
+    <div class="rdlj" v-for="(item,i) in allmsg.read_understand" :key="i">
+        <p>{{i+1}}.{{item.topic_and_stem[0]}}</p>
+        <div v-for="(ite,key,y) in item.topic_and_stem[1]" :key="y">
+            <p>{{ite.title}}</p>
+            <el-radio v-model="yuedu[i]" label="A" class="xuanze">{{ite.options.A}}</el-radio>
+            <el-radio v-model="yuedu[i]" label="B"  class="xuanze">{{ite.options.B}}</el-radio>
+            <el-radio v-model="yuedu[i]" label="C"  class="xuanze">{{ite.options.C}}</el-radio>
+            <el-radio v-model="yuedu[i]" label="D"  class="xuanze">{{ite.options.D}}</el-radio>
         </div>
     </div>
-    <div class="conright">
-        <p>题 数</p>
-    <ul>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-                <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-        <li>2</li>
-    </ul>
+</div>
+
+
+<!-- 短文改错的demo -->
+<div class="dwgcs" :class="tab!=tabs[10]?'tt':''">
+    <p class="headp">短文改错</p>
+    <div class="dwgc zong">
+        <p>1.这是短文改错的第一题</p>
     </div>
-        </div>
- 
-    <div class="bianji">
-        <div class="bianleft">
-            <p>选项编辑</p>
-            <ul class="xuan">
-                <li>选项<span>1</span></li>
-                <li>(1)<span>选啊老妹啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</span></li>
-                <li>(1)<span>选啊老妹</span></li>
-                <li>(1)<span>选啊老妹</span></li>
-                <li>(1)<span>选啊老妹</span></li>
-            </ul>
-        </div>
-        <div class="bianright">
-            <p>答案编辑</p>
-        </div>
+</div>
+
+
+<!-- 翻译的demo -->
+
+<div class="fys" :class="tab!=tabs[11]?'tt':''">
+     <p class="headp">翻译</p>
+     <div class="fy zong">
+        <p>这里是翻译的标题</p>
+        <el-input
+  type="textarea"
+  :rows="2"
+  placeholder="请输入内容"
+  v-model="fy">
+</el-input>
     </div>
+</div>
+
+
+<!-- 作文的demo -->
+
+<div class="zws" :class="tab!=tabs[12]?'tt':''">
+    <p class="headp">作文</p>
+    <div class="zw zong">
+            <p>这里是作文的题目</p>
+                 <el-input
+  type="textarea"
+  :rows="2"
+  placeholder="请输入内容"
+  v-model="zw">
+</el-input>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="con-right">
+         <p class="headp">
+            答题卡
+        </p>
+    </div>
+       <div style="height:60px:float:left">
+       </div>
  </div>
 
     
@@ -75,18 +240,182 @@
 
 <script>
   export default {
+          // 开局调用
+    created(){
+        
+        this.exammsg();
+    },
        data() {
       return {
-        sureclose:false
+        //  所有的数据
+        allmsg:{},
+        sureclose:false,
+        zdy:{
+            g:'',
+            sx:''
+        },
+        // 是否隐藏
+        ishidden:false,
+        // 单选题答案存储
+        dan:[],
+        // 多选题答案储存
+        duo:[],
+        // 判断题
+        pan:[],
+        // 七选五
+        qi:[],
+        // 填空题答案
+        tian:[],
+        // 选词填空
+        xuan:[],
+        // 完型填空
+        wan:[],
+        // 听力
+        ting:[],
+        // 非定向选择
+        fei:[],
+        // 阅读理解
+        yuedu:[],
+        // 翻译
+        fy:'',
+        // 作文
+        zw:'',
+        // tab选项卡
+        tab:1,
+        // tab选项卡的四个
+        tabs:[1,2,3,4,5,6,7,8,9,10,11,12,13],
+        // 所有时间
+        alltime:1800,
+        // 分钟
+        fen:'30',
+        // 秒数
+        miao:'0',
+        // 音频
+        mp3:''
       }
     },
 methods:{
+
     close:function(){
         this.sureclose = true;
     },
     examover:function(){
             this.$router.push("ziexamover")
-        }
+        },
+        // 获取传过来的值
+        async exammsg(){
+     var storage = window.sessionStorage; 
+      let examid=storage.getItem("examid");
+      
+          let msg = await this.$http.get('exam/'+examid,{
+               params:{
+                 candidate_id:parseInt(examid),
+               }
+             });
+             if(msg.data.code==0){
+                   let ms = this.$decryptData(msg.data.data);
+                   this.allmsg = ms;
+
+          //单选题的处理
+                   for(let i=0;i<this.allmsg.single_select.length;i++){
+                       this.dan[i]=''
+                    this.allmsg.single_select[i].topic_and_stem = JSON.parse(this.allmsg.single_select[i].topic_and_stem)
+                   }
+            // 多选题的处理
+            for(let i=0;i<this.allmsg.multi_select.length;i++){
+                       this.duo[i]=[];
+                   
+                    this.allmsg.multi_select[i].topic_and_stem = JSON.parse(this.allmsg.multi_select[i].topic_and_stem)
+                   }
+             // 七选五的处理               
+                 for(let i=0;i<this.allmsg.seven_selected_five.length;i++){
+                       this.qi[i]=[];
+                    this.allmsg.seven_selected_five[i].topic_and_stem = JSON.parse(this.allmsg.seven_selected_five[i].topic_and_stem)
+                   }
+               // 判断的处理                
+                 for(let i=0;i<this.allmsg.true_or_false.length;i++){
+                       this.pan[i]='';
+                    this.allmsg.true_or_false[i].topic_and_stem = JSON.parse(this.allmsg.true_or_false[i].topic_and_stem)
+                   }    
+                // 选词填空的处理
+                let xc = 0;
+                    for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
+                    this.allmsg.choose_fill_blank[i].topic_and_stem = JSON.parse(this.allmsg.choose_fill_blank[i].topic_and_stem);
+                         for(let k in this.allmsg.choose_fill_blank[i].topic_and_stem.options){
+                            this.xuan[xc]='';
+                             xc++;
+                         }
+                   } 
+                // 完型填空的处理
+                let wx = 0;
+                 for(let i=0;i<this.allmsg.fill_blank.length;i++){
+                    this.allmsg.fill_blank[i].topic_and_stem = JSON.parse(this.allmsg.fill_blank[i].topic_and_stem);
+                         for(let k in this.allmsg.fill_blank[i].topic_and_stem.options){
+                            this.wan[wx]='';
+                             wx++;
+                         }
+                   } 
+                
+                // 听力的处理
+                 for(let i=0;i<this.allmsg.listening.length;i++){
+                       this.ting[i]=''
+                    this.allmsg.listening[i].topic_and_stem = JSON.parse(this.allmsg.listening[i].topic_and_stem)
+                   }
+                
+                // 非定向选择的处理
+                for(let i=0;i<this.allmsg.non_directional_select.length;i++){
+                       this.fei[i]=''
+                    this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
+                   }
+                
+                // 阅读理解的处理
+                let rd = 0;
+                for(let i=0;i<this.allmsg.read_understand.length;i++){
+                      
+                    this.allmsg.read_understand[i].topic_and_stem = JSON.parse(this.allmsg.read_understand[i].topic_and_stem)
+                   for(let k in this.allmsg.read_understand[i].topic_and_stem[1]){
+                            this.yuedu[rd]='';
+                             rd++;
+                         }
+                      
+                  }
+
+                    // 填空题的处理
+                      for(let i=0;i<this.allmsg.fill.length;i++){
+                       this.tian[i]=[];
+                    this.allmsg.fill[i].topic_and_stem = JSON.parse(this.allmsg.fill[i].topic_and_stem)
+                   }
+
+
+
+
+
+
+                    this.mp3 = this.allmsg.listening[0].topic_and_stem.accessory
+                   console.log(this.allmsg)
+             }else{
+                this.$message.error("获取内容失败！")
+             }
+        },
+        // 开始考试
+        starexam:function(){
+            let that = this;
+            this.ishidden=true;
+         setInterval(function(){
+             that.alltime = that.alltime-1;
+             that.fen = parseInt(that.alltime/60);
+             that.miao = that.alltime%60;
+             if(that.alltime == 0){
+                    console.log("over")
+             }
+         },1000)
+          
+        },
+    qian:function(es){
+      
+        this.tab = parseInt(es);
+        
+    }
 }
   }
 </script>
@@ -95,167 +424,95 @@ methods:{
 *{
     box-sizing: border-box;
 }
-.rile{
-    min-height: 500px;
+.hidden{
+    display: none;
 }
 .ingcon{
-    width: 1200px;
+    width: 1400px;
     min-height: 400px;
     margin: 0 auto;
     margin-top: 100px;
     z-index: -1;
 }
-.conleft{
-    min-height: 400px;
-    width: 800px;
-    background: white;
+.con-left{
+    width: 300px;
     float: left;
-    padding: 10px;
-    position: relative;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+    //box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+      min-height: 400px;
+      margin-right: 50px;
 }
-.fu{
-    margin-left: 240px;
+.tt{
+    display: none;
 }
-.conright{
-    width: 380px;
-    min-height: 449px;
-    padding: 10px;
-    background: rgb(67,164,247);
+.con-center{
+    width: 700px;
+      min-height: 400px;
+      float: left;
+      //box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+      margin-right: 50px;
+      position: relative;
+
+}
+.con-right{
+     width: 300px;
+    float: left;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
-    float: right;
+      min-height: 400px;
+      
+}
+.headp{
     text-align: center;
+    font-weight: 600;
 }
-.lefttop span:nth-child(1){
-font-weight: 600;
-}
-.quit{
+// 剩余时间
+.time{
+    font-weight: 600;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    right: 0;
+    top: -22px;
 }
-.lefttop span:nth-child(2){
- position: absolute;
- top: 20px;
- right: 120px;
+// 开始考试
+.star{
+     position: absolute;
+   left: 160px;
+    top: -42px;
 }
-.classqus span{
-    color: rgb(153,164,196);
+// 结束考试
+.end{
+   position: absolute;
+   left: 0px;
+    top: -42px;
 }
-.classqus span:nth-child(1){
-    font-weight: 600;
-    margin-right: 20px;
-}
-.quesleft{
-    width: 70%;
-    float: left;
-    min-height: 300px;
-    padding: 10px;
-}
-.quesleft ul{
-    width: 100%;
+// 题目类型
+.qc{
     padding: 0;
-    display: flex;
     list-style: none;
-     justify-content: space-around;
-     flex-flow: row wrap;
-}
-.quesleft ul li{
-    width: 200px;
-    min-height: 40px;
-}
-.quesright{
-    width: 30%;
-    float: left;
-    min-height: 300px;
-    padding: 10px;
-    text-align: center;
-    color: rgb(163,163,163);
-}
-.quesright img{
-    height: 140px;
-    width: 140px;
-}
-.conright ul{
     width: 100%;
-    list-style: none;
-    padding: 0;
-     display: flex;
-    list-style: none;
-     justify-content: start;
-     flex-flow: row wrap;
-}.conright ul li{
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    background: white;
-    text-align: center;
-    line-height: 40px;
-    margin-right: 5px;
-    margin-bottom: 5px;
 }
-
-.conright p{
+.qc li{
+    height: 60px;
+    width: 100%;
+   font-weight: 600;
+   text-align: center;
+   line-height: 60px;
+   border: 1px solid lightblue;
+   cursor: pointer;
+}
+// 左部分被选中
+.lactive{
     color: white;
-    font-weight: 600;
+    background: black;
 }
-
-
-
-
-// 编辑部分css
-.bianji{
-    width: 100%;
-    min-height: 400px;
-   padding-top: 20px;
-   margin-bottom: 66px;
-}
-.bianleft{
- min-height: 400px;
-    width: 800px;
-    background: white;
-    float: left;
-    padding: 10px;
-    position: relative;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+// 题的css
+.zong{
     padding: 10px;
     font-weight: 600;
+    border-bottom: 1px solid lightgray;
 }
-.bianright{
- width: 380px;
-    min-height: 400px;
-    padding: 10px;
-    background: white;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
-    float: right;
-    padding: 10px;
-     font-weight: 600;
-}
-
-.xuan{
+.xuanze{
     width: 100%;
-     display: flex;
-  flex-flow: row wrap;
-  justify-content: start;
-  
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  border-bottom: 1px solid lightblue;
-  padding-bottom: 5px;
-  box-sizing: content-box;
+    margin-bottom: 10px;
 }
-.xuan li{
-    min-width: 72px;
-    height: 20px;
-    text-align: center;
-    padding: 2px 3px;
-    line-height: 17px;
-    margin-left: 5px;
-    color: grey;
-}
-.xuan li:nth-child(1){
-    background: rgb(146,174,249);
-    color: white;
-}
+// 翻译的大盒子
+
 </style>
