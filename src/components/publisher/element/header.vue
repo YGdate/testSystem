@@ -52,7 +52,7 @@
 </script>
 
 <style lang="less" scoped>
-  // 蓝:#24c9e3  黄：#f4c521  border-bottom: 3px solid #f4c521;
+  // 蓝:#24c9e3  黄：#f4c521  border-bottom: 3px solid #f4c521; 
   .header {
     .el-row {
       height: 100%;

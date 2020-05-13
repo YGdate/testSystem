@@ -73,7 +73,7 @@
 
               window.sessionStorage.setItem("token", "" + res.data.data)
               this.$message.success(res.data.msg);
-              this.$router.push('/list');
+              this.$router.push('/solve');
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,

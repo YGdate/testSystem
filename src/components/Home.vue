@@ -6,7 +6,7 @@
 </template>
 <script>
 import Tiku from './lzy/TiKu'
-import Nav from './lzy/Nav'
+import Nav from './solvequestion/S-header'
   export default {
     components:{
       Nav,
