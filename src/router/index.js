@@ -47,7 +47,7 @@ import Qxw from '../components/lzy/fun-page/Qxw'
 //发布者子页面
 import Promulgator from '../components/publisher/Promulgator.vue'
 import ReportStatistics from '../components/publisher/ReportStatistics.vue'
-import ReportDetails from '../components/publisher/ReportDetails.vue'
+// import ReportDetails from '../components/publisher/ReportDetails.vue'
 import TestPaper from '../components/publisher/TestPaper.vue'
 import AutoPaper from '../components/publisher/AutoPaper.vue'
 import ExamManagement from '../components/publisher/ExamManagement.vue'
@@ -57,221 +57,408 @@ import PaperManagement from '../components/publisher/PaperManagement.vue'
 Vue.use(VueRouter)
 
 const routes = [{
-    path: '/login',
-    component: LoginReg
-  },
-  {
-    //发布者
-    path: '/publisher',
-    component: Publisher,
-    redirect: '/publisher/promulgator',
-    children: [{
-        //发布者首页
-        path: 'promulgator',
-        component: Promulgator
-      },
-      {
-        //报告统计
-        path: 'reportStatistics',
-        component: ReportStatistics
-      },
-      {
-        //报告详情
-        path: 'reportDetails',
-        component: ReportDetails
-      },
-      {
-        //手动组卷
-        path: 'testPaper',
-        component: TestPaper
-      },
-      {
-        //自动组卷
-        path: 'autoPaper',
-        component: AutoPaper
-      },
-      {
-        //自动组卷
-        path: 'examManagement',
-        component: ExamManagement
-      },
-      {
-        //试卷评分
-        path: 'testScore',
-        component: TestScore
-      },
-      {
-        //试卷管理
-        path: 'paperManagement',
-        component: PaperManagement
-      },
-    ]
-  },
-  {
-    //
-    path: '/solve',
-    redirect: '/solve/zhomepage',
-    component: Solve,
-    children: [{
-        path: 'zhomepage',
-        component: Shouye
-      },
-      {
-        path: 'testpage',
-        component: Testpage
-      },
-      {
-        path: 'pkonline',
-        component: Pkonline
-      }, {
-        path: 'evaluation',
-        component: Evaluation
-      }, {
-        path: 'pking',
-        component: Pking
-      },
-      {
-        path: 'chengji',
-        component: Chengji
-      },
-      {
-        path: 'chengjibaobiao',
-        component: Chengjibaobiao
-      },
-      // 我的考试
-      {
-        path: 'myexam',
-        component: Myexam
-      }
-      // 评测1
-      ,
-      {
-        path: 'testone',
-        component: P1
-      }
-      // 评测2
-      ,
-      {
-        path: 'testtwo',
-        component: P2
-      },
-      {
-        path: 'testthree',
-        component: P3
-      },
-      {
-        path: 'testfour',
-        component: P4
-      }
-      // 自定义考试结束
-      ,
-      {
-        path: 'ziexamover',
-        component: Ziexamover
-      },
-      // 考试结束
-      {
-        path: 'examover',
-        component: Examover
-      }
-      // 考试详情
-      ,
-      {
-        path: 'examdetails',
-        component: Examdetails
-      }
-    ]
-  },
-  {
-    //题库录入
-    path: '/',
-    component: Home,
-    children: [
-      {
-        path: 'list',
-        component: List
-      },
-      {
-        path: 'write',
-        component: Write,
-        children: [{
-            path: 'single',
-            component: Single
-          },
-          {
-            path: 'more',
-            component: More
-          }
-        ]
-      },
-      {
-        path: 'dxuan',
-        component: Dxuan
-      },
-      {
-        path: 'panduan',
-        component: Panduan
-      },
-      {
-        path: 'duoxuan',
-        component: Duoxuan
-      },
-      {
-        path: 'fanyi',
-        component: Fanyi
-      },
-      {
-        path: 'bdx',
-        component: Bdx
-      },
-      {
-        path: 'xuanci',
-        component: Xuanci
-      },
-      {
-        path: 'wxtk',
-        component: Wxtk
-      },
-      {
-        path: 'ydlj',
-        component: Ydlj
-      },
-      {
-        path: 'qxw',
-        component: Qxw
-      },
-      {
-        path: 'tiankong',
-        component: Tiankong
-      },
-      {
-        path: 'zuowen',
-        component: Zuowen
-      },
-      {
-        path: 'dwgc',
-        component: Dwgc
-      },
-      {
-        path: 'log',
-        component: Log
-      }
-    ]
-  }
+      path: '/login',
+      component: LoginReg
+    },
+    {
+      //发布者
+      path: '/publisher',
+      component: Publisher,
+      redirect: '/publisher/promulgator',
+      children: [{
+          //发布者首页
+          path: 'promulgator',
+          component: Promulgator
+        },
+        {
+          //报告统计
+          path: 'reportStatistics',
+          component: ReportStatistics
+        },
+        // {
+        //   //报告详情
+        //   path: 'reportDetails',
+        //   component: ReportDetails
+        // },
+        {
+          //手动组卷
+          path: 'testPaper',
+          component: TestPaper
+        },
+        {
+          //自动组卷
+          path: 'autoPaper',
+          component: AutoPaper
+        },
+        {
+          //自动组卷
+          path: 'examManagement',
+          component: ExamManagement
+        },
+        {
+          //试卷评分
+          path: 'testScore',
+          component: TestScore
+        },
+        {
+          //试卷管理
+          path: 'paperManagement',
+          component: PaperManagement
+        },
+      ]
+    },
+    {
+      //
+      path: '/solve',
+      redirect: '/solve/zhomepage',
+      component: Solve,
+      children: [{
+          path: 'zhomepage',
+          component: Shouye
+        },
+        {
+          path: 'testpage',
+          component: Testpage
+        },
+        {
+          path: 'pkonline',
+          component: Pkonline
+        }, {
+          path: 'evaluation',
+          component: Evaluation
+        }, {
+          path: 'pking',
+          component: Pking
+        },
+        {
+          path: 'chengji',
+          component: Chengji
+        },
+        {
+          path: 'chengjibaobiao',
+          component: Chengjibaobiao
+        },
+        // 我的考试
+        {
+          path: 'myexam',
+          component: Myexam
+        }
+        // 评测1
+        ,
+        {
+          path: 'testone',
+          component: P1
+        }
+        // 评测2
+        ,
+        {
+          path: 'testtwo',
+          component: P2
+        },
+        {
+          path: 'testthree',
+          component: P3
+        },
+        {
+          path: 'testfour',
+          component: P4
+        }
+        // 自定义考试结束
+        ,
+        {
+          path: 'ziexamover',
+          component: Ziexamover
+        },
+        // 考试结束
+        {
+          path: 'examover',
+          component: Examover
+        }
+        // 考试详情
+        ,
+        {
+          path: 'examdetails',
+          component: Examdetails
+        }
+      ]
+    },
+    {
+      //题库录入
+      path: '/',
+      component: Home,
+      children: [{
+          path: 'list',
+          component: List
+        },
+        {
+          path: 'write',
+          component: Write,
+          path: '/login',
+          component: LoginReg
+        },
+        {
+          //发布者
+          path: '/publisher',
+          component: Publisher,
+          redirect: '/publisher/promulgator',
+          children: [{
+              //发布者首页
+              path: 'promulgator',
+              component: Promulgator
+            },
+            {
+              //报告统计
+              path: 'reportStatistics',
+              component: ReportStatistics
+            },
+            // {
+            //   //报告详情
+            //   path: 'reportDetails',
+            //   component: ReportDetails
+            // },
+            {
+              //手动组卷
+              path: 'testPaper',
+              component: TestPaper
+            },
+            {
+              //自动组卷
+              path: 'autoPaper',
+              component: AutoPaper
+            },
+            {
+              //自动组卷
+              path: 'examManagement',
+              component: ExamManagement
+            },
+            {
+              //试卷评分
+              path: 'testScore',
+              component: TestScore
+            },
+            {
+              //试卷管理
+              path: 'paperManagement',
+              component: PaperManagement
+            },
+          ]
+        },
+        {
+          path: 'dxuan',
+          component: Dxuan
+        },
+        {
+          path: 'panduan',
+          component: Panduan
+        },
+        {
+          path: 'duoxuan',
+          component: Duoxuan
+        },
+        {
+          path: 'fanyi',
+          component: Fanyi
+        },
+        {
+          path: 'bdx',
+          component: Bdx
+        },
+        {
+          path: 'xuanci',
+          component: Xuanci
+        },
+        {
+          path: 'wxtk',
+          component: Wxtk
+        },
+        {
+          path: 'ydlj',
+          component: Ydlj
+        },
+        {
+          path: 'qxw',
+          component: Qxw
+        },
+        {
+          path: 'tiankong',
+          component: Tiankong
+        },
+        {
+          path: 'zuowen',
+          component: Zuowen
+        },
+        {
+          path: 'dwgc',
+          component: Dwgc
+        },
+        {
+          path: 'log',
+          component: Log
+        }
+      ]
+    },
+    {
+      //
+      path: '/solve',
+      redirect: '/solve/zhomepage',
+      component: Solve,
+      children: [{
+          path: 'zhomepage',
+          component: Shouye
+        },
+        {
+          path: 'testpage',
+          component: Testpage
+        },
+        {
+          path: 'pkonline',
+          component: Pkonline
+        }, {
+          path: 'evaluation',
+          component: Evaluation
+        }, {
+          path: 'pking',
+          component: Pking
+        },
+        {
+          path: 'chengji',
+          component: Chengji
+        },
+        {
+          path: 'chengjibaobiao',
+          component: Chengjibaobiao
+        },
+        // 我的考试
+        {
+          path: 'myexam',
+          component: Myexam
+        }
+        // 评测1
+        ,
+        {
+          path: 'testone',
+          component: P1
+        }
+        // 评测2
+        ,
+        {
+          path: 'testtwo',
+          component: P2
+        },
+        {
+          path: 'testthree',
+          component: P3
+        },
+        {
+          path: 'testfour',
+          component: P4
+        }
+        // 自定义考试结束
+        ,
+        {
+          path: 'ziexamover',
+          component: Ziexamover
+        },
+        // 考试结束
+        {
+          path: 'examover',
+          component: Examover
+        }
+        // 考试详情
+        ,
+        {
+          path: 'examdetails',
+          component: Examdetails
+        }
+      ]
+    },
+    {
+      //题库录入
+      path: '/',
+      component: Home,
+      children: [{
+          path: 'list',
+          component: List
+        },
+        {
+          path: 'write',
+          component: Write,
+          children: [{
+              path: 'single',
+              component: Single
+            },
+            {
+              path: 'more',
+              component: More
+            }
+          ]
+        },
+        {
+          path: 'dxuan',
+          component: Dxuan
+        },
+        {
+          path: 'panduan',
+          component: Panduan
+        },
+        {
+          path: 'duoxuan',
+          component: Duoxuan
+        },
+        {
+          path: 'fanyi',
+          component: Fanyi
+        },
+        {
+          path: 'bdx',
+          component: Bdx
+        },
+        {
+          path: 'xuanci',
+          component: Xuanci
+        },
+        {
+          path: 'wxtk',
+          component: Wxtk
+        },
+        {
+          path: 'ydlj',
+          component: Ydlj
+        },
+        {
+          path: 'qxw',
+          component: Qxw
+        },
+        {
+          path: 'tiankong',
+          component: Tiankong
+        },
+        {
+          path: 'zuowen',
+          component: Zuowen
+        },
+        {
+          path: 'dwgc',
+          component: Dwgc
+        },
+        {
+          path: 'log',
+          component: Log
+        }
+      ]
+    }]
 
-]
 
 
+    const originalPush = VueRouter.prototype.push
+    VueRouter.prototype.push = function push(location) {
+      return originalPush.call(this, location).catch(err => err)
+    }
 
-const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+    const router = new VueRouter({
+      mode: 'history',
+      base: process.env.BASE_URL,
+      routes
+    })
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
-
-export default router
+    export default router

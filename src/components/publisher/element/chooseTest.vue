@@ -7,9 +7,10 @@
         <div class="choose-type">
           <transition name="slide-fade">
             <div ref="chooseItem" class="choose-type-item">
-              <el-card :class="categoryIndex==index?'stylecategory':''" v-for="(item,index) in imgData"  @click.native="categoryIndex = index" :key="index">
+              <el-card :class="categoryIndex==index?'stylecategory':''" v-for="(item,index) in imgData"
+                @click.native="chooseItem(index)" :key="index">
                 <img style="width:60px;height:60px" :src="item.path" alt="">
-                <span>单选题</span>
+                <span style="font-size:14px">{{item.name}}</span>
               </el-card>
             </div>
           </transition>
@@ -33,81 +34,102 @@
                 </el-col>
               </el-row>
               <el-row style="margin-top:20px">
-                <el-table size="mini" :header-cell-style="tableHeaderStyle" style="width: 100%">
+                <el-table size="mini" height="300" :data="selectQuestionData" :header-cell-style="tableHeaderStyle"
+                  :cell-style="{'vertical-align':'top'}" style="width: 100%">
                   <el-table-column type="index" label="序号" width="50">
                   </el-table-column>
-                  <el-table-column prop="date" label="题干" width="50">
+                  <el-table-column prop="category" label="题目类型" width="100">
                   </el-table-column>
-                  <el-table-column prop="name" label="选项A" width="60">
+                  <el-table-column label="题干">
+                    <template scope="scope">
+                      <div class="topic_and_stem">
+                        {{JSON.parse(scope.row.topic_and_stem).title}}
+                      </div>
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="address" label="选项B" width="60">
+                  <el-table-column prop="knowledge_point" label="知识点" width="100">
                   </el-table-column>
-                  <el-table-column prop="address" label="选项C" width="60">
+                  <el-table-column label="难度" width="50">
+                    <template scope="scope">
+                      <div>
+                        {{difficultyDegree(scope.row.degree_of_difficulty)}}
+                      </div>
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="address" label="选项D" width="60">
+                  <el-table-column  prop="score" label="设置分值" width="80">
+                    <template slot-scope="scope">
+                        <el-input size="mini" @blur="inputValue(scope.row.score)" @input="change($event)" type="text"  placeholder="分数" v-model="scope.row.score"></el-input>
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="address" label="知识点">
-                  </el-table-column>
-                  <el-table-column prop="address" label="难度" width="50">
-                  </el-table-column>
-                  <el-table-column prop="address" label="设置分值" width="70">
-                  </el-table-column>
-                  <el-table-column prop="address" width="40">
+                  <el-table-column  label="操作" width="50">
+                   <template scope="scope">
+                     <div>
+                        <el-button size="mini" type="danger" icon="el-icon-delete" circle  @click="deleteQuestion(scope.row)">
+                    </el-button>
+                     </div>
+                   </template>
                   </el-table-column>
                 </el-table>
                 <!-- 分页 -->
-                <el-row style="margin-top:20px;text-align:center">
-                  <el-pagination background layout="prev, pager, next" :total="1000">
+                <!-- <el-row style="margin-top:20px;text-align:center">
+                  <el-pagination background layout="prev, pager, next" :total="questionTotal">
                   </el-pagination>
-                </el-row>
+                </el-row> -->
               </el-row>
             </el-tab-pane>
             <!-- 题库 -->
             <el-tab-pane label="题库">
               <el-row class="choose-test-title">
-                <el-select size="mini" v-model="gradeValue" placeholder="年级选择">
+                <el-select @change="questionChoose" size="mini" v-model="gradeValue" placeholder="年级选择">
                   <el-option v-for="item in gradeOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="semesterValue" placeholder="章节选择">
+                <el-select @change="questionChoose" size="mini" v-model="semesterValue" placeholder="章节选择">
                   <el-option v-for="item in semesterOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="questionValue" placeholder="知识点选择">
+                <el-select @change="questionChoose" size="mini" v-model="questionValue" placeholder="知识点选择">
                   <el-option v-for="item in questionOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
-                <el-select size="mini" v-model="diffValue" placeholder="难度选择">
+                <el-select @change="questionChoose" size="mini" v-model="diffValue" placeholder="难度选择">
                   <el-option v-for="item in diffValueOptions" :key="item.value" :label="item.label" :value="item.value">
                   </el-option>
                 </el-select>
               </el-row>
               <el-row style="margin-top:20px">
-                <el-table size="mini" :header-cell-style="tableHeaderStyle" style="width: 100%">
+                <el-table size="mini" :data="tabalData" :header-cell-style="tableHeaderStyle" style="width: 100%">
                   <el-table-column type="index" label="序号" width="50">
                   </el-table-column>
-                  <el-table-column prop="date" label="题干" width="50">
+                  <el-table-column label="题干">
+                    <template scope="scope">
+                      <div class="topic_and_stem">
+                        {{JSON.parse(scope.row.topic_and_stem).title}}
+                      </div>
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="name" label="选项A" width="60">
+                  <el-table-column prop="knowledge_point" label="知识点" width="100">
                   </el-table-column>
-                  <el-table-column prop="address" label="选项B" width="60">
+                  <el-table-column prop="subject" label="学课" width="50">
                   </el-table-column>
-                  <el-table-column prop="address" label="选项C" width="60">
+                  <el-table-column prop="degree_of_difficulty" label="难度" width="50">
+                    <template scope="scope">
+                      <div>
+                        {{difficultyDegree(scope.row.degree_of_difficulty)}}
+                      </div>
+                    </template>
                   </el-table-column>
-                  <el-table-column prop="address" label="选项D" width="60">
-                  </el-table-column>
-                  <el-table-column prop="address" label="知识点">
-                  </el-table-column>
-                  <el-table-column prop="address" label="学课" width="50">
-                  </el-table-column>
-                  <el-table-column prop="address" label="难度" width="50">
-                  </el-table-column>
-                  <el-table-column prop="address" label="操作">
+                  <el-table-column prop="address" label="操作" width="100">
+                    <template scope="scope">
+                      <el-button type="text" size="small">详情</el-button>
+                      <el-button @click="addQuestion(scope.row)" type="text" size="small">添加</el-button>
+                    </template>
                   </el-table-column>
                 </el-table>
                 <!-- 分页 -->
                 <el-row style="margin-top:20px;text-align:center">
-                  <el-pagination background layout="prev, pager, next" :total="1000">
+                  <el-pagination background layout="prev, pager, next" @current-change="handleCurrentChange"
+                    :current-page="current_page" :page-size="10" :total="total">
                   </el-pagination>
                 </el-row>
               </el-row>
@@ -129,25 +151,22 @@
     </el-row>
     <!-- 下一步 -->
     <el-row class="content-footer">
-      <el-button size="small">下一步</el-button>
-      <el-button size="small">去发布</el-button>
+      <el-button @click="nextStep"  size="small">下一步</el-button>
     </el-row>
   </div>
 </template>
-
-
 
 <script>
   export default {
     data() {
       return {
         // 当前题型
-        categoryIndex:0,
+        categoryIndex: 0,
         // tabledata
         tableData: [
 
         ],
-        gradeValue: null,
+        gradeValue: '',
         gradeOptions: [{
             value: 0,
             label: '一年级'
@@ -190,19 +209,18 @@
             label: '大学四年级'
           }
         ],
-        semesterValue: null,
+        semesterValue: '',
         semesterOptions: [{
-            value: 0,
-            label: '上学期'
-          }, {
-            value: 1,
-            label: '下学期'
-          }],
-          questionValue: null,
+          value: 0,
+          label: '上学期'
+        }, {
+          value: 1,
+          label: '下学期'
+        }],
+        questionValue: '',
         questionOptions: [],
-        diffValue:'',
-        diffValueOptions:[
-          {
+        diffValue: '',
+        diffValueOptions: [{
             value: 0,
             label: '简单'
           }, {
@@ -216,67 +234,109 @@
             value: 3,
             label: '困难'
           },
-           {
+          {
             value: 4,
             label: '艰难'
           }
         ],
+        tabalData: [],
+        //表格标签
+
         //图标资源
         imgData: [{
             name: '单选题',
-            path: require('../../../assets/img/icon/单选题.png')
+            path: require('../../../assets/img/icon/单选题.png'),
+            name1: 'single_select'
           },
           {
             name: '不定项选择',
-            path: require('../../../assets/img/icon/不定项选择.png')
+            path: require('../../../assets/img/icon/不定项选择.png'),
+            name1: 'non_directional_select'
           },
           {
             name: '判断题',
-            path: require('../../../assets/img/icon/判断题.png')
+            path: require('../../../assets/img/icon/判断题.png'),
+            name1: 'true_or_false'
           },
           {
             name: '听力',
-            path: require('../../../assets/img/icon/听力.png')
+            path: require('../../../assets/img/icon/听力.png'),
+            name1: 'listening'
           },
           {
             name: '填空题',
-            path: require('../../../assets/img/icon/填空题.png')
+            path: require('../../../assets/img/icon/填空题.png'),
+            name1: 'fill'
           },
           {
             name: '多选题',
-            path: require('../../../assets/img/icon/多选题.png')
+            path: require('../../../assets/img/icon/多选题.png'),
+            name1: 'multi_select '
           },
           {
             name: '完形填空',
-            path: require('../../../assets/img/icon/完形填空.png')
+            path: require('../../../assets/img/icon/完形填空.png'),
+            name1: 'fill_blank'
           },
           {
             name: '短文改错',
-            path: require('../../../assets/img/icon/短文改错.png')
+            path: require('../../../assets/img/icon/短文改错.png'),
+            name1: 'text_mistake'
           },
           {
             name: '翻译',
-            path: require('../../../assets/img/icon/翻译.png')
+            path: require('../../../assets/img/icon/翻译.png'),
+            name1: 'translation'
           },
           {
             name: '选词填空',
-            path: require('../../../assets/img/icon/选词填空.png')
+            path: require('../../../assets/img/icon/选词填空.png'),
+            name1: 'choose_fill_blank'
           },
           {
             name: '阅读理解',
-            path: require('../../../assets/img/icon/阅读理解.png')
+            path: require('../../../assets/img/icon/阅读理解.png'),
+            name1: 'read_understand'
           },
           {
             name: '作文',
-            path: require('../../../assets/img/icon/作文.png')
+            path: require('../../../assets/img/icon/作文.png'),
+            name1: 'composition'
           },
           {
             name: '七选五',
-            path: require('../../../assets/img/icon/七选五.png')
+            path: require('../../../assets/img/icon/七选五.png'),
+            name1: 'seven_selected_five'
           },
 
         ],
-        ischeck: true
+        ischeck: true,
+        current_page: 1,
+        total: 0,
+        // questionCurrentPage: 1,
+        // questionTotal: 0,
+        // 已选试题
+        selectQuestionData: [],
+        reportClass:[],
+        reportNum:[]
+      }
+    },
+    computed: {
+      difficultyDegree() {
+        return function (text) {
+          // 难度 0-4分别对应；简单，一般，适中，困难，艰难
+          if (text == 0) {
+            return '简单'
+          } else if (text == 1) {
+            return '一般';
+          } else if (text == 2) {
+            return '适中'
+          } else if (text == 3) {
+            return '困难'
+          } else if (text == 4) {
+            return '艰难'
+          }
+        }
       }
     },
     mounted() {
@@ -284,25 +344,104 @@
       this.$refs.chooseItem.style.marginLeft = '0'
       this.drawgrade()
     },
+    created() {
+      this.getAllTopicAndStem()
+      this.getQuestionPoint()
+    },
     methods: {
-      
-      //获取题库信息
-      getAllTopicAndStem() {
+      // 下一步
+      nextStep(){
+        this.$emit('nextStep')
+      },
+      // 分数输入验证
+      inputValue(e){
+        if(typeof(Number(e))!='number'||isNaN(Number(e))){
+          this.$message.warning('请输入合法分数！')
+        }
+      },
+      // input输入
+      change(){
+        this.$forceUpdate()
+      },
+      // 移除题目
+      deleteQuestion(row) {
+        
+        let index1 = 0
+        this.selectQuestionData.forEach((item,index)=>{
+          if(item.id == row.id){
+            index1 = index
+          }
+        })
+        let index2 = this.reportClass.findIndex((item)=>{
+          return item==row.category
+        })
+        console.log(index1);
+        console.log(index2);
+        if( this.reportNum[index2]<=1){
+          this.reportClass.splice(index2,1)
+        }else{
+          this.reportNum[index2]--
+        }
+        
 
-        this.$http.get('questionInfo/getAllTopicAndStem', {
+         this.drawgrade(this.reportClass,this.reportNum)
+         
+         this.selectQuestionData.splice(index1,1)
+         this.$message.success('删除成功！')
+        this.$store.commit('alertTableData',this.selectQuestionData)
+      },
+      questionChoose() {
+        this.getAllTopicAndStem()
+      },
+      handleCurrentChange(pages) {
+        this.getAllTopicAndStem(pages)
+      },
+      // 添加到试卷
+      addQuestion(row) {
+
+        if(this.reportClass.includes(row.category)){
+          let index = this.reportClass.findIndex((item)=>{
+          return item==row.category
+        })
+          console.log(index);
+          this.reportNum[index]++
+        }else{
+          this.reportClass.push(row.category)
+           this.reportNum.push(1)
+        }
+
+        this.drawgrade(this.reportClass,this.reportNum)
+        let rowData = row
+        rowData.score= ''
+        console.log(rowData);
+        this.$message.success('添加成功！')
+        this.selectQuestionData.push(rowData)
+        this.$store.commit('alertTableData',this.selectQuestionData)
+      },
+      chooseItem(index) {
+        this.categoryIndex = index
+        this.getQuestionPoint()
+        this.getAllTopicAndStem()
+      },
+      //获取题库信息
+      getAllTopicAndStem(pages = 1) {
+        this.$http.get('questionInfo/getAllTopicAndStem?page=' + pages, {
             params: {
               grade: this.gradeValue,
               semester: this.semesterValue,
-              question_point: '',
-              diff: '',
-              category: ''
+              question_point: this.questionValue,
+              diff: this.diffValue,
+              category: this.imgData[this.categoryIndex].name1
             }
           })
           .then(res => {
             console.log(res);
             if (res.data.code != 0) return this.$message.error(res.data.msg)
+            console.log(this.$decryptData(res.data.data))
+            this.tabalData = this.$decryptData(res.data.data).data
+            this.current_page = this.$decryptData(res.data.data).current_page
+            this.total = this.$decryptData(res.data.data).total
 
-            //  let {}
           }).catch(err => {
             console.log(err);
             this.$message({
@@ -313,8 +452,48 @@
             });
           })
       },
+      //获取知识点
+      getQuestionPoint() {
+        this.$http.get('questionInfo/getQuestionPoint', {
+            params: {
+              grade: this.gradeValue,
+              semester: this.semesterValue,
+              diff: this.diffValue,
+              category: this.imgData[this.categoryIndex].name1
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            let arr = this.$decryptData(res.data.data)
+            let newArr = []
+            arr.forEach(item => {
+              let val = {
+                value: item,
+                label: item
+              }
+              newArr.push(val)
+            })
+            this.questionOptions = newArr
+            //  let {}
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+
+      },
+
       // 报表
-      drawgrade() {
+      drawgrade(arrTest=[],num=[]) {
+        if(this.reportClass.length==0){
+          arrTest=[]
+          num=[]
+        }
         // 绘制图表
         let opt = {
           color: ['#24c9e3'],
@@ -328,12 +507,12 @@
             top: '8%',
             left: '0%',
             right: '0%',
-            bottom: '0%',
+            bottom: '1%',
             containLabel: true
           },
           xAxis: [{
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: arrTest,
             axisTick: {
               alignWithLabel: true
             }
@@ -342,10 +521,10 @@
             type: 'value'
           }],
           series: [{
-            name: '直接访问',
+            name: '题型数量',
             type: 'bar',
             barWidth: '40%',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            data: num
           }]
         }
 
@@ -396,9 +575,10 @@
 </script>
 <style lang="less" scoped>
   //题型选择样式
-  .stylecategory{
+  .stylecategory {
     background: rgb(241, 241, 241);
   }
+
   //题型选择
   .content-container {
     height: 120px;
@@ -448,6 +628,13 @@
 
   // 题库选择
   .choose-test {
+    .topic_and_stem {
+      display: inline-block !important;
+      white-space: nowrap !important;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
     width: 100%;
 

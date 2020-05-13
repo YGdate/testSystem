@@ -3,10 +3,10 @@
        <p class="c1">考试结束</p>
     <div class="c2"></div>
     <div class="occ">
-        <p><span class="zhong">考试信息</span><span class="nz">一年级上册</span></p>
-        <p><span class="zhong">客观题得分（100分）</span><span class="nz">98分</span></p>
-        <p><span class="zhong">用时</span><span class="nz">30分45秒</span></p>
-        <div class="bt"><el-button type="primary">查看考试详情</el-button></div>
+        <p><span class="zhong">考试信息</span><span class="nz">{{grade}}</span></p>
+        <p><span class="zhong">客观题得分（50分）</span><span class="nz">{{num}}分</span></p>
+        <p><span class="zhong">用时</span><span class="nz">{{fen}}分{{miao}}秒</span></p>
+        <div class="bt"><el-button type="primary" @click="chakan">查看考试详情</el-button></div>
     </div>
   </div>
 </template>
@@ -15,7 +15,30 @@
 
 <script>
   export default {
-
+    created(){
+        this.getmsg()
+    },
+    methods:{
+      // 获取考试信息
+      getmsg:function(){
+          var storage = window.sessionStorage; 
+      this.grade=storage.getItem("zdystring");
+       this.num=storage.getItem("zdyfs");
+       this.fen = parseInt(storage.getItem("ztime")/60);
+       this.miao = storage.getItem("ztime")%60;
+      },
+      chakan:function(){
+        this.$router.push("examdetails")
+      }
+    },
+    data(){
+      return{
+        grade:'',
+        fen:'',
+        miao:'',
+        num:''
+      }
+    }
   }
 </script>
 <style lang="less" scoped>

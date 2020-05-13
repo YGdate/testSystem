@@ -1,21 +1,21 @@
 <template>
     <el-row>
       <el-form ref="resetLoginRef" :rules="loginFormRules" :model="loginForm" label-width="80px">
-              <el-form-item label="姓名:" prop="email" style="width:340px;">
-                <el-input placeholder="email" v-model="loginForm.email"></el-input>
+              <el-form-item label="姓名:" prop="name" style="width:340px;">
+                <el-input placeholder="name" v-model="loginForm.name"></el-input>
               </el-form-item>
-              <el-form-item label="手机号:" prop="password" style="width:340px;">
-                <el-input placeholder="手机号" type="text"></el-input>
+              <el-form-item label="手机号:" prop="number" style="width:340px;">
+                <el-input placeholder="手机号" v-model="loginForm.number" type="text"></el-input>
               </el-form-item>
              <el-row class="code">
                <el-col>
                  短信验证码：
                </el-col>
                <el-col>
-                 <el-input style="width:100px" size="mini"></el-input>
+                 <el-input style="width:100px" v-model="loginForm.code" size="mini"></el-input>
                </el-col>
                <el-col>
-                 <el-button size="mini">发送验证码</el-button>
+                 <el-button :disabled="idchecked" @click="sendCode" size="mini">{{thisCodeTitle}}</el-button>
                </el-col>
              </el-row>
               <el-form-item label="密码:" prop="password" style="width:340px;">
@@ -30,26 +30,44 @@
 <script>
   export default {
     data() {
+       let checkNum = (rule, value, callback) => {
+        if (!(/^1[3456789]\d{9}$/.test(value))) {
+        return callback(new Error('手机号码有误，请重填'));
+        } 
+        callback();
+        
+      };
       return {
         checked:false,
+        thisCodeTitle:'发送验证码',
+        idchecked:false,
         // 登录表单数据
         loginForm: {
-          email: 'user5@qq.com',
-          password: '000000'
+          name: '',
+          password: '',
+          number:'',
+          code:''
         },
         // 表单验证规则
         loginFormRules: {
-           email: [{
+           name: [{
               required: true,
-              message: '请输入邮箱',
+              message: '请输入姓名',
               trigger: 'blur'
             },
             {
-              type: 'email',
-              message: '请输入合法邮箱',
+              min: 2,
+              max: 16,
+              message: '长度在 2 到 10 个字符',
               trigger: 'blur'
             }
           ],
+          number:[{
+              required: true,
+              message: '请输入电话号码',
+              trigger: 'blur'
+            },
+            { validator: checkNum, trigger: 'blur' }],
           password: [{
               required: true,
               message: '请输入密码',
@@ -66,22 +84,53 @@
       }
     },
     methods: {
+      sendCode(){
+      
+        if(!(/^1[3456789]\d{9}$/.test(this.loginForm.number))) return this.$message.error('手机号码有误，请重填')
+        
+        this.$http.post('send_code',this.$qs.stringify({phone_number:this.loginForm.number}))
+            .then(res => {
+              if (res.data.code != 0) return this.$message.error(res.data.msg)
+              this.$message.success(res.data.msg)
+              let num = 60
+              this.idchecked = true
+             let inter = setInterval(()=>{
+               num--;
+               this.thisCodeTitle = num + 's 后发送'
+               if(num<=0){
+                clearInterval(inter)
+                this.idchecked = false
+                this.thisCodeTitle='发送验证码'
+              }
+              },1000)
+              
+
+
+            }).catch(err => {
+              this.$message({
+                dangerouslyUseHTMLString: true,
+                showClose: true,
+                message: err.response.data.data.join('<br><br>'),
+                type: 'error'
+              });
+            })
+      },
       // 点击登录
       loginSubmit() {
         this.$refs.resetLoginRef.validate(async valid => {
           // 判断验证是否通过
           if (!valid) return;
           //  发起请求
-          this.$http.post('oAuth/login', this.loginForm)
+          
+          this.$http.post('register', {
+            phone_number:this.loginForm.name,
+            password:this.loginForm.password,
+            real_name:this.loginForm.number,
+            code:this.loginForm.code
+          })
             .then(res => {
-              if (res.data.code !== 200) return this.$message.error(res.data.msg)
-              //1.将登陆之后的token，保存到客户端的sessionStorage中
-              window.sessionStorage.setItem("token", "Bearer " + res.data.data.token)
-              // 给token设置时效
-              window.sessionStorage.setItem("tokenDate", (Date.parse(new Date())+res.data.data.expires_in*1000-600000))
-              this.$message.success(res.data.msg);
-              //2.通过编程式导航跳转到主页
-              this.$router.push('/home');
+              if (res.data.code != 0) return this.$message.error(res.data.msg)
+              
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,

@@ -27,6 +27,7 @@
         loginForm: {
           phone_number: '13155169239',
           password: '123456'
+         
         },
         // 表单验证规则
         loginFormRules: {
@@ -35,11 +36,6 @@
               message: '请输入账号',
               trigger: 'blur'
             },
-            // {
-            //   type: 'email',
-            //   message: '请输入合法邮箱',
-            //   trigger: 'blur'
-            // }
           ],
           password: [{
               required: true,
@@ -59,11 +55,17 @@
     created(){
       window.sessionStorage.clear()
     },
+     mounted() {
+    this.getCookie();
+  },
     methods: {
       // 点击登录
       loginSubmit() {
         this.$refs.resetLoginRef.validate(async valid => {
           if (!valid) return;
+          if(this.checked==true)this.setCookie(this.loginForm.phone_number, this.loginForm.password, 7);
+          else this.clearCookie();
+        
           this.$http.post('login', this.$qs.stringify(this.loginForm))
             .then(res => {
                console.log(res);
@@ -81,6 +83,36 @@
             })
         })
       },
+    //设置cookie
+    setCookie(c_name, c_pwd, exdays) {
+      var exdate = new Date(); //获取时间
+      exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays); //保存的天数
+      window.document.cookie =
+        "userName" + "=" + c_name + ";path=/;expires=" + exdate.toGMTString();
+      window.document.cookie =
+        "userPwd" + "=" + c_pwd + ";path=/;expires=" + exdate.toGMTString();
+    },
+        //清除cookie
+    clearCookie: function() {
+      this.setCookie("", "", -1); //修改2值都为空，天数为负1天就好了
+    },
+
+        getCookie: function() {
+      if (document.cookie.length > 0) {
+        var arr = document.cookie.split("; "); //这里显示的格式需要切割一下自己可输出看下
+        for (var i = 0; i < arr.length; i++) {
+          var arr2 = arr[i].split("="); //再次切割
+          //判断查找相对应的值
+          if (arr2[0] == "userName") {
+            this.loginForm.phone_number = arr2[1]; //保存到保存数据的地方
+          } else if (arr2[0] == "userPwd") {
+            this.loginForm.password = arr2[1];
+          }
+        }
+      }
+    },
+
+
       // 跳转注册页面
       registered() {
         this.$router.push('/registered');

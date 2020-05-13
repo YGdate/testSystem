@@ -7,13 +7,12 @@
       ></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
-        <!-- <testPaper></testPaper> -->
-        <!-- <testSubmit></testSubmit> -->
+        <testPaper v-if="isshow" @paperInfo="paperInfo"></testPaper>
+        <testSubmit v-else-if="!isshow" :paperID='paperID'></testSubmit>
         <!-- <gradeInfo></gradeInfo> -->
-        <markPaper></markPaper>
+   
         
       </el-col>
-      
     </el-row>
   </div>
 </template>
@@ -21,40 +20,30 @@
 
 
 <script>
-// import testPaper from './element/testPaper'
+import testPaper from './element/testPaper'
 import sidebar from './element/sidebar'
-// import testSubmit from './element/testSubmit'
+import testSubmit from './element/testSubmit'
 // import gradeInfo from './element/gradeInfo'
-import markPaper from './element/markPaper'
+
   export default {
     components:{
-      // testPaper,
+      testPaper,
       sidebar,
       // gradeInfo,
-      markPaper
-      // testSubmit
+
+      testSubmit
     },
     data(){
       return{
-        search:'',
-         options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
-        value: ''
+        isshow:true,
+        paperID:0,
       }
+      },
+      methods:{
+        paperInfo(id){
+          this.isshow = false
+          this.paperID = id
+        }
       }
     
   }
