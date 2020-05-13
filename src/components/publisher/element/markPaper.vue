@@ -33,7 +33,7 @@
           </el-row>
         </el-card>
       </el-col>
-      <el-col :span="17">
+      <el-col :span="17" style="margin-bottom:40px">
         <el-card>
           <el-row class="paper-info" type="flex" justify="space-between">
             <el-col :span="6">试卷详情</el-col>
@@ -57,7 +57,14 @@
 
 
           <el-divider content-position="left">{{QuestionType(isQuestionType)}}</el-divider>
-          <singleSelect v-if="isQuestionType=='single_select'"></singleSelect>
+          <singleSelect :content="content" v-if="isQuestionType=='single_select'"></singleSelect>
+          <listening :content="content" v-if="isQuestionType=='listening'"></listening>
+          <fillBlank :content="content" v-if="isQuestionType=='fill_blank'"></fillBlank>
+          <multiSelect :content="content" v-if="isQuestionType=='multi_select'"></multiSelect>
+          <trueOrFalse :content="content" v-if="isQuestionType=='true_or_false'"></trueOrFalse>
+          <readUnderstand :content="content" v-if="isQuestionType=='read_understand'"></readUnderstand>
+          <chooseFillBlank :content="content" v-if="isQuestionType=='choose_fill_blank'"></chooseFillBlank>
+          <sevenSelectedFive :content="content" v-if="isQuestionType=='seven_selected_five'"></sevenSelectedFive>
           <composition ref="com" :content="content" :scoreNum="scoreNum" v-if="isQuestionType=='composition'">
           </composition>
           <fill ref="com" :content="content" v-if="isQuestionType=='fill'"></fill>
@@ -67,10 +74,10 @@
           </textMistake>
 
 
-          <el-row class="selectBtn">
+          <!-- <el-row class="selectBtn">
             <el-button @click="nextQuestion" size="mini">上一题</el-button>
             <el-button @click="lastQuestion" size="mini">下一题</el-button>
-          </el-row>
+          </el-row> -->
 
 
         </el-card>
@@ -85,13 +92,27 @@
   import translation from '../questionType/translation'
   import fill from '../questionType/fill'
   import textMistake from '../questionType/textMistake'
+  import listening from '../questionType/listening'
+  import fillBlank from '../questionType/fill_blank'
+  import multiSelect from '../questionType/multi_select'
+  import trueOrFalse from '../questionType/true_or_false'
+  import readUnderstand from '../questionType/read_understand'
+  import chooseFillBlank from '../questionType/choose_fill_blank'
+  import sevenSelectedFive from '../questionType/seven_selected_five'
   export default {
     components: {
       singleSelect,
       composition,
       fill,
       translation,
-      textMistake
+      textMistake,
+      listening,
+      fillBlank,
+      multiSelect,
+      trueOrFalse,
+      readUnderstand,
+      chooseFillBlank,
+      sevenSelectedFive
     },
     data() {
       return {
@@ -223,7 +244,7 @@
         this.isindexTitleAuto = e
         this.isQuestionType = category
         this.content = this.questionDataAuto[category][index]
-        console.log(this.$store.state.autoQuestionTile);
+        console.log(this.content);
       },
 
       chooseQuestion(index, category, e) {

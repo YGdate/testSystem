@@ -2,7 +2,7 @@
 
   <el-row class="question-content">
     <el-row class="questionTitle" :gutter="10">
-      <el-col :span="24">
+      <el-col :span="24" style="text-align: justify;text-justify:inter-ideograph;">
          {{title}}（{{scoer}}分）
       </el-col>
     </el-row>
@@ -10,7 +10,8 @@
     <!-- 选择内容 -->
     <el-row class="questionSelect">
       <el-radio-group v-model="radio">
-        <el-radio v-for="(item,i) in option" :key="i" :label="item.name">{{item.name}}---{{item.value}}</el-radio>
+        <el-radio label="true">正确</el-radio>
+        <el-radio label="false">错误</el-radio>
       
       </el-radio-group>
     </el-row>
@@ -47,27 +48,13 @@
     },
     methods:{
       dataComputed() {
-        console.log(this.scoreALL);
         let data = this.content
         let testData = JSON.parse(data.topic_and_stem)
         this.title = testData.title
-        
         console.log(this.option);
-        let newOption = []
-          for(let item in testData.options){
-          newOption.push(
-            {name:item,
-            value:testData.options[item]}
-          )
-        }
-        this.option = newOption
+        this.option = testData.options
         this.radio = data.right_ans
         this.answer = data.ans
-        if(this.answer==this.radio){
-          this.isright = true
-        }else{
-          this.isright = false
-        }
         this.answerAnalyze = data.test_analyze
         this.scoer = data.score
       }

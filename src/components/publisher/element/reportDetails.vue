@@ -133,25 +133,35 @@
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="考试信息">
-            <el-table :header-cell-style="tableHeaderStyle" style="width: 100%">
+
+            <el-table :data="tableData" :header-cell-style="tableHeaderStyle" style="width: 100%">
               <el-table-column type="index" label="序号">
               </el-table-column>
               <el-table-column prop="date" label="考生姓名" width="180">
               </el-table-column>
               <el-table-column prop="name" label="提交状态" width="180">
-              </el-table-column>
-              <el-table-column prop="address" label="系统评分">
-              </el-table-column>
-              <el-table-column prop="address" label="手动评分">
-              </el-table-column>
-              <el-table-column prop="address" label="操作">
-                <template>
+                <template scope="scope">
                   <div>
-                    查看个人报告
+                    {{scope.row.user_end_at!=null?'已提交':'未提交'}}
                   </div>
                 </template>
               </el-table-column>
+              <el-table-column prop="auto_score" label="系统评分">
+              </el-table-column>
+              <el-table-column prop="manual_score" label="手动评分">
+              </el-table-column>
+              <el-table-column prop="address" label="操作">
+                <template>
+                  <el-button icon="el-icon-edit" type="text" size="small" >查看个人报告</el-button>
+                </template>
+              </el-table-column>
             </el-table>
+             <!-- 分页 -->
+        <el-row style="margin-top:20px;text-align:center">
+          <el-pagination @current-change="handleCurrentChange" :page-size="10" :total="total" background
+        layout="prev, pager, next">
+        </el-pagination>
+        </el-row>
           </el-tab-pane>
         </el-tabs>
       </el-col>
@@ -169,11 +179,15 @@
       return {
         allData: {},
         pointNum:[],
-        categoryNum:[]
+        categoryNum:[],
+        current_page:1,
+        total:0,
+        tableData:[]
       }
     },
     created() {
       this.getdata()
+      this.getAllTopicAndStem()
     },
     mounted() {
       this.drawgrade()
@@ -244,6 +258,40 @@
             }
             this.pointNum = pointdata1,
             this.intelletiveScores(pointdata)
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
+            // 分页
+      handleCurrentChange(page) {
+        this.current_page = page
+        this.getAllTopicAndStem(page)
+      },
+       getAllTopicAndStem(pages = 1) {
+        this.$http.get('testPaper/submit?page=' + pages, {
+            params: {
+              id:this.paperId
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            console.log(this.$decryptData(res.data.data))
+            let {
+              current_page,
+              data,
+              total
+            } = this.$decryptData(res.data.data)
+            this.tableData = data
+            this.current_page = current_page
+            this.total = total
+
           }).catch(err => {
             console.log(err);
             this.$message({

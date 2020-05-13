@@ -1,25 +1,33 @@
 <template>
 
   <el-row class="question-content">
-    <el-row class="questionTitle" :gutter="10">
-      <el-col :span="24">
+    <el-row class="questionTitle"  :gutter="10">
+      <el-col :span="24" style="text-align: justify;text-justify:inter-ideograph;">
          {{title}}（{{scoer}}分）
       </el-col>
     </el-row>
 
     <!-- 选择内容 -->
-    <el-row class="questionSelect">
-      <el-radio-group v-model="radio">
-        <el-radio v-for="(item,i) in option" :key="i" :label="item.name">{{item.name}}---{{item.value}}</el-radio>
-      
-      </el-radio-group>
+    <el-row class="questionSelect" v-for="(item1,index1) in question" :key="index1">
+
+      <el-row>
+        <el-col style="margin-bottom:20px;"><span style="font-size:16px;font-weight:600">问题_{{item1.name}}_</span>
+        <span> : {{item1.title}}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-radio-group v-model="radio[index1]">
+          <el-radio v-for="(item2,i) in item1.value" :key="i" :label="item2.name">{{item2.name}}---{{item2.value}}</el-radio>
+        </el-radio-group>
+      </el-row>
     </el-row>
+
     <!-- 正确答案 -->
     <el-row class="answer">
       正确答案：<span>{{answer}}</span>
     </el-row>
 
-    <el-row >
+    <el-row>
       答案解析：{{answerAnalyze}}
     </el-row>
   </el-row>
@@ -28,47 +36,60 @@
 <script>
   export default {
     props: ['content'],
+
     data() {
       return {
-        radio:'',
-        isright:true,
+        radio: '',
         scoreALL: '',
         title: '',
         answer: '',
         scoer: 0,
         questionId: 0,
-        answerAnalyze:'',
-        option:[]
+        answerAnalyze: '',
+        question: []
       }
-    }, 
+    },
     created() {
-      console.log(this.content);
       this.dataComputed()
     },
-    methods:{
+    methods: {
       dataComputed() {
-        console.log(this.scoreALL);
         let data = this.content
+        console.log(this.content);
         let testData = JSON.parse(data.topic_and_stem)
-        this.title = testData.title
-        
-        console.log(this.option);
+        console.log(testData);
+  
+
         let newOption = []
-          for(let item in testData.options){
-          newOption.push(
-            {name:item,
-            value:testData.options[item]}
-          )
+        this.title = testData.title
+        console.log(testData.options);
+        for (let item in testData.options) {
+          let newData = []
+          for(let item1 in testData.options[item]){
+            newData.push({
+              value:testData.options[item][item1],
+              name:item1
+            }) 
+          }
+          newOption.push({
+            name: item,
+            value: newData
+          })
         }
-        this.option = newOption
-        this.radio = data.right_ans
+        console.log(newOption);
+        //选择题目
+        this.question = newOption
+        //正确答案
+        let rightData = []
+        for(let i in data.right_ans){
+          rightData.push(data.right_ans[i])
+        }
+        this.radio = rightData
+        //我的答案
         this.answer = data.ans
-        if(this.answer==this.radio){
-          this.isright = true
-        }else{
-          this.isright = false
-        }
+        //解析
         this.answerAnalyze = data.test_analyze
+        //分数
         this.scoer = data.score
       }
     }
@@ -79,6 +100,7 @@
   .main {
     width: 100%;
     height: 100%;
+
     // 试题样式
     .question-content {
       >* {

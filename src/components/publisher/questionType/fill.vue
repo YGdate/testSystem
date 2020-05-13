@@ -6,8 +6,6 @@
         {{title}}（{{scoer}}分）
       </el-col>
       <el-col :span="4">
-        <!-- <el-button size="mini" :class="isright ?'':'falsebg'" icon="el-icon-check" circle></el-button>
-        <el-button size="mini" :class="!isright ?'':'truebg'" icon="el-icon-close" circle></el-button> -->
         <div style="display:flex;justify-content:flex-end;align-items:center">
           <el-input @blur="changeValue" size="mini" maxlength="3" type="number" style="width:80%;margin:0 5px"
             v-model="scoreALL" placeholder="0.0">
@@ -15,8 +13,7 @@
         </div>
       </el-col>
     </el-row>
-
-
+    
     <!-- 正确答案 -->
     <el-row class="answer">
       答题内容：
@@ -38,7 +35,7 @@
         scoer: 0,
         questionId: 0
       }
-    },
+    }, 
     created() {
       console.log(this.content);
       this.dataComputed()
@@ -77,9 +74,6 @@
         }
         this.answer = stranw
         this.scoer = data.score
-
-
-
       }
     }
 

@@ -1,7 +1,7 @@
 <template>
 
   <el-row class="question-content">
-    <el-row class="questionTitle" :gutter="10">
+    <el-row class="questionTitle" style="text-align: justify;text-justify:inter-ideograph;" :gutter="10">
       <el-col :span="20">
         {{title}}（{{score}}分）
       </el-col>
