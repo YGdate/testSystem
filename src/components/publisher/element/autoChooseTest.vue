@@ -16,96 +16,55 @@
         </el-col>
         <el-col :span="16">
           <el-card>
-            <el-row class="selected-test-title" type="flex" justify="space-between">
+            <el-row style="margin-bottom:20px" class="selected-test-title" type="flex" justify="space-between">
               <el-col :span="4">
                 已选试题
               </el-col>
               <el-col :span="10">
-                <el-button size="small" type="primary" icon="el-icon-circle-plus-outline">添加一项</el-button>
+                <el-button size="small" @click="addItem" type="primary" icon="el-icon-circle-plus-outline">添加一项
+                </el-button>
               </el-col>
             </el-row>
-            <el-row style="margin-top:20px">
+            <el-row v-for="(item,index) in selectNum" :key="index">
               <el-row :gutter="10">
                 <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  <el-select size="mini" v-model="item.grade" placeholder="年纪选择">
+                    <el-option v-for="item in gradeOptions" :key="item.value" :label="item.label" :value="item.value">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  <el-select size="mini" v-model="item.semester" placeholder="章节选择">
+                    <el-option v-for="item in semesterOptions" :key="item.value" :label="item.label"
+                      :value="item.value">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  <el-select size="mini" @change="chooseCategory" v-model="item.category" placeholder="题型选择">
+                    <el-option v-for="item in questionClassOptions" :key="item.value" :label="item.label"
+                      :value="item.value">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                  <el-input @blur="blurChange($event)" type="text" size="mini" placeholder="试题数量" v-model="item.number">
+                  </el-input>
+                </el-col>
+                <el-col :span="4">
+                  <el-select size="mini" v-model="item.difficult" placeholder="难度选择">
+                    <el-option v-for="item in diffValueOptions" :key="item.value" :label="item.label"
+                      :value="item.value">
                     </el-option>
                   </el-select>
                 </el-col>
                 <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-              </el-row>
-              <el-divider></el-divider>
-               <el-row :gutter="10">
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
-                </el-col>
-                <el-col :span="4">
-                  <el-select size="mini" v-model="value" placeholder="请选择">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                  </el-select>
+                  <el-input type="text" size="mini" placeholder="单体分数" v-model="item.single_score">
+                  </el-input>
                 </el-col>
               </el-row>
               <el-divider></el-divider>
             </el-row>
-             
-
           </el-card>
         </el-col>
 
@@ -113,7 +72,7 @@
     </el-row>
     <!-- 下一步 -->
     <el-row class="content-footer">
-      <el-button size="small">下一步</el-button>
+      <el-button @click="nextStep" size="small">下一步</el-button>
     </el-row>
 
   </div>
@@ -125,7 +84,126 @@
   export default {
     data() {
       return {
-
+        selectNum: [{
+          "category": '',
+          "grade": '',
+          "semester": '',
+          "number": '',
+          "difficult": '',
+          "single_score": ''
+        }],
+        gradeOptions: [{
+            value: 0,
+            label: '一年级'
+          }, {
+            value: 1,
+            label: '二年级'
+          }, {
+            value: 2,
+            label: '三年级'
+          }, {
+            value: 3,
+            label: '四年级'
+          }, {
+            value: 4,
+            label: '五年级'
+          },
+          {
+            value: 5,
+            label: '六年级'
+          }, {
+            value: 6,
+            label: '七年级'
+          }, {
+            value: 7,
+            label: '八年级'
+          }, {
+            value: 8,
+            label: '九年级'
+          }, {
+            value: 9,
+            label: '大学一年级'
+          }, {
+            value: 10,
+            label: '大学二年级'
+          }, {
+            value: 11,
+            label: '大学三年级'
+          }, {
+            value: 12,
+            label: '大学四年级'
+          }
+        ],
+        semesterOptions: [{
+          value: 0,
+          label: '上学期'
+        }, {
+          value: 1,
+          label: '下学期'
+        }],
+        questionClassOptions: [{
+            value: 'non_directional_select ',
+            label: '不定向选择'
+          }, {
+            value: 'fill',
+            label: '填空题'
+          }, {
+            value: 'true_or_false',
+            label: '判断题'
+          }, {
+            value: 'seven_selected_five',
+            label: '七选五'
+          }, {
+            value: 'single_select',
+            label: '单选'
+          },
+          {
+            value: 'listening',
+            label: '听力'
+          }, {
+            value: 'multi_select',
+            label: '多选题'
+          }, {
+            value: 'text_mistake',
+            label: '短文改错'
+          }, {
+            value: 'fill_blank',
+            label: '完型填空'
+          }, {
+            value: 'translation',
+            label: '翻译'
+          }, {
+            value: 'composition',
+            label: '作文'
+          }, {
+            value: 'choose_fill_blank',
+            label: '选词填空'
+          }, {
+            value: 'read_understand',
+            label: '阅读理解'
+          }
+        ],
+        diffValueOptions: [{
+            value: 0,
+            label: '简单'
+          }, {
+            value: 1,
+            label: '一般'
+          },
+          {
+            value: 2,
+            label: '适中'
+          }, {
+            value: 3,
+            label: '困难'
+          },
+          {
+            value: 4,
+            label: '艰难'
+          }
+        ],
+        reportClass: [],
+        reportNum: []
       }
 
     },
@@ -133,8 +211,53 @@
       this.drawgrade()
     },
     methods: {
+      // 下一步
+      nextStep() {
+        this.selectNum.forEach(item => {
+          let flag = true
+          for (let i in item) {
+            if (item[i] === '') {
+              flag = false
+            }
+          }
+          if (flag == false) return this.$message.warning('请完善数据填写')
+          this.$emit('nextStep')
+           this.$store.commit('alertAutoTableData',this.selectNum)
+          return flag
+        })
+      },
+      blurChange() {
+        this.reportNum = []
+        this.selectNum.forEach(item => {
+          this.reportNum.push(item.number)
+        })
+        this.drawgrade(this.reportClass, this.reportNum)
+      },
+      chooseCategory() {
+        this.reportClass = []
+        this.selectNum.forEach(item => {
+          this.reportClass.push(item.category)
+        })
+        this.drawgrade(this.reportClass, this.reportNum)
+
+      },
+      addItem() {
+        let item = {
+          "category": '',
+          "grade": '',
+          "semester": '',
+          "number": '',
+          "difficult": '',
+          "single_score": ''
+        }
+        this.selectNum.push(item)
+      },
       // 报表
-      drawgrade() {
+      drawgrade(reportClass = [], reportNum = []) {
+        if (reportClass.length == 0) {
+          reportClass = []
+          reportNum = []
+        }
         // 绘制图表
         let opt = {
           color: ['#24c9e3'],
@@ -148,12 +271,12 @@
             top: '8%',
             left: '0%',
             right: '0%',
-            bottom: '0%',
+            bottom: '1%',
             containLabel: true
           },
           xAxis: [{
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: reportClass,
             axisTick: {
               alignWithLabel: true
             }
@@ -162,10 +285,10 @@
             type: 'value'
           }],
           series: [{
-            name: '直接访问',
+            name: '题目数量',
             type: 'bar',
             barWidth: '40%',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            data: reportNum
           }]
         }
 

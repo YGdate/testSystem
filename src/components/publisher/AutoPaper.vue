@@ -20,8 +20,8 @@
           </el-col>
         </el-row>
         <!-- 已选试题 -->
-        <autoChooseTest v-if="ischeck"></autoChooseTest>
-         <InfoSet v-if="!ischeck"></InfoSet>
+        <autoChooseTest @nextStep="step($event)" ref="autoChooseTest" v-show="ischeck"></autoChooseTest>
+         <InfoSet v-show="!ischeck"></InfoSet>
       </el-col>
     </el-row>
   </div>
@@ -45,9 +45,19 @@ import InfoSet from './element/InfoSet'
      
     },
     methods: {
+      step(){
+        this.ischeck = false
+      },
       ischecked(num) {
-        if (num == 0) this.ischeck = true
-        else this.ischeck = false
+       
+          if (num == 0) this.ischeck = true
+          else {
+            if(this.$refs.autoChooseTest.nextStep())
+              this.ischeck = false
+            
+          }
+        
+        
       },
      
     }

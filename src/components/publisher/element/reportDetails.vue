@@ -1,63 +1,57 @@
 <template>
   <div class="main">
-    <el-row class="title">
-      <div>
-        全年级第一次月考
-      </div>
-    </el-row>
     <el-row class="content">
-      <el-col class="content-left" :span="4">
+      <!-- <el-col class="content-left" :span="4">
         <el-button icon="el-icon-back">试卷选择</el-button>
-      </el-col>
-      <el-col class="content-center" :span="16">
+      </el-col> -->
+      <el-col class="content-center">
         <el-card>
           <el-row class="content-card-title">
             考生信息
           </el-row>
           <el-row type="flex" class="content-card-info" justify="space-between">
-            <el-col :span="2">
+            <el-col :span="1">
               <div>参考人数</div>
-              <div>30</div>
+              <div>{{allData.total}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="3">
+              <div>考试开始时间</div>
+              <div>{{allData.test_start}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="3">
+              <div>考试结束时间</div>
+              <div>{{allData.test_end}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>试卷作者</div>
+              <div>{{allData.user}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>考试总分</div>
+              <div>{{allData.all_score}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>试卷总分</div>
+              <div>{{allData.total_score}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>考试时间</div>
+              <div>{{allData.test_use_time}}s</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>提交人数</div>
+              <div>{{allData.submit}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>弃考人数</div>
+              <div>{{allData.unSubmit}}</div>
             </el-col>
-            <el-col :span="2">
-              <div>参考人数</div>
-              <div>30</div>
+            <el-col :span="1">
+              <div>试卷数目</div>
+              <div>{{allData.test_num}}</div>
             </el-col>
           </el-row>
         </el-card>
-
         <el-tabs type="border-card">
           <el-tab-pane label="统计信息">
             <el-row class="content-info" style="margin-bottom:20px;" :gutter="20">
@@ -66,11 +60,9 @@
                   <el-row>
                     分数统计
                   </el-row>
-
                   <div class="echartImg">
                     <div id="myChart" :style="{width: '100%', height: '100%'}"></div>
                   </div>
-
                 </el-card>
               </el-col>
               <el-col class="history-grade" :span="12">
@@ -84,7 +76,6 @@
                 </el-card>
               </el-col>
             </el-row>
-
             <el-row :gutter="20">
               <el-col :span="8">
                 <el-card>
@@ -102,34 +93,18 @@
                     题型得分率
                   </el-row>
                   <el-row type="flex" justify="space-between">
-                    <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
+                    <el-col v-for="(item,i) in categoryNum" :key="i" class="testScores-item" :span="4">
+                      <div>
+                        <el-progress :width="80" type="circle" :percentage="item.value-0"></el-progress>
+                      </div>
+                      <div>{{item.name}}</div>
                     </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-
                   </el-row>
                 </el-card>
               </el-col>
             </el-row>
-
-          <!-- 知识点 -->
-             <el-row :gutter="20" style="margin-top:20px">
+            <!-- 知识点 -->
+            <el-row :gutter="20" style="margin-top:20px">
               <el-col :span="8">
                 <el-card>
                   <el-row>
@@ -146,27 +121,12 @@
                     知识点得分率
                   </el-row>
                   <el-row type="flex" justify="space-between">
-                    <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
+                    <el-col v-for="(item,i) in pointNum" :key="i" class="testScores-item" :span="4">
+                      <div>
+                        <el-progress :width="80" type="circle" :percentage="item.value-0"></el-progress>
+                      </div>
+                      <div>{{item.name}}</div>
                     </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-                     <el-col class="testScores-item" :span="4">
-                      <div> <el-progress :width="80" type="circle" :percentage="25"></el-progress></div>
-                      <div>单选题</div>
-                    </el-col>
-
                   </el-row>
                 </el-card>
               </el-col>
@@ -204,13 +164,16 @@
 
 <script>
   export default {
+    props: ['paperId'],
     data() {
       return {
-
+        allData: {},
+        pointNum:[],
+        categoryNum:[]
       }
     },
     created() {
-
+      this.getdata()
     },
     mounted() {
       this.drawgrade()
@@ -219,10 +182,86 @@
       this.intelletiveScores()
     },
     methods: {
+      getdata() {
+        this.$http.get('testPaper/getTestAnalysis', {
+            params: {
+              test_id: this.paperId
+            }
+          })
+          .then(res => {
+            console.log(res);
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            console.log(this.$decryptData(res.data.data))
+            this.allData = this.$decryptData(res.data.data)
+            let categoryName = []
+            let categoryNum = []
+            categoryName.push('总分')
+            categoryNum.push(this.allData.all_score)
+            categoryName.push('平均分')
+            categoryNum.push(this.allData.avgScore)
+            categoryName.push('最高分')
+            categoryNum.push(this.allData.maxScore)
+            categoryName.push('最低分')
+            categoryNum.push(this.allData.minScore)
+            this.drawgrade(categoryName, categoryNum)
+
+            let questionType = []
+            let questionType1 = []
+            for (let item in this.allData.category) {
+              let data = {
+                value: this.allData.category[item],
+                name: item
+              }
+              let data1 = {
+                value: (this.allData.category[item]*100).toFixed(),
+                name: item
+              }
+              questionType.push(data)
+              questionType1.push(data1)
+            }
+            this.testScores(questionType)
+             this.categoryNum = questionType1
+
+            let historyName = []
+            for (let item in this.allData.history) {
+              historyName.push('第' + ((Number(item) + 1)) + '次考试')
+            }
+            this.historyGrade(historyName, this.allData.history)
+
+            let pointdata = []
+            let pointdata1 = []
+             for (let item in this.allData.point) {
+               let data = {
+                value: this.allData.point[item],
+                name: item
+              }
+              let data1 = {
+                value: (this.allData.point[item]*100).toFixed(),
+                name: item
+              }
+              pointdata.push(data)
+              pointdata1.push(data1)
+            }
+            this.pointNum = pointdata1,
+            this.intelletiveScores(pointdata)
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
       tableHeaderStyle() {
         return 'text-align: center;background:rgba(133,176,248);color:#fff;'
       },
-      drawgrade() {
+      drawgrade(categoryName = [], categoryNum = []) {
+        if (categoryName.length == 0) {
+          categoryName = []
+          categoryNum = []
+        }
         // 绘制图表
         let opt = {
           color: ['#3398DB'],
@@ -241,7 +280,7 @@
           },
           xAxis: [{
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: categoryName,
             axisTick: {
               alignWithLabel: true
             }
@@ -253,7 +292,7 @@
             name: '直接访问',
             type: 'bar',
             barWidth: '40%',
-            data: [10, 52, 200, 334, 390, 330, 220]
+            data: categoryNum
           }]
         }
 
@@ -262,7 +301,11 @@
           myChart.setOption(opt)
         }, 0)
       },
-      historyGrade() {
+      historyGrade(historyName = [], historyNum = []) {
+        if (historyName.length == 0) {
+          historyName = []
+          historyNum = []
+        }
         // 绘制图表
         let opt = {
           color: ['#3398DB'],
@@ -278,13 +321,13 @@
           },
           xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            data: historyName
           },
           yAxis: {
             type: 'value'
           },
           series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: historyNum,
             type: 'line'
           }]
         };
@@ -295,12 +338,13 @@
           myChart.setOption(opt)
         }, 0)
       },
-      testScores() {
+
+      testScores(data) {
         // 绘制图表
         let opt = {
           tooltip: {
             trigger: 'item',
-            formatter: '{b} <br/> {c} ({d}%)'
+            formatter: '{b} <br/>值：{c} {d}%'
           },
 
           series: [{
@@ -315,34 +359,14 @@
             emphasis: {
               label: {
                 show: true,
-                fontSize: '18',
+                fontSize: '14',
                 fontWeight: 'bold'
               }
             },
             labelLine: {
               show: false
             },
-            data: [{
-                value: 335,
-                name: '直接访问'
-              },
-              {
-                value: 310,
-                name: '邮件营销'
-              },
-              {
-                value: 234,
-                name: '联盟广告'
-              },
-              {
-                value: 135,
-                name: '视频广告'
-              },
-              {
-                value: 1548,
-                name: '搜索引擎'
-              }
-            ]
+            data: data
           }]
         };
         setTimeout(() => {
@@ -350,12 +374,12 @@
           myChart.setOption(opt)
         }, 0)
       },
-       intelletiveScores() {
+      intelletiveScores(data) {
         // 绘制图表
         let opt = {
           tooltip: {
             trigger: 'item',
-            formatter: '{b} <br/> {c} ({d}%)'
+            formatter: '{b} <br/> 值：{c} ({d}%)'
           },
 
           series: [{
@@ -370,34 +394,14 @@
             emphasis: {
               label: {
                 show: true,
-                fontSize: '18',
+                fontSize: '14',
                 fontWeight: 'bold'
               }
             },
             labelLine: {
               show: false
             },
-            data: [{
-                value: 335,
-                name: '直接访问'
-              },
-              {
-                value: 310,
-                name: '邮件营销'
-              },
-              {
-                value: 234,
-                name: '联盟广告'
-              },
-              {
-                value: 135,
-                name: '视频广告'
-              },
-              {
-                value: 1548,
-                name: '搜索引擎'
-              }
-            ]
+            data: data
           }]
         };
         setTimeout(() => {
@@ -426,27 +430,6 @@
     align-content: flex-start;
   }
 
-  .title {
-    position: relative;
-    width: 100%;
-    height: 90px;
-    text-align: center;
-    display: flex;
-    letter-spacing: 2px;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: #333;
-    font-weight: 600;
-
-    div {
-      position: relative;
-      height: 20px;
-      display: inline-block;
-      border-bottom: 10px solid #f4c521;
-      line-height: 28px;
-    }
-  }
 
   .content {
     width: 100%;
@@ -462,6 +445,7 @@
 
     .content-center {
       margin-bottom: 20px;
+
       >.el-card {
         margin-bottom: 20px;
 
@@ -474,7 +458,7 @@
       }
 
       .content-card-info {
-        font-size: 16px;
+        font-size: 14px;
         line-height: 25px;
         text-align: center;
 
@@ -493,8 +477,9 @@
         margin-top: 40px;
         height: 140px;
         line-height: 30px;
-        >div{
-          
+
+        >div {
+
           text-align: center;
         }
       }

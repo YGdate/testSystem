@@ -1,44 +1,58 @@
 html,
 body,
 #app {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  min-width: 1366px;
-  font-family: Microsoft YaHei;
-  box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    min-width: 1366px;
+    font-family: Microsoft YaHei;
+    box-sizing: border-box;
 }
 
+
 /* 卡片视图 */
+
 .el-breadcrumb {
-  margin-bottom: 15px;
-  font-size: 12px;
+    margin-bottom: 15px;
+    font-size: 12px;
 }
 
 .el-card {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
 }
 
 .el-form-item__label {
-  font-size: 16px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.9);
+    font-size: 16px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.9);
 }
 
+
 /* 去点number输入框的右边上下箭头 */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none !important;
-  margin: 0;
+    -webkit-appearance: none !important;
+    margin: 0;
 }
 
 input[type="number"] {
-  -moz-appearance: textfield;
-   
+    -moz-appearance: textfield;
 }
 
+
+/* table文字居中 */
+
+.el-table td,
+.el-table th {
+    text-align: center;
+}
+
+
 /* 覆盖掉表单验证前的 “ * ” 符号 */
+
+
 /* .el-form-item.is-required:not(.is-no-asterisk)>.el-form-item__label:before {
 
   content: '';

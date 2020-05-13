@@ -20,15 +20,13 @@
           </el-col>
         </el-row>
         <!-- 手动选题 -->
-        <ChooseTest v-if="ischeck"></ChooseTest>
-        <InfoSet v-if="!ischeck"></InfoSet>
+        <ChooseTest @nextStep="nextStep($event)" v-show="ischeck"></ChooseTest>
+        <InfoSet  v-show="!ischeck"></InfoSet>
        
       </el-col>
     </el-row>
   </div>
 </template>
-
-
 
 <script>
 import ChooseTest from './element/chooseTest'
@@ -128,6 +126,9 @@ import InfoSet from './element/InfoSet'
         if (num == 0) this.ischeck = true
         else this.ischeck = false
       },
+      nextStep(){
+        this.ischeck = false
+      }
      
     }
 

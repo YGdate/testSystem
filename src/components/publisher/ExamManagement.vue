@@ -9,9 +9,9 @@
       </el-col>
       <el-col class="content-center" :span="16">
         <!-- 报考管理 展示 -->
-        <examManageshow></examManageshow>
+        <examManageshow v-show="isshow" @handleInfo="handleInfo"></examManageshow>
         <!-- 报考管理 详情展示 -->
-        <!-- <examManageInfo></examManageInfo> -->
+        <examManageInfo ref="examManageInfo" v-show="!isshow"></examManageInfo>
       </el-col>
     </el-row>
   </div>
@@ -21,16 +21,17 @@
 <script>
 import sidebar from './element/sidebar'
 import examManageshow from './element/examManageshow'
-// import examManageInfo from './element/examManageInfo'
+import examManageInfo from './element/examManageInfo'
 
   export default {
     components:{
       sidebar,
       examManageshow,
-      // examManageInfo
+      examManageInfo
     },
     data() {
       return {
+        isshow:true
         
       }
     },
@@ -39,6 +40,10 @@ import examManageshow from './element/examManageshow'
 
     },
     methods: {
+      handleInfo(id){
+        this.isshow = false
+        this.$refs.examManageInfo.getdata(id)
+      }
     }
 
   }

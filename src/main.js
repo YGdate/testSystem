@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import store from './store/index'
 import './plugins/element.js'
 
 // 引入全局样式、js
 import './assets/css/global.css'
 import JS from './assets/js/global'
-
 
 import axios from 'axios'
 // import Message from 'element-ui'
@@ -40,8 +39,6 @@ Vue.prototype.$http = axios
     // 挂载qs到全局
 Vue.prototype.$qs = qs
 
-
-
 // 给请求头设置拦截器,将token放入Authorization中，传入服务器
 axios.interceptors.request.use(
     config => {
@@ -57,12 +54,6 @@ axios.interceptors.request.use(
         // 设置请求出错的信息。
         return Promise.reject(err.response.data)
     })
-
-
-
-
-
-
 
 Vue.config.productionTip = false
 new Vue({
