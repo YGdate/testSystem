@@ -7,31 +7,38 @@
     提交状态 <i class="el-icon-arrow-down el-icon--right"></i>
   </span>
   <el-dropdown-menu slot="dropdown">
-    <el-dropdown-item>黄金糕</el-dropdown-item>
-    <el-dropdown-item>狮子头</el-dropdown-item>
-    <el-dropdown-item>螺蛳粉</el-dropdown-item>
-    <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-    <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+    <el-dropdown-item>完成</el-dropdown-item>
+    <el-dropdown-item>未完成</el-dropdown-item>
+    <el-dropdown-item>进行中</el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
-    <div class="cheng">
-        <div class="chengtop">语文</div>
+    <div class="cheng" v-for="(item,i) in alltest" :key="i">
+        <div class="chengtop">语文 id:{{item.candidate_id}}</div>
         <p class="endor">考试进行中
 
-            <span class="examspan">20人已经提交</span>
-            <span  class="examspan">20人未提交</span>
+            <span class="examspan">{{item.hasUp}}人已经提交</span>
+            <span  class="examspan">{{item.notUp}}人未提交</span>
         </p>
-        <p>这是什么鬼</p>
-        <p>这又是什么鬼</p>
+        <p>开始时间:{{item.get_test_paper_info.test_start}} | 科目:英语 | 题数:{{item.get_test_paper_info.test_num}}</p>
+        <p>结束时间:{{item.get_test_paper_info.test_end}} | 总分:{{item.get_test_paper_info.all_score}} | 得分:{{item.get_test_paper_info.pass_score}} |考试时长:{{item.get_test_paper_info.test_use_time}}</p>
         <div class="bbox">
            <span class="chakan">已提交</span>
-           <span class="download">去考试</span>
+           <span class="download" @click="goexam(item.candidate_id)">去考试</span>
         </div>
     </div>
 
+    <!-- 分页按钮 -->
+    <el-pagination
+  background
+  layout="prev, pager, next"
+  :total="pagecount"
+  class="fenye"
+  @current-change="huanye"
+  >
+</el-pagination>
 
     <!-- 定位 -->
-    <div class="back" @click="$router.go(-1)">
+    <div class="back" @click="gotp">
       返回
     </div>
  </div>
@@ -41,8 +48,66 @@
 
 <script>
   export default {
+     data() {
+      return {
+        // 我的考试总页数
+        pagecount:1,
+        // 所有考试的数据
+        alltest:[]
+      }
+    },
 methods:{
-   
+  // 获取所有信息的函数
+   async allexam(page){
+     let msg = await this.$http.get('exams?page='+page);
+     if(msg.data.code==0){
+let ms = this.$decryptData(msg.data.data);
+     this.pagecount = ms.last_page*10;
+    // this.alltest = ms.data;
+ let x = ms.data;
+     let len = ms.data.length;
+     for(let i=0;i<len;i++){
+       let tid = ms.data[i].test_id
+       let ids = await this.$http.get('people/'+tid);
+       let gaintest = this.$decryptData(ids.data.data);
+       x[i].notUp = gaintest.notUp;
+       x[i].hasUp = gaintest.hasUp;
+     }
+     this.alltest = x;
+     console.log(this.alltest)
+     //console.log(ms)
+     }else{
+     this.$message.error("获取数据失败！")
+     }
+    //  获取考试完成情况
+    let wcqk = await this.$http.get('reports',{
+      pagrams:{
+        page:page
+      }
+    });
+    let wcdata = this.$decryptData(wcqk.data.data);
+    console.log(wcdata)
+   },
+  //  返回testpage
+  gotp:function(){
+     this.$router.push("testpage")
+  },
+  //  获取当前页数的函数
+  huanye:function(e){
+    this.allexam(e)
+  },
+  // 去考试
+  goexam:function(e){
+   var storage = window.sessionStorage;  
+     storage.setItem('examid', e);
+   this.$router.push("testtwo")
+  }
+},
+created(){
+  this.allexam(1);
+  setInterval(function(){
+
+  },500)
 }
   }
 </script>
@@ -50,6 +115,13 @@ methods:{
 *{
     box-sizing: border-box;
 }
+// 分页的css
+.fenye{
+  margin-top: 20px;
+}
+
+
+
 .chengjicon{
     width: 1000px;
     min-height: 500px;
@@ -75,7 +147,8 @@ methods:{
     width: 100%;
     height: 200px;
     border-radius: 7px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+   margin-bottom: 15px;
 }
 .cheng p{
     padding-left: 20px;
