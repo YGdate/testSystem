@@ -2,6 +2,28 @@
 
 
 <div class="ingcon">
+    <!-- 确认放弃考试 -->
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible1"
+  width="30%">
+  <span>你确定要放弃考试吗？</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible1 = false">取 消</el-button>
+    <el-button type="primary" @click="fangqi">确 定</el-button>
+  </span>
+</el-dialog>
+<!-- 提交试卷 -->
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible2"
+  width="30%">
+  <span>你确定要提交考试吗？</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible2 = false">取 消</el-button>
+    <el-button type="primary" @click="tijiao">确 定</el-button>
+  </span>
+</el-dialog>
     <div class="con-left">
         <p class="headp">
             题目类型
@@ -28,9 +50,9 @@
         <!-- 开始考试 -->
           <el-button type="primary" class="star" :class="{ hidden: ishidden }" @click="starexam">开始考试</el-button>
           <!-- 放弃考试 -->
-            <el-button type="primary" class="end">放弃考试</el-button>
-            <!-- 提交试卷 -->
- <el-button type="primary" class="star" :class="{ hidden: !ishidden }" >提交考试</el-button>
+            <el-button type="primary" class="end" @click="dialogVisible1=true">放弃考试</el-button>
+        <!-- 提交考试 -->
+ <el-button type="primary" class="star" @click="dialogVisible2=true" :class="{ hidden: !ishidden }">提交考试</el-button>
 
             <!-- 单选题demo -->
             <div class="dxs" :class="tab!=tabs[0]?'tt':''">
@@ -109,8 +131,8 @@
                      <p class="headp">选词填空</p>
                     <div clas="xctk zong" v-for="(item,i) in allmsg.choose_fill_blank" :key="i">
                         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
-                          <!-- <div v-for="(item, key, x) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="x">{{key}}:{{item}}</div>           
-           <el-input v-model="xuan[y]" maxlength=1 style="width:40px;" v-for="(item, key, y) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="y"></el-input> -->
+                          <div v-for="(item, key, x) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="x">{{key}}:{{item}}</div>           
+           <el-input v-model="xuan[y]" maxlength=1 style="width:40px;" v-for="(item, key, y) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="y"></el-input>
                     </div>
                 </div>
 
@@ -138,10 +160,10 @@ Your browser does not support the audio element.
                     <div class="tingli zong" v-for="(item,i) in allmsg.listening[0].topic_and_stem.title" :key="i">
                         <p>1.{{item.title}}</p>
                          <template>
-            <el-radio v-model="ting" label="A" class="xuanze">备选项</el-radio>
-            <el-radio v-model="ting" label="B"  class="xuanze">备选项</el-radio>
-            <el-radio v-model="ting" label="C"  class="xuanze">备选项</el-radio>
-            <el-radio v-model="ting" label="D"  class="xuanze">备选项</el-radio>
+            <el-radio v-model="ting" label="A" class="xuanze">{{item.options.A}}</el-radio>
+            <el-radio v-model="ting" label="B"  class="xuanze">{{item.options.B}}</el-radio>
+            <el-radio v-model="ting" label="C"  class="xuanze">{{item.options.C}}</el-radio>
+            <!-- <el-radio v-model="ting" label="D"  class="xuanze">{{item.options.D}}</el-radio> -->
                 </template>
                     </div>
                 </div>
@@ -163,12 +185,12 @@ Your browser does not support the audio element.
     <p class="headp">阅读理解</p>
     <div class="rdlj" v-for="(item,i) in allmsg.read_understand" :key="i">
         <p>{{i+1}}.{{item.topic_and_stem[0]}}</p>
-        <div v-for="(ite,key,y) in item.topic_and_stem[1]" :key="y">
+        <div v-for="(ite,key,y) in item.topic_and_stem[1]" :key="y" @input="updateView($event)">
             <p>{{ite.title}}</p>
-            <el-radio v-model="yuedu[i]" label="A" class="xuanze">{{ite.options.A}}</el-radio>
-            <el-radio v-model="yuedu[i]" label="B"  class="xuanze">{{ite.options.B}}</el-radio>
-            <el-radio v-model="yuedu[i]" label="C"  class="xuanze">{{ite.options.C}}</el-radio>
-            <el-radio v-model="yuedu[i]" label="D"  class="xuanze">{{ite.options.D}}</el-radio>
+            <el-radio v-model="yuedu[i][y]" label="A" class="xuanze">{{ite.options.A}}</el-radio>
+            <el-radio v-model="yuedu[i][y]" label="B"  class="xuanze">{{ite.options.B}}</el-radio>
+            <el-radio v-model="yuedu[i][y]" label="C"  class="xuanze">{{ite.options.C}}</el-radio>
+            <el-radio v-model="yuedu[i][y]" label="D"  class="xuanze">{{ite.options.D}}</el-radio>
         </div>
     </div>
 </div>
@@ -177,8 +199,8 @@ Your browser does not support the audio element.
 <!-- 短文改错的demo -->
 <div class="dwgcs" :class="tab!=tabs[10]?'tt':''">
     <p class="headp">短文改错</p>
-    <div class="dwgc zong">
-        <p>1.这是短文改错的第一题</p>
+    <div class="dwgc zong" v-for="(item,i) in allmsg.text_mistake" :key="i">
+        <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
     </div>
 </div>
 
@@ -187,8 +209,8 @@ Your browser does not support the audio element.
 
 <div class="fys" :class="tab!=tabs[11]?'tt':''">
      <p class="headp">翻译</p>
-     <div class="fy zong">
-        <p>这里是翻译的标题</p>
+     <div class="fy zong" v-for="(item,i) in allmsg.translation" :key="i">
+        <p>{{item.topic_and_stem.title}}</p>
         <el-input
   type="textarea"
   :rows="2"
@@ -203,8 +225,8 @@ Your browser does not support the audio element.
 
 <div class="zws" :class="tab!=tabs[12]?'tt':''">
     <p class="headp">作文</p>
-    <div class="zw zong">
-            <p>这里是作文的题目</p>
+    <div class="zw zong" v-for="(item,i) in allmsg.composition" :key="i">
+           <p>{{item.topic_and_stem.title}}</p>
                  <el-input
   type="textarea"
   :rows="2"
@@ -227,6 +249,18 @@ Your browser does not support the audio element.
          <p class="headp">
             答题卡
         </p>
+
+            <div class="tkt" v-for="(item,i) in allmsg.fill" :key="i">
+            <p>填空第{{i+1}}题</p>
+            <el-input placeholder="请输入内容"  @input="updateView($event)" v-model="tian[i]" ></el-input> -->
+            
+            </div>
+
+            <div class="tkt" v-for="(item,i) in allmsg.text_mistake" :key="i">
+            <p>短文改错第{{i+1}}题</p>
+            <el-input placeholder="请输入内容"  @input="updateView($event)" v-model="dwgc[i]" ></el-input> -->
+            
+            </div>
     </div>
        <div style="height:60px:float:left">
        </div>
@@ -242,13 +276,15 @@ Your browser does not support the audio element.
   export default {
           // 开局调用
     created(){
-        
         this.exammsg();
+       
     },
        data() {
       return {
         //  所有的数据
         allmsg:{},
+        dialogVisible1:false,
+         dialogVisible2:false,
         sureclose:false,
         zdy:{
             g:'',
@@ -276,6 +312,8 @@ Your browser does not support the audio element.
         fei:[],
         // 阅读理解
         yuedu:[],
+        // 短文该错
+        dwgc:[],
         // 翻译
         fy:'',
         // 作文
@@ -347,13 +385,18 @@ methods:{
                          }
                    } 
                 // 完型填空的处理
-                let wx = 0;
+              
                  for(let i=0;i<this.allmsg.fill_blank.length;i++){
                     this.allmsg.fill_blank[i].topic_and_stem = JSON.parse(this.allmsg.fill_blank[i].topic_and_stem);
-                         for(let k in this.allmsg.fill_blank[i].topic_and_stem.options){
-                            this.wan[wx]='';
-                             wx++;
-                         }
+                    this.wan.length=20;
+                    for(let i=0;i<20;i++){
+                        this.wan[i]=''
+                    }
+                        //  for(k in this.allmsg.fill_blank[i].topic_and_stem.options){
+                        //     this.wan[wx]='';
+                        //      wx++;
+                        //      console.log(k)
+                        //  }
                    } 
                 
                 // 听力的处理
@@ -369,27 +412,41 @@ methods:{
                    }
                 
                 // 阅读理解的处理
-                let rd = 0;
+                
                 for(let i=0;i<this.allmsg.read_understand.length;i++){
-                      
+                      this.yuedu[i]=[];
                     this.allmsg.read_understand[i].topic_and_stem = JSON.parse(this.allmsg.read_understand[i].topic_and_stem)
                    for(let k in this.allmsg.read_understand[i].topic_and_stem[1]){
-                            this.yuedu[rd]='';
-                             rd++;
+                            
+                            this.yuedu[i][k-1]=''
+                            
                          }
                       
                   }
-
+                  
+                   
                     // 填空题的处理
                       for(let i=0;i<this.allmsg.fill.length;i++){
-                       this.tian[i]=[];
+                       this.tian[i]='';
                     this.allmsg.fill[i].topic_and_stem = JSON.parse(this.allmsg.fill[i].topic_and_stem)
                    }
 
 
+                    // 短文改错的处理
+                     for(let i=0;i<this.allmsg.text_mistake.length;i++){
+                     this.dwgc[i]='';
+                    this.allmsg.text_mistake[i].topic_and_stem = JSON.parse(this.allmsg.text_mistake[i].topic_and_stem)
+                   }
 
+                    // 翻译的处理
+                    for(let i=0;i<this.allmsg.translation.length;i++){
+                    this.allmsg.translation[i].topic_and_stem = JSON.parse(this.allmsg.translation[i].topic_and_stem)
+                   }
 
-
+                //  作文的处理
+for(let i=0;i<this.allmsg.composition.length;i++){
+                    this.allmsg.composition[i].topic_and_stem = JSON.parse(this.allmsg.composition[i].topic_and_stem)
+                   }
 
                     this.mp3 = this.allmsg.listening[0].topic_and_stem.accessory
                    console.log(this.allmsg)
@@ -399,6 +456,7 @@ methods:{
         },
         // 开始考试
         starexam:function(){
+             
             let that = this;
             this.ishidden=true;
          setInterval(function(){
@@ -406,11 +464,25 @@ methods:{
              that.fen = parseInt(that.alltime/60);
              that.miao = that.alltime%60;
              if(that.alltime == 0){
-                    console.log("over")
+                   this.$message.success("考试结束！")
+                    this.$router.push("testpage");
              }
          },1000)
-          
+      
         },
+          //   提交考试
+        tijiao:function(){
+        this.$message.success("考试结束！")
+         this.$router.push("testpage");
+        },
+        // 放弃考试
+        fangqi:function(){
+             this.$router.push("testpage")
+        },
+        // 绑定
+        updateView(e) {
+    this.$forceUpdate()
+},
     qian:function(es){
       
         this.tab = parseInt(es);
@@ -458,6 +530,7 @@ methods:{
     float: left;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
       min-height: 400px;
+      padding: 5px;
       
 }
 .headp{
