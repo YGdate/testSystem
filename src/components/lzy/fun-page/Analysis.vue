@@ -1,7 +1,7 @@
 <template>
   <div class="analysis">
     <div class="title">{{title}}</div>
-    <input :style="{width: width,background: bgr}" class="content" :placeholder="placeholder" type="text" />
+    <input :value="content" v-on:input="$emit('input',$event.target.value)" :style="{width: width,background: bgr}" class="content" :placeholder="placeholder" type="text" />
     <slot></slot>
   </div>
 </template>
@@ -40,7 +40,8 @@ export default {
             type: String,
             default: '请输入相关内容'
         },
-        bgr: String
+        bgr: String,
+        content: String
     }
 };
 </script>

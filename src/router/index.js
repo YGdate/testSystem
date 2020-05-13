@@ -56,8 +56,7 @@ import PaperManagement from '../components/publisher/PaperManagement.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/login',
     component: LoginReg
   },
@@ -187,7 +186,8 @@ const routes = [
     //题库录入
     path: '/',
     component: Home,
-    children: [{
+    children: [
+      {
         path: 'list',
         component: List
       },
@@ -258,7 +258,7 @@ const routes = [
       }
     ]
   }
- 
+
 ]
 
 

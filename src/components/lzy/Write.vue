@@ -26,7 +26,7 @@
       background: linear-gradient(to top,#f4c521 20%,transparent 0)
   }
 }
-</style>
+</style> 
 
 <script>
 export default {};

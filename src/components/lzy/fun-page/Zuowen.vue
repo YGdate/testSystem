@@ -5,14 +5,17 @@
       <div class="fun-content">
         <div class="content-title">选项录入</div>
         <div class="option-input">
-          <analysis width="250px" title="题干"></analysis>
-          <analysis placeholder=" " width="50px" title="答案"></analysis>
-          <analysis width="250px" title="选项A"></analysis>
-          <analysis width="250px" title="选项B"></analysis>
-          <analysis width="250px" title="选项C"></analysis>
-          <analysis width="250px" title="选项D"></analysis>
+          <analysis v-model="title" width="250px" title="题干"></analysis>
+          <analysis v-model="answer" placeholder=" " width="50px" title="答案"></analysis>
+          <analysis
+            v-model="item.content"
+            v-for="(item,index) in optionItem"
+            :key="index"
+            :title="item.title"
+            width="250px"
+          ></analysis>
         </div>
-        <div class="option-add">增加题目</div>
+        <div @click="handleAdd" class="option-add">增加题目</div>
       </div>
       <div class="listion">
         <div class="title">听力题</div>
@@ -20,25 +23,26 @@
           <span style="margin-right: 10px">听力录音上传</span>
           <el-upload
             class="upload-demo"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://47.113.121.50/api/question"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
             :before-remove="beforeRemove"
+            :headers="submitFile"
             multiple
             :limit="3"
             :on-exceed="handleExceed"
             :file-list="fileList"
-          >
+          ><div slot="tip" class="el-upload__tip">只能上传mp3文件</div>
             <i style="cursor: pointer" class="el-icon-upload2"></i>
           </el-upload>
         </div>
       </div>
     </div>
     <div style="margin-top: 15px;width:600px">
-      <tmsz></tmsz>
+      <tmsz v-on:get-option="getOption($event)"></tmsz>
     </div>
     <div class="end">
-        <el-button type="primary">确定录入</el-button>
+      <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
     </div>
   </div>
 </template>
@@ -49,7 +53,7 @@
   width: 750px;
   padding: 10px;
   position: relative;
-    box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
+  box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
 }
 .row {
   display: flex;
@@ -79,19 +83,18 @@
   margin-left: 15px;
   height: 250px;
   width: 200px;
-    box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
+  box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
   padding: 10px;
   .title {
     margin-bottom: 10px;
   }
 }
-
 </style>
 
 <script>
 import Tmsz from "./Tmsz";
 import Analysis from "./Analysis";
-import Top from '../Title'
+import Top from "../Title";
 export default {
   components: {
     Tmsz,
@@ -100,23 +103,32 @@ export default {
   },
   data() {
     return {
-      fileList: [
-        {
-          name: "food.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        },
-        {
-          name: "food2.jpeg",
-          url:
-            "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100"
-        }
-      ]
+      fileList: [],
+      optionItem: [],
+      option: ["A", "B", "C", "D"],
+      index: 0,
+      grade: "",
+      semester: "",
+      category: "",
+      degree_of_difficulty: "",
+      analyze: "",
+      title: "",
+      answer: "",
+      submitFile: {
+        Authorization: sessionStorage.getItem('token')
+      }
     };
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
+    },
+    handleAdd() {
+      this.optionItem.push({
+        title: "选项" + this.option[this.index],
+        content: ""
+      });
+      this.index++;
     },
     handlePreview(file) {
       console.log(file);
@@ -130,6 +142,31 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    getOption(event) {
+      this.grade = event[0];
+      this.semester = event[1];
+      this.category = event[2];
+      this.degree_of_difficulty = event[3];
+      this.analyze = event[4];
+    },
+    handleSubmit() {
+      this.$http
+        .post("question", {
+          grade: this.grade,
+          semester: this.semester,
+          category: this.category,
+          analyze: this.analyze,
+          degree_of_difficulty: this.degree_of_difficulty,
+          title: this.title,
+          answer: this.answer
+        })
+        .then(res => {
+          this.$message({
+            message: res.data.msg,
+            type: "success"
+          });
+        });
     }
   }
 };

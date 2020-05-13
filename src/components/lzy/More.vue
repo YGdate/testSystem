@@ -20,14 +20,22 @@
       </div>
     </el-card>
     <div class="model">
-      <button class="card">下载模板</button>
-      <button class="card">上传题目</button>
+      <button class="card"><a class="card_export" href="http://47.113.121.50/api/import/question" download="">下载模板</a></button>
+      <el-upload
+        class="upload-demo"
+        action="http://47.113.121.50/api/import/question"
+        :headers="httpHeader"
+        :on-change="handleChange"
+        :file-list="fileList"
+      >
+        <el-button size="small" type="primary">上传题目</el-button>
+      </el-upload>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.el-card__body{
+.el-card__body {
   display: flex;
   .left {
     margin-left: 100px;
@@ -50,18 +58,40 @@
   .card {
     border: 0;
     cursor: pointer;
-    width: 130px;
+    width: 85px;
     border-radius: 5px;
-    height: 50px;
+    height: 35px;
     color: #fff;
     background-color: cornflowerblue;
     display: flex;
     justify-content: center;
     align-items: center;
+    .card_export{
+      text-decoration: none;
+      color: white;
+    }
   }
 }
 </style>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      fileList: [],
+      httpHeader: {
+        Authorization: ''
+      }
+    };
+  },
+  created(){
+    this.httpHeader.Authorization = sessionStorage.getItem('token')
+  },  
+  methods: {
+    handleChange(file, fileList) {
+      this.fileList = fileList.slice(-3);
+      
+    }
+  }
+};
 </script>

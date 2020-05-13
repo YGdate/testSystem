@@ -1,7 +1,7 @@
 <template>
   <div :topData="topData" class="top-list">
     <el-dropdown size="mini" split-button>
-      {{isGrade?checkedGrade: '选择年级'}}
+      选择年级
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getGrade(index)"
@@ -11,7 +11,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      {{isSemester?checkedSemester: '选择学期'}}
+      选择学期
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getSemester(index)"
@@ -21,7 +21,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      {{isCategory?checkedCategory: '选择题型'}}
+      选择题型
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getCategory(index)"
@@ -31,7 +31,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      {{isDifficulty?checkedDifficulty: '选择难度'}}
+      选择难度
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getDifficulty(index)"
@@ -98,62 +98,36 @@ export default {
         "作文",
         "听力"
       ],
-      semester: ["上册", "下册"],
-      isGrade: false,
-      isSemester: false,
-      isCategory: false,
-      isDifficulty: false,
-      checkedGrade: "",
-      checkedSemester: "",
-      checkedCategory: "",
-      checkedDifficulty: ""
+      semester: ["上册", "下册"]
     };
-  },
-  computed: {
-    // grade() {
-    //   let arr = [];
-    //   for (let i = 0; i < this.topData.length; i++) {
-    //     let grade = this.topData[i].grade
-    //     arr.push(grade)
-    //   }
-    //   return arr
-    // }
   },
   methods: {
     getGrade(index) {
-      this.$http.get("question?grade=" + index).then(res => {
-        this.isGrade = !this.isGrade;
-        this.checkedGrade = this.grade[index];
+      this.$http.get("searchLog?grade=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getSemester(index) {
-      this.isSemester = !this.isSemester;
-      this.checkedSemester = this.semester[index];
-      this.$http.get("question?semester=" + index).then(res => {
+      this.$http.get("searchLog?semester=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getCategory(index) {
-      this.isCategory = !this.isCategory;
-      this.checkedCategory = this.type[index];
-      this.$http.get("question?category=" + index).then(res => {
+      this.$http.get("searchLog?knowledge=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getDifficulty(index) {
-      this.isDifficulty = !this.isDifficulty;
-      this.checkedDifficulty = this.difficulty[index];
-      this.$http.get("question?degree_of_difficulty=" + index).then(res => {
+      this.$http.get("searchLog?degree_of_difficulty=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
-    handleDelete(){
-      this.$emit('mul-delete')
+    handleDelete() {
+      this.$emit("mul-delete");
     }
   }
 };
