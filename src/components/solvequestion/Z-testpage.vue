@@ -22,7 +22,7 @@
     <div class="selectsub" @click="$router.push('zhomepage')">
       <-学科选择
     </div>
-    <div class="tiku">进入题库-></div>
+    <div @click="inQuestionBank" class="tiku">进入题库-></div>
     <div class="pingce">评测管理-></div>
 
     <div class="tip">
@@ -38,6 +38,10 @@
 <script>
   export default {
 methods:{
+  //进入题库
+  inQuestionBank(){
+    this.$router.push("/publisher")
+  },
   pkonline:function(){
      this.$router.push("pkonline")
   },

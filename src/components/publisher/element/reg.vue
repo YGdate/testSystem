@@ -123,9 +123,9 @@
           //  发起请求
           
           this.$http.post('register', {
-            phone_number:this.loginForm.name,
+            phone_number:this.loginForm.number,
             password:this.loginForm.password,
-            real_name:this.loginForm.number,
+            real_name:this.loginForm.name,
             code:this.loginForm.code
           })
             .then(res => {

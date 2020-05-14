@@ -84,10 +84,12 @@
 
     .choose {
       margin: auto;
-      width: 60%;
+      width: 30%;
+      font-size: 20px;
       height: 40px;
       margin-top: 40px;
-      margin-bottom: 60px;
+      border-bottom: 2px solid #f4c521;
+      margin-bottom: 40px;
       display: flex;
       justify-content: space-around;
       

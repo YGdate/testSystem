@@ -6,7 +6,7 @@
       </el-col>
       <el-col :span="12">
         <div class="header-nav">
-          <div :class="val==1?'yellowStyle':''"  @click="skipPage(1)">首页</div>
+          <div :class="val==1?'yellowStyle':''" @click="skipPage(1)">首页</div>
           <div :class="val==2?'yellowStyle':''" @click="skipPage(2)">试卷评阅</div>
           <div :class="val==3?'yellowStyle':''" @click="skipPage(3)">手动组卷</div>
           <div :class="val==4?'yellowStyle':''" @click="skipPage(4)">自动组卷</div>
@@ -16,8 +16,18 @@
         </div>
       </el-col>
       <el-col :span="6">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-        <div class="name" style="margin-left:10px;">lisa</div>
+
+        <el-dropdown trigger="click" @command="handleCommand">
+          <span class="el-dropdown-link">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            <div class="name" style="margin-left:10px;">lisa</div>
+          </span>
+          <el-dropdown-menu slot="dropdown" :split-button="true">
+            <el-dropdown-item command="修改密码">修改密码</el-dropdown-item>
+            <el-dropdown-item  command="退出">退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
       </el-col>
     </el-row>
 
@@ -27,9 +37,9 @@
   import mixin from '../../../mixins/skip'
   export default {
     mixins: [mixin],
-    data(){
-      return{
-        val:1,
+    data() {
+      return {
+        val: 1,
       }
     },
     // 监听路由改变
@@ -38,7 +48,7 @@
         this.val = window.sessionStorage.getItem('index')
       }
     },
-    created(){
+    created() {
       this.val = window.sessionStorage.getItem('index')
     },
     components: {},
@@ -46,7 +56,14 @@
       skipPage(index) {
         this.skip(index)
       },
-     
+      // 点击下拉菜单事件
+      handleCommand(command) {
+        // 清空token 跳转修页面
+        window.sessionStorage.clear()
+        if (command === '修改密码') {
+          this.$router.push('/alertPwd')
+        } else this.$router.push('/login')
+      },
     },
   }
 </script>
@@ -59,8 +76,17 @@
       width: 100%;
     }
 
+    .el-dropdown-link {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: #fff;
+      cursor: pointer;
+    }
+
     .el-col:nth-of-type(1) {
-      font-size: 24px;
+      font-family: '华文行楷';
+      font-size: 26px;
       letter-spacing: 3px;
       font-weight: 600;
       display: flex;
@@ -87,7 +113,8 @@
           align-items: center;
         }
       }
-      .yellowStyle{
+
+      .yellowStyle {
         border-bottom: 3px solid #f4c521;
       }
 

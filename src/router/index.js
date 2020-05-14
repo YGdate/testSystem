@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../components/Home.vue'
 import Publisher from '../components/Publisher.vue'
 import LoginReg from '../components/LoginReg.vue'
+import AlertPwd from '../components/AlertPwd.vue'
 
 
 // 以下部分是张傲引入的
@@ -58,6 +59,11 @@ Vue.use(VueRouter)
 const routes = [{
         path: '/login',
         component: LoginReg
+    },
+    //修改密码
+    {
+        path: '/alertPwd',
+        component: AlertPwd
     },
     //发布者
     {
@@ -272,16 +278,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.path === '/login') return next()
-        // if (to.path === '/registered') return next()
+    if (to.path === '/alertPwd') return next()
         // if (to.path === '/alertPassword') return next()
         //获取token
     const tokenStr = window.sessionStorage.getItem('token')
 
     if (!tokenStr) {
-        this.$massage.warning('token已过期，请重新登录！')
-        setTimeout(() => {
-            return next('/login')
-        }, 2000)
+        return next('/login')
     }
     next()
 })

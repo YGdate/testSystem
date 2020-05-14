@@ -1,9 +1,6 @@
 <template>
     <el-row>
       <el-form ref="resetLoginRef" :rules="loginFormRules" :model="loginForm" label-width="80px">
-              <el-form-item label="姓名:" prop="name" style="width:340px;">
-                <el-input placeholder="name" v-model="loginForm.name"></el-input>
-              </el-form-item>
               <el-form-item label="手机号:" prop="number" style="width:340px;">
                 <el-input placeholder="手机号" v-model="loginForm.number" type="text"></el-input>
               </el-form-item>
@@ -22,7 +19,10 @@
                 <el-input placeholder="Password" type="password" v-model="loginForm.password" show-password></el-input>
               </el-form-item>
               <el-form-item class="login-submit-button " style="width:350px;">
-                <el-button type="primary" @click="loginSubmit">注册</el-button>
+                <el-button type="primary" @click="findPassword">找回密码</el-button>
+                <el-row>
+                  <el-link type="primary">返回登录</el-link>
+                </el-row>
               </el-form-item>
             </el-form>
     </el-row>
@@ -43,25 +43,12 @@
         idchecked:false,
         // 登录表单数据
         loginForm: {
-          name: '',
           password: '',
           number:'',
           code:''
         },
         // 表单验证规则
         loginFormRules: {
-           name: [{
-              required: true,
-              message: '请输入姓名',
-              trigger: 'blur'
-            },
-            {
-              min: 2,
-              max: 16,
-              message: '长度在 2 到 10 个字符',
-              trigger: 'blur'
-            }
-          ],
           number:[{
               required: true,
               message: '请输入电话号码',
@@ -87,7 +74,7 @@
       sendCode(){
       
         if(!(/^1[3456789]\d{9}$/.test(this.loginForm.number))) return this.$message.error('手机号码有误，请重填')
-        
+
         this.$http.post('send_code',this.$qs.stringify({phone_number:this.loginForm.number}))
             .then(res => {
               if (res.data.code != 0) return this.$message.error(res.data.msg)
@@ -104,8 +91,6 @@
               }
               },1000)
               
-
-
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,
@@ -116,16 +101,15 @@
             })
       },
       // 点击登录
-      loginSubmit() {
+      findPassword() {
         this.$refs.resetLoginRef.validate(async valid => {
           // 判断验证是否通过
           if (!valid) return;
           //  发起请求
           
-          this.$http.post('register', {
-            phone_number:this.loginForm.name,
-            password:this.loginForm.password,
-            real_name:this.loginForm.number,
+          this.$http.post('forget', {
+            phone_number:this.loginForm.number,
+            new_password:this.loginForm.password,
             code:this.loginForm.code
           })
             .then(res => {

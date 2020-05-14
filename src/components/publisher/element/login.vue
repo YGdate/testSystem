@@ -71,7 +71,8 @@
                console.log(res);
               if (res.status != 200) return this.$message.error(res.data.msg)
 
-              window.sessionStorage.setItem("token", "" + res.data.data)
+              window.sessionStorage.setItem("token", "" + res.data.data.token)
+              window.sessionStorage.setItem("index",1)
               this.$message.success(res.data.msg);
               this.$router.push('/solve');
             }).catch(err => {

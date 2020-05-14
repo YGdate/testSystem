@@ -5,8 +5,16 @@
         在线考试系统
       </div>
       <div class="right">
-        <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-        <div class="name" style="margin-left:10px;">lisa</div>
+        <el-dropdown trigger="click" @command="handleCommand">
+          <span class="el-dropdown-link">
+            <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
+            <div class="name" style="margin-left:10px;">lisa</div>
+          </span>
+          <el-dropdown-menu slot="dropdown" :split-button="true">
+            <el-dropdown-item  command="修改密码">修改密码</el-dropdown-item>
+            <el-dropdown-item  command="退出">退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
     </div>
   </div>
@@ -16,7 +24,15 @@
 
 <script>
   export default {
-
+    methods: {
+      handleCommand(command) {
+        // 清空token 跳转修页面
+        window.sessionStorage.clear()
+        if (command == '修改密码') {
+          this.$router.push('/alertPwd')
+        } else this.$router.push('/login')
+      },
+    }
   }
 </script>
 <style lang="less" scoped>
@@ -26,6 +42,14 @@
     width: 100%;
     background: #24c9e3;
     box-shadow: 0 0 15px rgb(97, 97, 97);
+  }
+
+  .el-dropdown-link {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
   }
 
   .content {
@@ -38,7 +62,8 @@
 
     .left {
       margin-left: 20px;
-      font-size: 24px;
+      font-family: '华文行楷';
+      font-size: 26px;
       letter-spacing: 3px;
       color: #fff;
       font-weight: 600;

@@ -3,7 +3,7 @@
 
     <el-row class="content">
       <el-col class="content-left" :span="4">
-        <el-button icon="el-icon-back">学课选择</el-button>
+        <el-button @click="subjectChoose" icon="el-icon-back">学课选择</el-button>
       </el-col>   
       <el-col class="content-center" :span="16">
         <el-row :gutter="80">
@@ -66,7 +66,7 @@
         </el-row>
       </el-col>
       <el-col class="content-right" :span="4">
-        <el-button>
+        <el-button @click="enterQuestionBank">
           进入题库 <i class="el-icon-arrow-right el-icon-right"></i></el-button>
       </el-col>
     </el-row>
@@ -82,7 +82,12 @@
      
     },
     methods:{
-      
+      subjectChoose(){
+        this.$router.push('/solve/zhomepage')
+      },
+      enterQuestionBank(){
+        this.$router.push('/list')
+      }
     }
   }
 </script>
