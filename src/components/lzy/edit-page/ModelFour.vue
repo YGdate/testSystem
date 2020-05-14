@@ -1,55 +1,73 @@
 <template>
-  <div class="fun-container">
-    <top>作文</top>
-    <div class="row">
-      <div class="fun-content">
-        <div class="content-title">选项录入</div>
-        <div class="option-input">
-          <analysis v-model="title" width="250px" title="题干"></analysis>
-          <analysis v-model="answer" placeholder=" " width="50px" title="答案"></analysis>
-          <analysis
-            v-model="item.content"
-            v-for="(item,index) in optionItem"
-            :key="index"
-            :title="item.title"
-            width="250px"
-          ></analysis>
-        </div>
-        <div @click="handleAdd" class="option-add">增加题目</div>
-      </div>
-      <div class="listion">
-        <div class="title">听力题</div>
-        <div class="content">
-          <span style="margin-right: 10px">听力录音上传</span>
-          <el-upload
-            class="upload-demo"
-            action="http://47.113.121.50/api/question"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            :headers="submitFile"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
-            :file-list="fileList"
-          >
-            <div slot="tip" class="el-upload__tip">只能上传mp3文件</div>
-            <i style="cursor: pointer" class="el-icon-upload2"></i>
-          </el-upload>
-        </div>
-      </div>
+  <div class="editContainer">
+    <div @click="handleClose" class="close">
+      <i class="el-icon-error"></i>
     </div>
-    <div style="margin-top: 15px;width:600px">
-      <tmsz v-on:get-option="getOption($event)"></tmsz>
-    </div>
-    <div class="end">
-      <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
+    <div class="fun-container">
+      <top>作文</top>
+      <div class="row">
+        <div class="fun-content">
+          <div class="content-title">选项录入</div>
+          <div class="option-input">
+            <analysis v-model="title" width="250px" title="题干"></analysis>
+            <analysis v-model="answer" placeholder=" " width="50px" title="答案"></analysis>
+            <analysis
+              v-model="item.content"
+              v-for="(item,index) in optionItem"
+              :key="index"
+              :title="item.title"
+              width="250px"
+            ></analysis>
+          </div>
+          <div @click="handleAdd" class="option-add">增加题目</div>
+        </div>
+        <div class="listion">
+          <div class="title">听力题</div>
+          <div class="content">
+            <span style="margin-right: 10px">听力录音上传</span>
+            <el-upload
+              class="upload-demo"
+              action="http://47.113.121.50/api/question"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              :headers="submitFile"
+              multiple
+              :limit="3"
+              :on-exceed="handleExceed"
+              :file-list="fileList"
+            >
+              <div slot="tip" class="el-upload__tip">只能上传mp3文件</div>
+              <i style="cursor: pointer" class="el-icon-upload2"></i>
+            </el-upload>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 15px;width:600px">
+        <tmsz v-on:get-option="getOption($event)"></tmsz>
+      </div>
+      <div class="end">
+        <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
+      </div>
     </div>
   </div>
 </template>
-
-<style lang="less" scoped>
-@import url("./common.less");
+<style lang="less">
+.editContainer {
+  padding: 10px;
+  z-index: 100;
+  background-color: #fff;
+  position: absolute;
+  top: 500px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  .close {
+    float: right;
+    cursor: pointer;
+  }
+}
+@import url("../fun-page/common");
 .fun-content {
   width: 750px;
   padding: 10px;
@@ -93,14 +111,18 @@
 </style>
 
 <script>
-import Tmsz from "./Tmsz";
-import Analysis from "./Analysis";
+import Analysis from "../fun-page/Analysis";
+import Tmsz from "../fun-page/Tmsz";
 import Top from "../Title";
 export default {
   components: {
-    Tmsz,
     Analysis,
+    Tmsz,
     Top
+  },
+  props: {
+    top_title: String,
+    editData: Object
   },
   data() {
     return {
@@ -153,7 +175,7 @@ export default {
     },
     handleSubmit() {
       this.$http
-        .post("question", {
+        .patch("question/" + this.editData.id, {
           grade: this.grade,
           semester: this.semester,
           category: this.category,
@@ -168,10 +190,10 @@ export default {
             type: "success"
           });
         });
+    },
+    handleClose() {
+      this.$emit("model-four-close");
     }
-  },
-  handleClose() {
-    this.$emit("model-four-close");
   }
 };
 </script>
