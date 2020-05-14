@@ -61,18 +61,19 @@
             
             </div>
 
-            <!-- 多选题demo -->
-            <div class="dxs" :class="tab!=tabs[1]?'tt':''">
-                <p class="headp" >多选题</p>
-                <div class="duoxuan zong"  v-for="(item,i) in allmsg.non_directional_select" :key="i">
-                     <p>{{i+1}}.这是一道多选题，这里选择请</p>
-   <template>
-  <el-checkbox v-model="duo" label="A" class="xuanze">备选项</el-checkbox>
-  <el-checkbox v-model="duo" label="B" class="xuanze">备选项</el-checkbox>
-  <el-checkbox v-model="duo" label="C" class="xuanze">备选项</el-checkbox>
-  <el-checkbox v-model="duo" label="D" class="xuanze">备选项</el-checkbox>
-</template>
-                </div>
+            <!-- 非定向选择题demo -->
+            <div class="fdxs" :class="tab!=tabs[8]?'tt':''">
+                    <p class="headp">非定向选择</p>
+                    <div class="fdx zong" v-for="(item,i) in allmsg.non_directional_select" :key="i">
+                        <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
+                         <template>
+            <el-radio v-model="fei[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
+            <el-radio v-model="fei[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-radio>
+            <el-radio v-model="fei[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-radio>
+            <el-radio v-model="fei[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-radio>
+                </template>
+                    </div>
+        
 
 
             </div>
@@ -272,12 +273,11 @@ methods:{
                        this.allmsg.single_select[i].right_ans = JSON.parse(this.allmsg.single_select[i].right_ans)
                     this.allmsg.single_select[i].topic_and_stem = JSON.parse(this.allmsg.single_select[i].topic_and_stem)
                    }
-                // 多选题的处理
-                // for(let i=0;i<this.allmsg.non_directional_select.length;i++){
-                //        this.dan.d[i]=''
-                //        this.allmsg.single_select[i].right_ans = JSON.parse(this.allmsg.single_select[i].right_ans)
-                //     this.allmsg.single_select[i].topic_and_stem = JSON.parse(this.allmsg.single_select[i].topic_and_stem)
-                //    }
+                 // 非定向选择的处理
+                for(let i=0;i<this.allmsg.non_directional_select.length;i++){
+                       this.fei[i]=''
+                    this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
+                   }
 
                 // 七选五的处理               
                  for(let i=0;i<this.allmsg.seven_selected_five.length;i++){

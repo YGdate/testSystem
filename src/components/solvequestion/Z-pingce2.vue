@@ -92,7 +92,7 @@
                                        <template>
                 <el-checkbox-group 
                  v-model="qi[i]"
-                :max="6">
+                :max="5">
                     <el-checkbox  label="A" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
                      <el-checkbox  label="B" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
                      <el-checkbox  label="C" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
@@ -160,9 +160,9 @@ Your browser does not support the audio element.
                     <div class="tingli zong" v-for="(item,i) in allmsg.listening[0].topic_and_stem.title" :key="i">
                         <p>1.{{item.title}}</p>
                          <template>
-            <el-radio v-model="ting" label="A" class="xuanze">{{item.options.A}}</el-radio>
-            <el-radio v-model="ting" label="B"  class="xuanze">{{item.options.B}}</el-radio>
-            <el-radio v-model="ting" label="C"  class="xuanze">{{item.options.C}}</el-radio>
+            <el-radio v-model="ting[i]" label="A" class="xuanze">{{item.options.A}}</el-radio>
+            <el-radio v-model="ting[i]" label="B"  class="xuanze">{{item.options.B}}</el-radio>
+            <el-radio v-model="ting[i]" label="C"  class="xuanze">{{item.options.C}}</el-radio>
             <!-- <el-radio v-model="ting" label="D"  class="xuanze">{{item.options.D}}</el-radio> -->
                 </template>
                     </div>
