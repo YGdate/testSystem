@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../components/Home.vue'
-import Publisher from '../components/Publisher.vue'
-import LoginReg from '../components/LoginReg.vue'
-import AlertPwd from '../components/AlertPwd.vue'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -12,12 +8,18 @@ import {
     Message
 } from 'element-ui'
 
-//引入nprogress
-import NProgress from 'nprogress' // 进度条
-import 'nprogress/nprogress.css' //这个样式必须引入
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 
-// 以下部分是张傲引入的
+//主要组件
+import Home from '../components/Home.vue'
+import Publisher from '../components/Publisher.vue'
+import LoginReg from '../components/LoginReg.vue'
+import AlertPwd from '../components/AlertPwd.vue'
+
+
+// 考试组件
 import Solve from '../components/solve.vue'
 import Shouye from '../components/solvequestion/Z-shouye.vue'
 import Testpage from '../components/solvequestion/Z-testpage.vue'
@@ -36,7 +38,7 @@ import Examover from '../components/solvequestion/Z-examover.vue'
 import Examdetails from '../components/solvequestion/Z-examxiangqing.vue'
 
 
-// // lzy
+// 题库组件
 import List from '../components/lzy/List'
 import Write from '../components/lzy/Write'
 import Single from '../components/lzy/Single'
@@ -67,6 +69,7 @@ import PaperManagement from '../components/publisher/PaperManagement.vue'
 
 Vue.use(VueRouter)
 
+//普通用户路由
 const constantRouterMap = [{
         path: '/login',
         component: LoginReg
@@ -199,6 +202,7 @@ const constantRouterMap = [{
 
 ]
 
+//普通管理员路由
 const asyncRouterMap = [
     //题库录入
     {
@@ -278,6 +282,7 @@ const asyncRouterMap = [
     }
 ]
 
+//普通管理员路由名
 const pathTrue = ['list', 'dxuan', 'fanyi', 'panduan', 'bdx', 'duoxuan', 'log', 'dwgc', 'zuowen', 'tiankong', 'qxw', 'ydlj', 'wxtk', 'xuanci']
 
 const originalPush = VueRouter.prototype.push
@@ -290,7 +295,6 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes: constantRouterMap.concat(asyncRouterMap)
 })
-
 
 
 //权限控制
@@ -324,6 +328,5 @@ router.beforeEach((to, from, next) => {
 
 
 })
-
 
 export default router
