@@ -122,15 +122,15 @@
           if (!valid) return;
           //  发起请求
           
-          this.$http.post('register', {
+          this.$http.post('register', this.$qs.stringify({
             phone_number:this.loginForm.number,
             password:this.loginForm.password,
-            real_name:this.loginForm.name,
-            code:this.loginForm.code
-          })
+            name:this.loginForm.name,
+            verification_code:this.loginForm.code
+          }))
             .then(res => {
               if (res.data.code != 0) return this.$message.error(res.data.msg)
-              
+              return this.$message.success(res.data.msg)
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,

@@ -5,6 +5,17 @@ import Publisher from '../components/Publisher.vue'
 import LoginReg from '../components/LoginReg.vue'
 import AlertPwd from '../components/AlertPwd.vue'
 
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)
+import {
+    Message
+} from 'element-ui'
+
+//引入nprogress
+import NProgress from 'nprogress' // 进度条
+import 'nprogress/nprogress.css' //这个样式必须引入
+
 
 // 以下部分是张傲引入的
 import Solve from '../components/solve.vue'
@@ -56,7 +67,7 @@ import PaperManagement from '../components/publisher/PaperManagement.vue'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const constantRouterMap = [{
         path: '/login',
         component: LoginReg
     },
@@ -184,6 +195,11 @@ const routes = [{
         ]
     },
 
+
+
+]
+
+const asyncRouterMap = [
     //题库录入
     {
         path: '/',
@@ -260,9 +276,9 @@ const routes = [{
             }
         ]
     }
-
 ]
 
+const pathTrue = ['list', 'dxuan', 'fanyi', 'panduan', 'bdx', 'duoxuan', 'log', 'dwgc', 'zuowen', 'tiankong', 'qxw', 'ydlj', 'wxtk', 'xuanci']
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -272,21 +288,41 @@ VueRouter.prototype.push = function push(location) {
 const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
-    routes
+    routes: constantRouterMap.concat(asyncRouterMap)
 })
 
 
+
+//权限控制
 router.beforeEach((to, from, next) => {
+    NProgress.start()
     if (to.path === '/login') return next()
     if (to.path === '/alertPwd') return next()
-        // if (to.path === '/alertPassword') return next()
-        //获取token
-    const tokenStr = window.sessionStorage.getItem('token')
 
+    const tokenStr = window.sessionStorage.getItem('token')
     if (!tokenStr) {
+        NProgress.done()
         return next('/login')
     }
-    next()
+    const userCode = window.sessionStorage.getItem('userCode')
+    if (userCode == 2) {
+        if (pathTrue.includes(to.path.split('/')[1])) {
+            Message.error({
+                message: '没有权限，请先登录!',
+            })
+            NProgress.done()
+            return next('/login')
+        } else {
+            NProgress.done()
+            return next()
+        }
+
+    } else {
+        NProgress.done()
+        return next()
+    }
+
+
 })
 
 

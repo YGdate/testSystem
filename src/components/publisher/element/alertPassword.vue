@@ -19,9 +19,9 @@
                 <el-input placeholder="Password" type="password" v-model="loginForm.password" show-password></el-input>
               </el-form-item>
               <el-form-item class="login-submit-button " style="width:350px;">
-                <el-button type="primary" @click="findPassword">找回密码</el-button>
+                <el-button type="primary" @click="findPassword">确认修改</el-button>
                 <el-row>
-                  <el-link type="primary">返回登录</el-link>
+                  <el-link @click="login" type="primary">返回登录</el-link>
                 </el-row>
               </el-form-item>
             </el-form>
@@ -71,6 +71,9 @@
       }
     },
     methods: {
+      login(){
+        this.$router.push('/login')
+      },
       sendCode(){
       
         if(!(/^1[3456789]\d{9}$/.test(this.loginForm.number))) return this.$message.error('手机号码有误，请重填')
@@ -110,11 +113,14 @@
           this.$http.post('forget', {
             phone_number:this.loginForm.number,
             new_password:this.loginForm.password,
-            code:this.loginForm.code
+            verification_code:this.loginForm.code
           })
             .then(res => {
               if (res.data.code != 0) return this.$message.error(res.data.msg)
-              
+              this.$message.success(res.data.msg+'返回登录！')
+              setTimeout(()=>{
+                this.$router.push('/login')
+              },1500)
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,
@@ -155,7 +161,10 @@
     .login-submit-button {
       text-align: center;
       margin-top: 50px;
-
+    .el-row{
+      margin-top: 20px;
+      line-height: 20px;
+    }
 
       .el-button {
        width:151px;

@@ -20,7 +20,7 @@
         <el-dropdown trigger="click" @command="handleCommand">
           <span class="el-dropdown-link">
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
-            <div class="name" style="margin-left:10px;">lisa</div>
+            <div class="name" style="margin-left:10px;">{{name}}</div>
           </span>
           <el-dropdown-menu slot="dropdown" :split-button="true">
             <el-dropdown-item command="修改密码">修改密码</el-dropdown-item>
@@ -40,6 +40,7 @@
     data() {
       return {
         val: 1,
+        name:''
       }
     },
     // 监听路由改变
@@ -50,6 +51,7 @@
     },
     created() {
       this.val = window.sessionStorage.getItem('index')
+      this.name = window.sessionStorage.getItem('username')
     },
     components: {},
     methods: {

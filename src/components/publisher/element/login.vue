@@ -9,7 +9,7 @@
               </el-form-item>
               <el-row  class="option">
                 <el-checkbox v-model="checked">记住密码</el-checkbox>
-                <el-link type="primary">忘记密码？</el-link>
+                <el-link @click="forgetPassword" type="primary">忘记密码？</el-link>
               </el-row>
           
               <el-form-item class="login-submit-button " style="width:350px;">
@@ -59,6 +59,9 @@
     this.getCookie();
   },
     methods: {
+      forgetPassword(){
+        this.$router.push('/alertPwd')
+      },
       // 点击登录
       loginSubmit() {
         this.$refs.resetLoginRef.validate(async valid => {
@@ -73,6 +76,8 @@
 
               window.sessionStorage.setItem("token", "" + res.data.data.token)
               window.sessionStorage.setItem("index",1)
+              window.sessionStorage.setItem("username",res.data.data.userInfo.real_name)
+              window.sessionStorage.setItem("userCode",res.data.data.userInfo.code)
               this.$message.success(res.data.msg);
               this.$router.push('/solve');
             }).catch(err => {
