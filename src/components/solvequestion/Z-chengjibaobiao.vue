@@ -35,41 +35,29 @@
            <div class="kleft">
              <p class="l1">
                <span class="zh">知识点得分</span>
-               <span class="lspan" v-for="(item,i) in allmsg.knowledegePointsFullScore" :key="i">{{allmsg.knowledegePointsList[i]}}:{{item}}分</span>
+               <span class="lspan" v-for="(item,key,i) in allmsg.knowledegePointsFullScore" :key="i">{{key}}:{{item}}分</span>
              </p>
            </div>
+
+
+           <!-- 第一个⚪图 -->
            <div class="kright" id="bingone"></div>
          </div>
          <p><span class="zh">知识点得分率</span></p>
          <p>
            <ul class="fli">
-             <li><p>介词</p>
-             <div id="b1" class="bdiv">
-               <div>
-                 80%
+             <li v-for="(item,key,i) in allmsg.knowledegePointsRatio" :key="i"><p>{{key}}</p>
+             <div  class="bdiv">
+               <div title="">
+                 {{item}}
                </div>
-             </div>
-             </li>
-             <li><p>介词</p>
-             <div id="idb2"  class="bdiv">
-               <div> 80%</div>
-             </div>
-             </li>
-             <li><p>介词</p>
-             <div id="b3"  class="bdiv">
-               <div> 80%</div>
-             </div>
-             </li>
-             <li><p>介词</p>
-             <div id="b4"  class="bdiv">
-               <div> 80%</div>
              </div>
              </li>
            </ul>
          </p>
     </div>
      <div class="tcon">
-                <div class="knowledgenum">
+                <!-- <div class="knowledgenum">
            <div class="kleft">
              <p class="l1">
                <span class="zh">知识点得分</span>
@@ -107,7 +95,7 @@
              </div>
              </li>
            </ul>
-         </p>
+         </p> -->
 
          <p class="zou">
            <span class="zh">历史成绩走势</span>
@@ -131,33 +119,54 @@
       return {
        //获取数据的id
        bbid:'',
-       allmsg:''
+       allmsg:'',
+      //  第一个⚪图的数据
+      oy:[]
       }
     },
     created(){
       this.getmsg();
     },
 mounted(){
-this.tuone();
-this.tutwo();
+// this.tutwo();
 this.zoushi();
 },
 methods:{
   // 获取开局信息
   async getmsg(){
+     
       var storage = window.sessionStorage; 
       this.bbid=storage.getItem("bgid");
       let msg = await this.$http.get('report/'+this.bbid);
       //console.log(msg)
       if(msg.data.code==0){
           let ms = this.$decryptData(msg.data.data);
+          let k;
+          let i=0;
+        for(k in ms.knowledegePointsRatio){
+          this.oy[i]={value:ms.knowledegePointsRatio[k],name:k}
+          i++;
+        }
+        //主要是这儿
+        let ex = [];
+        for(let k in this.oy){
+          ex.push({
+           value:this.oy[k].value,
+           name:this.oy[k].name
+         })
+         
+        }
+this.tuone(ex);
+       
+
+
           this.allmsg = ms;
           console.log(this.allmsg)
       }else{
         this.$message.error("获取数据失败");
       }
   },
-  tuone:function(){
+  tuone:function(x){
     let myChart = this.$echarts.init(document.getElementById("bingone"));
     let option = {
     tooltip: {
@@ -167,8 +176,9 @@ methods:{
     legend: {
         orient: 'vertical',
         left: 10,
-        data: ['介词', '动词', '名词', '形容词']
+        data: this.allmsg.knowledegePointsList
     },
+
     series: [
         {
             name: '占比',
@@ -182,19 +192,14 @@ methods:{
             emphasis: {
                 label: {
                     show: true,
-                    fontSize: '30',
+                    fontSize: '12',
                     fontWeight: 'bold'
                 }
             },
             labelLine: {
                 show: false
             },
-            data: [
-                {value: 335, name: '介词'},
-                {value: 310, name: '动词'},
-                {value: 234, name: '名词'},
-                {value: 135, name: '形容词'},
-            ]
+            data: x
         }
     ]
 };
@@ -283,6 +288,10 @@ myChart.setOption(option)
   border-radius: 7px;
   padding: 15px;
 }
+.qiu{
+  overflow: hidden;
+  padding: 10px;
+}
 .back{
    height: 40px;
   width: 115px;
@@ -354,6 +363,7 @@ border-radius: 5px;
 .lspan{
   color: rgb(142,153,189);
   margin-right: 20px;
+  margin-top: 5px;
 }
 .l2{
   padding-left: 106px;
@@ -364,11 +374,13 @@ border-radius: 5px;
   justify-content: center;
   width: 100%;
   list-style: none;
+  flex-flow: row wrap;
 }
 .fli li{
   height: 100px;
   width: 140px;
   margin-left: 30px;
+  margin-bottom: 40px;
 }
 .fli li p{
   text-align: center;
@@ -378,6 +390,7 @@ border-radius: 5px;
 .fli li .bdiv{
   width: 100%;
   height: 100px;
+ 
 }
 .bdiv div{
   height: 100px;
@@ -386,9 +399,11 @@ border-radius: 5px;
   border: 2px solid orange;
   border-radius: 50%;
   text-align: center;
-  line-height: 100px;
+  line-height: 78px;
   color: rgb(85,108,175);
   font-weight: 600;
+  padding: 10px;
+  overflow: hidden;
 }
 .zou{
   position: relative;
