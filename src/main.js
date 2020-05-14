@@ -22,7 +22,8 @@ import './assets/css/global.css'
 import JS from './assets/js/global'
 
 import axios from 'axios'
-// import Message from 'element-ui'
+import Message from 'element-ui'
+import MessageBox from 'element-ui'
 
 import qs from 'qs'
 
@@ -66,13 +67,11 @@ axios.interceptors.request.use(
             config.baseURL = 'http://login.myxy99.cn/api/'
         }
         // 根据vuex store内容动态设置baseurl
-
         return config
     }, err => {
         // 设置请求出错的信息。
         return Promise.reject(err.response.data)
     })
-
 
 // 给响应头设置拦截器。
 axios.interceptors.response.use(
@@ -81,44 +80,21 @@ axios.interceptors.response.use(
         return response
     },
     error => {
-        // var config1 = error.config
-        // var backoff
-        // // 设置token失效
-        // if (error.response.status == 401) {
+        Message({
+            message: '身份失效',
+            type: 'error',
+            duration: 5 * 1000
+        })
+        if (error.response.status == 403) {
+            MessageBox.alert('身份已失效，请重新登录！', '身份验证', {
+                confirmButtonText: '确定',
+                callback: () => {
+                    this.$router.push('/login')
+                }
+            });
+        }
+        return Promise.reject('error')
 
-        //     backoff = new Promise(function (resolve) {
-        //         setTimeout(function () {
-        //             resolve()
-        //         }, 1500)
-        //     })
-        //     /*在此处判断token过期，以及其他状态码设置跳转页面*/
-        //     axios
-        //         .post('oAuth/refresh')
-        //         .then(res => {
-        //             if (res.data.code !== 200) Message.error('获取token失败')
-        //             //1.将登陆之后的token，保存到客户端的sessionStorage中
-        //             window.sessionStorage.setItem(
-        //                 'token',
-        //                 'Bearer ' + res.data.data.token
-        //             )
-        //         })
-        //         .catch(err => {
-        //             Message({
-        //                 dangerouslyUseHTMLString: true,
-        //                 showClose: true,
-        //                 message: eval('(' + err.response.data + ')').data.join(
-        //                     '<br><br>跳转登录页面'
-        //                 ),
-        //                 type: 'error'
-        //             })
-        //             // this.$router.push('/login')
-        //         })
-        //     return backoff.then(function () {
-        //         return axios(config1)
-        //     })
-        // }
-        /*在这里设置token过期的跳转*/
-        return Promise.reject(error)
     });
 
 Vue.config.productionTip = false
