@@ -30,7 +30,7 @@
             <template slot-scope="scope">
               <i @click="handleShow(scope.row)" class="el-icon-zoom-in blue"></i>
               <i @click="handleEdit(scope.row)" class="el-icon-edit blue"></i>
-              <i @click="handleDelete(scope.$index)" class="el-icon-delete blue"></i>
+              <i @click="handleDelete(scope.row.id)" class="el-icon-delete blue"></i>
             </template>
           </el-table-column>
         </el-table>
@@ -212,12 +212,12 @@ export default {
       });
     },
     handleDelete(index) {
-      let num = index + 1;
+      let num = index;
       this.$http.delete("question/" + num).then(res => {
         console.log(res);
-        if (res == 0) {
-          this.$message(res.msg);
-        }
+
+          this.$message(res.data.msg);
+        
       });
     },
     upData(event) {
