@@ -28,8 +28,8 @@
          </ul>
 
          <p class="gainnum">
-           <span class="zh">试题得分</span> <span class="zhunum">主观题:999分</span>
-           <span class="kenum">客观题:666分</span>
+           <span class="zh">试题得分</span> <span class="zhunum">主观题:{{allmsg.objectiveScore}}分</span>
+           <span class="kenum">客观题:{{allmsg.notObjectiveScore}}分</span>
          </p>
          <div class="knowledgenum">
            <div class="kleft">
@@ -129,7 +129,7 @@
     },
 mounted(){
 // this.tutwo();
-this.zoushi();
+
 },
 methods:{
   // 获取开局信息
@@ -147,7 +147,7 @@ methods:{
           this.oy[i]={value:ms.knowledegePointsRatio[k],name:k}
           i++;
         }
-        //主要是这儿
+        //⚪表的数据处理
         let ex = [];
         for(let k in this.oy){
           ex.push({
@@ -156,6 +156,17 @@ methods:{
          })
          
         }
+
+        // 走势图的数据处理
+        let z1 = [];
+        let z2=[];
+        for(let i=0;i<ms.scorePicture.length;i++){
+          let sj = `第${i+1}次考试`
+         z1.push(sj)
+         z2.push(ms.scorePicture[i])
+        }
+        this.zoushi(z1,z2);
+
 this.tuone(ex);
        
 
@@ -248,18 +259,18 @@ myChart.setOption(option)
 };
 myChart.setOption(option)
   },
-  zoushi:function(){
+  zoushi:function(x,y){
      let myChart = this.$echarts.init(document.getElementById("zoushi"));
     let option={
     xAxis: {
         type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        data: x
     },
     yAxis: {
         type: 'value'
     },
     series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
+        data: y,
         type: 'line'
     }]
 };

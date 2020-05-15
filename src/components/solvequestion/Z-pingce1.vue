@@ -78,23 +78,18 @@
 
             </div>
              <!-- 七选五demo --> 
-             <div class="qiwus" :class="tab!=tabs[2]?'tt':''">
+            <div class="qiwus" :class="tab!=tabs[2]?'tt':''">
                   <p class="headp">7选五</p>
-                  <div class="qiwu zong" v-for="(item,i) in allmsg.seven_selected_five" :key="i">
+                    <div class="qiwu zong" v-for="(item,i) in allmsg.seven_selected_five" :key="i">
                    <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
-                                       <template>
-                <el-checkbox-group 
-                 v-model="qi[i]"
-                :max="6">
-                    <el-checkbox  label="A" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
-                     <el-checkbox  label="B" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
-                     <el-checkbox  label="C" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
-                     <el-checkbox  label="D" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.D}}</el-checkbox>
-                     <el-checkbox  label="E" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.E}}</el-checkbox>
-                    <el-checkbox  label="F" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.F}}</el-checkbox>
-                     <el-checkbox  label="G" v-model="qi[i]" class="xuanze">{{item.topic_and_stem.options.G}}</el-checkbox>
-                     </el-checkbox-group>
-                        </template> 
+                   <p v-for="(itx,s,x) in allmsg.seven_selected_five[i].topic_and_stem.options" :key="x">
+                   {{s}}.{{itx}}
+                   </p>
+                     <el-input v-model="qi[i][0]" maxlength=1 style="width:50px;"  :placeholder="1"></el-input>
+                     <el-input v-model="qi[i][1]" maxlength=1 style="width:50px;"  :placeholder="2"></el-input>
+                      <el-input v-model="qi[i][2]" maxlength=1 style="width:50px;"  :placeholder="3"></el-input>
+                       <el-input v-model="qi[i][3]" maxlength=1 style="width:50px;"  :placeholder="4"></el-input>
+                        <el-input v-model="qi[i][4]" maxlength=1 style="width:50px;"  :placeholder="5"></el-input>
                   </div>
        
              </div>
@@ -280,9 +275,13 @@ methods:{
                    }
 
                 // 七选五的处理               
+                let l = [];     
                  for(let i=0;i<this.allmsg.seven_selected_five.length;i++){
-                       this.qi[i]=[];
-                       this.allmsg.seven_selected_five[i].right_ans = JSON.parse(this.allmsg.seven_selected_five[i].right_ans)
+                     l[i]=[];
+                        for(let g=0;g<5;g++){
+                            l[i][g]=""
+                        }
+                        this.qi=l;
                     this.allmsg.seven_selected_five[i].topic_and_stem = JSON.parse(this.allmsg.seven_selected_five[i].topic_and_stem)
                    }
                 // 判断的处理                
