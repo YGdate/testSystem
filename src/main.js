@@ -16,6 +16,9 @@ NProgress.configure({
     showSpinner: false
 })
 
+import htmlToPdf from './htmlToPdf'
+Vue.use(htmlToPdf)
+
 import './assets/css/global.css'
 import JS from './assets/js/global'
 
