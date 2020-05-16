@@ -1,7 +1,14 @@
 <template>
   <div class="analysis">
     <div class="title">{{title}}</div>
-    <input :value="content" v-on:input="$emit('input',$event.target.value)" :style="{width: width,background: bgr}" class="content" :placeholder="placeholder" type="text" />
+    <input
+      :value="content"
+      v-on:input="$emit('input',$event.target.value)"
+      :style="{width: width,background: bgr}"
+      class="content"
+      :placeholder="placeholder"
+      type="text"
+    />
     <slot></slot>
   </div>
 </template>
@@ -14,7 +21,7 @@
   .title {
     background-color: #118aff;
     color: #fff;
-    height: 50px;
+    height: 54px;
     width: 60px;
     display: flex;
     justify-content: center;
@@ -24,24 +31,25 @@
     border: 0;
     padding: 0 10px;
     height: 50px;
+    border: 2px solid #118aff;
   }
 }
 </style>
 
 <script>
 export default {
-    props: {
-        width:{
-            type: String,
-            default: '450px'
-        },
-        title: String,
-        placeholder: {
-            type: String,
-            default: '请输入相关内容'
-        },
-        bgr: String,
-        content: String
-    }
+  props: {
+    width: {
+      type: String,
+      default: "450px"
+    },
+    title: String,
+    placeholder: {
+      type: String,
+      default: "请输入相关内容"
+    },
+    bgr: String,
+    content: String
+  }
 };
 </script>

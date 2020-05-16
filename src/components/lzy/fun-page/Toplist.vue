@@ -98,6 +98,9 @@ export default {
         "作文",
         "听力"
       ],
+      category: ['single_select','multi_select','non_directional_select',
+      'true_or_false','fill','seven_selected_five','fill_blank','choose_fill_blank',
+      'text_mistake','translation','read_understand','composition','listening'],
       semester: ["上册", "下册"],
       isGrade: false,
       isSemester: false,
@@ -109,27 +112,31 @@ export default {
       checkedDifficulty: ""
     };
   },
-  computed: {
-    // grade() {
-    //   let arr = [];
-    //   for (let i = 0; i < this.topData.length; i++) {
-    //     let grade = this.topData[i].grade
-    //     arr.push(grade)
-    //   }
-    //   return arr
-    // }
-  },
   methods: {
     getGrade(index) {
       this.$http.get("question?grade=" + index).then(res => {
-        this.isGrade = !this.isGrade;
+        // 取消选项
+        this.isSemester =false;
+        this.isDifficulty = false;
+        this.isCategory =false;
+
+        if (this.isGrade == false) {
+          this.isGrade = !this.isGrade;
+        }
         this.checkedGrade = this.grade[index];
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getSemester(index) {
-      this.isSemester = !this.isSemester;
+      // 取消选项
+      this.isGrade = false
+      this.isDifficulty = false
+      this.isCategory = false
+
+      if (this.isSemester == false) {
+        this.isSemester = !this.isSemester;
+      }
       this.checkedSemester = this.semester[index];
       this.$http.get("question?semester=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
@@ -137,23 +144,38 @@ export default {
       });
     },
     getCategory(index) {
-      this.isCategory = !this.isCategory;
+        // 取消选项
+        this.isSemester = false
+        this.isDifficulty = false
+        this.isGrade = false
+
+      if (this.isCategory == false) {
+        this.isCategory = !this.isCategory;
+      }
       this.checkedCategory = this.type[index];
-      this.$http.get("question?category=" + index).then(res => {
+      let category = this.category[index]
+      this.$http.get("question?category=" + category).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getDifficulty(index) {
-      this.isDifficulty = !this.isDifficulty;
+        // 取消选项
+        this.isSemester = false
+        this.isGrade = false
+        this.isCategory = false
+
+      if (this.isDifficulty == false) {
+        this.isDifficulty = !this.isDifficulty;
+      }
       this.checkedDifficulty = this.difficulty[index];
       this.$http.get("question?degree_of_difficulty=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
-    handleDelete(){
-      this.$emit('mul-delete')
+    handleDelete() {
+      this.$emit("mul-delete");
     }
   }
 };

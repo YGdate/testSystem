@@ -1,24 +1,14 @@
 <template>
   <div class="fun-container">
-    <top>英语填空题</top>
-    <div class="cardContent">
-      <div class="title">题目内容</div>
-      <div class="content">
-        <textarea v-model="title_content" rows="10" cols="120"></textarea>
+    <top>作文</top>
+    <div class="row">
+      <div class="left">
+        <div class="title">翻译文本</div>
+        <textarea :content="title" class="fy" v-model="title" rows="10" cols="120"></textarea>
       </div>
-      <div @click="handleInsert" class="insert">插入空格</div>
-    </div>
-    <div class="anwser-edit">
-      <div class="title">答案编辑</div>
-      <div class="flex">
-        <Analysis
-          v-for="(item,index) in answer_edit"
-          :key="index"
-          :title="index"
-          :content="item"
-          v-model="item.content"
-          width="150px"
-        ></Analysis>
+      <div class="right">
+        <div class="title">翻译范文</div>
+        <textarea :content="answer" class="fy" v-model="answer" rows="10" cols="120"></textarea>
       </div>
     </div>
     <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
@@ -31,72 +21,67 @@
 <style lang="less" scoped>
 @import url("./common.less");
 
-.cardContent {
-  position: relative;
-  height: 200px;
-  padding: 15px;
-  background-color: #fff;
-  box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
-  .title {
-    margin-bottom: 10px;
-  }
-  .content {
-    text-indent: 2em;
-    .area {
-      height: 150px;
-      width: 800px;
-      padding: 0 10px;
+.row {
+  display: flex;
+  margin-bottom: 20px;
+  .left,
+  .right {
+    width: 350px;
+    margin-right: 15px;
+    height: 270px;
+    box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
+    padding: 10px;
+    .title {
+      margin-bottom: 10px;
     }
   }
-  .insert {
-    position: absolute;
-    right: 0;
+}
+.label {
+  margin: 20px 0;
+  .item {
+    background-color: #118aff;
     color: #fff;
-    cursor: pointer;
-    top: 70px;
-    width: 30px;
-    text-align: center;
-    padding: 5px 7px;
-    background-color: #f4c521;
+    border-radius: 15px;
+    padding: 4px 5px;
+    outline: none;
+    border: 0;
+    width: 70px;
+    margin-left: 10px;
   }
 }
-.anwser-edit {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
-  .flex {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .title {
-    margin-bottom: 10px;
-  }
+.fy {
+  width: 350px;
+  height: 200px;
+}
+.add {
+  background-color: orange;
+  padding: 5px;
+  border-radius: 50%;
+  margin-left: 5px;
+  cursor: pointer;
 }
 </style>
 
 <script>
-import Analysis from "./Analysis";
 import Tmsz from "./Tmsz";
 import Top from "../Title";
 
 export default {
   components: {
-    Analysis,
     Tmsz,
     Top
   },
   data() {
     return {
-      answer_edit: [],
-      count: 1,
-      title_content: "",
+      title: "",
+      answer: "",
+      word: [],
       grade: "",
       semester: "",
       category: "",
       degree_of_difficulty: "",
       analyze: "",
-      options: {},
+      // _c
       semester_c: ["上学期", "下学期"],
       grade_c: [
         "一年级",
@@ -140,11 +125,10 @@ export default {
     let newData = JSON.parse(paramData);
     this.newData = newData;
 
-    let answer = newData.right_ans.answer
-    this.answer_edit = answer
-    console.log(answer)
+    this.title = newData.topic_and_stem.title;
+    this.answer = newData.right_ans.answer;
   },
-  mounted() {
+    mounted() {
     this.$refs.tmsz.analysis = this.newData.test_analyze;
     this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
     this.$refs.tmsz.isGrade = true;
@@ -155,13 +139,10 @@ export default {
     this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
   },
   methods: {
-    handleInsert() {
-      let position = this.count;
-      this.answer_edit.push({
-        title: position.toString(),
-        content: ""
+    handlInsert() {
+      this.word.push({
+        value: ""
       });
-      this.count++;
     },
     getOption(event) {
       this.grade = event[0];
@@ -171,11 +152,7 @@ export default {
       this.analyze = event[4];
     },
     handleSubmit() {
-      let answer = {};
-      for (let i in this.answer_edit) {
-        answer[i] = this.answer_edit[i]
-      }
-
+      console.log(this.$refs.xuanci_option);
       let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
       let semester = this.semester_c.indexOf(this.$refs.tmsz.checkedSemester);
       let difficulty = this.difficulty_c.indexOf(
@@ -184,32 +161,28 @@ export default {
       let analysis = this.$refs.tmsz.analysis;
       let knowledge_point = this.$refs.tmsz.knowledge_point;
 
-      console.log(this.title_content,grade,semester,difficulty)
-
       if (
-        this.title_content != "" &&
         grade != -1 &&
         semester != -1 &&
         difficulty != -1 &&
         analysis != "" &&
-        Object.keys(answer) != 0
+        this.title != "" &&
+        this.answer != ""
       ) {
-        this.$http
-          .post("question", {
-            grade: grade,
-            semester: semester,
-            category: "fill",
-            degree_of_difficulty: difficulty,
-            analyze: analysis,
-            knowledge_point: knowledge_point,
-            title: this.title_content,
-            answer: answer
-          })
-          .then(res => {
-            this._msg(res.data);
-          });
+        this.$http("question", {
+          grade: grade,
+          semester: semester,
+          knowledge_point: knowledge_point,
+          category: "translation",
+          analyze: analysis,
+          degree_of_difficulty: difficulty,
+          title: this.title,
+          answer: this.answer
+        }).then(res => {
+          this._msg(res.data);
+        });
       } else {
-        this.$message.error("请检查表格内容是否合理");
+        this.$message.error("请检查内容是否合理");
       }
     },
     _msg(res) {

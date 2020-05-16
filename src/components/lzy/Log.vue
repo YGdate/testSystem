@@ -11,7 +11,6 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column align="center" label="序号">
             <template slot-scope="scope">{{ scope.row.序号}}</template>
           </el-table-column>
