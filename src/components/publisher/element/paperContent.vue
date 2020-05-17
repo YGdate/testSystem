@@ -58,9 +58,9 @@
                     <el-tag size="small">考试结束</el-tag>
                     <el-tag size="small">试卷修改</el-tag>
                     <el-tag @click="measureTest(props.row.id)" size="small">发布测评</el-tag>
-                    <el-tag size="small">作答情况</el-tag>
+                    <el-tag  size="small">作答情况</el-tag>
                     <el-tag size="small">考试设置</el-tag>
-                    <el-tag size="small">导出试卷</el-tag>
+                    <el-tag @click="exportPaper(props.row.id)" size="small">导出试卷</el-tag>
                   </el-col>
                 </el-row>
               </el-form>
@@ -308,7 +308,6 @@
             console.log(this.$decryptData(res.data.data));
             this.textpaperShare = this.$decryptData(res.data.data)
           }).catch(err => {
-            // console.log(err);
             this.$message({
               dangerouslyUseHTMLString: true,
               showClose: true,
@@ -321,13 +320,28 @@
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
+      exportPaper(id){
+        let arr = []
+        arr.push(id)
+        this.$http.post('word/export',{ids:arr})
+          .then(res => {
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            return this.$message.success(res.data.msg)
+          }).catch(err => {
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
       // 批量导出
       exportWord(){
         console.log(111);
        let idList =  this.multipleSelection.map(e=>{
           return e.id
         })
-
          this.$http.post('word/export',{ids:idList})
           .then(res => {
             if (res.data.code != 0) return this.$message.error(res.data.msg)

@@ -92,7 +92,7 @@
                   <el-row>
                     题型得分率
                   </el-row>
-                  <el-row type="flex" justify="space-between">
+                  <el-row :gutter="20" style="display:flex;flex-wrap:wrap;">
                     <el-col v-for="(item,i) in categoryNum" :key="i" class="testScores-item" :span="4">
                       <div>
                         <el-progress :width="80" type="circle" :percentage="item.value-0"></el-progress>
@@ -120,7 +120,7 @@
                   <el-row>
                     知识点得分率
                   </el-row>
-                  <el-row type="flex" justify="space-between">
+                  <el-row type="flex"  style="display:flex;flex-wrap:wrap;">
                     <el-col v-for="(item,i) in pointNum" :key="i" class="testScores-item" :span="4">
                       <div>
                         <el-progress :width="80" type="circle" :percentage="item.value-0"></el-progress>
@@ -128,6 +128,7 @@
                       <div>{{item.name}}</div>
                     </el-col>
                   </el-row>
+
                 </el-card>
               </el-col>
             </el-row>
@@ -464,6 +465,7 @@
 <style lang="less" scoped>
   .el-card {
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15) !important;
+    
   }
 
   .el-tabs--border-card {

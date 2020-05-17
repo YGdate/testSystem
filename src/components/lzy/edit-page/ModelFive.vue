@@ -1,25 +1,43 @@
 <template>
-  <div class="fun-container">
-    <top>翻译</top>
-    <div class="row">
-      <div class="left">
-        <div class="title">翻译文本</div>
-        <input v-model="fy_text" class="fy" type="text" />
-      </div>
-      <div class="right">
-        <div class="title">翻译范文</div>
-        <input v-model="fy_content" class="fy" type="text" />
-      </div>
+  <div class="editContainer">
+    <div @click="handleClose" class="close">
+      <i class="el-icon-error"></i>
     </div>
-    <tmsz v-on:get-option="getOption($event)"></tmsz>
-    <div class="end">
-      <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
+    <div class="fun-container">
+      <top>翻译</top>
+      <div class="row">
+        <div class="left">
+          <div class="title">翻译文本</div>
+          <input v-model="fy_text" class="fy" type="text" />
+        </div>
+        <div class="right">
+          <div class="title">翻译范文</div>
+          <input v-model="fy_content" class="fy" type="text" />
+        </div>
+      </div>
+      <tmsz v-on:get-option="getOption($event)"></tmsz>
+      <div class="end">
+        <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
+      </div>
     </div>
   </div>
 </template>
-
-<style lang="less" scoped>
-@import url("./common.less");
+<style lang="less">
+.editContainer {
+  padding: 10px;
+  z-index: 100;
+  background-color: #fff;
+  position: absolute;
+  top: 500px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  .close {
+    float: right;
+    cursor: pointer;
+  }
+}
+@import url("../fun-page/common.less");
 
 .row {
   display: flex;
@@ -62,13 +80,16 @@
 </style>
 
 <script>
-import Tmsz from "./Tmsz";
+import Tmsz from "../fun-page/Tmsz";
 import Top from "../Title";
-
 export default {
   components: {
     Tmsz,
     Top
+  },
+  props: {
+    top_title: String,
+    editData: Object
   },
   data() {
     return {
@@ -97,7 +118,7 @@ export default {
     },
     handleSubmit() {
       this.$http
-        .post("question", {
+        .patch("question/" + this.editData.id, {
           grade: this.grade,
           semester: this.semester,
           category: this.category,
@@ -112,6 +133,9 @@ export default {
             type: "success"
           });
         });
+    },
+    handleClose() {
+      this.$emit("model-five-close");
     }
   }
 };
