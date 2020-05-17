@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <el-row class="content">
-      <el-col :span="4">
-        <sidebar name='测评管理'></sidebar>
+     <el-col class="content-left" :span="4">
+        <el-button style=" background-color: #24c9e3; color:#fff"  @click="subjectChoose" icon="el-icon-back">学课选择</el-button>
       </el-col>
       <el-col class="content-center" :span="16">
         <paperContent></paperContent>
@@ -18,17 +18,20 @@
 
 <script>
   import paperContent from './element/paperContent'
-  import sidebar from './element/sidebar'
   
   export default {
     components: {
-      sidebar,
       paperContent,
     },
     data() {
       return {
        
       }
+    },
+    methods:{
+            subjectChoose(){
+        this.$router.push('/solve/zhomepage')
+      },
     }
 
   }

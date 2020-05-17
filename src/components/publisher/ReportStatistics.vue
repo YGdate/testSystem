@@ -2,7 +2,7 @@
   <div class="main">
     <el-row class="content">
       <el-col :span="4">
-        <sidebar @skipBtn="skipBtn" :name='leftName'></sidebar>
+        <sidebar @skipBtn="skipBtn($event)" :name='leftName'></sidebar>
       </el-col>
       <el-col class="content-center" :span="16">
         <testPaper v-if="isshow" @paperInfo="paperInfo"></testPaper>
@@ -29,17 +29,26 @@
       return {
         isshow:true,
         paperId:0,
-        leftName:'报考管理'
+        leftName:'学课选择'
       }
     },
     methods: {
-      skipBtn(){
-        this.isshow = true
-      },
+     skipBtn(text){
+       console.log(text);
+       console.log(111);
+          if(text=='返回'){
+             this.isshow = true
+             this.leftName = '学课选择'
+          }else{
+            this.$router.push('/solve/zhomepage')
+          }
+        },
       paperInfo(id){
         this.leftName="返回"
         this.isshow = false
         this.paperId = id
+        
+        
       }
     }
 

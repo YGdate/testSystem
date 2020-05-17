@@ -433,7 +433,7 @@
             let testFromoptions = []
             for (let key in test_from) {
               let newdata = {
-                value: key,
+                value: test_from[key],
                 label: test_from[key]
               }
               testFromoptions.push(newdata)

@@ -4,15 +4,15 @@
     <!-- 手动选题 -->
     <el-card>
       <el-row class="choose-test-title">
-        <el-select size="mini" v-model="satusValue" placeholder="考试状态">
+        <el-select @change="changeStatus" size="mini" v-model="satusValue" placeholder="考试状态">
           <el-option v-for="item in optionStatus" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select size="mini" v-model="typeValue" placeholder="组卷类型">
+        <el-select @change="changeStatus" size="mini" v-model="typeValue" placeholder="组卷类型">
           <el-option v-for="item in optionType" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-        <el-select size="mini" v-model="methodValue" placeholder="考试方式">
+        <el-select @change="changeStatus" size="mini" v-model="methodValue" placeholder="考试方式">
           <el-option v-for="item in optionMethod" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
@@ -107,11 +107,15 @@
     created(){
       this.getInfo()
       // this.getQuestionPoint()
+
     },
     mounted() {
 
     },
     methods: {
+      changeStatus(){
+        this.getInfo(this.current_page)
+      },
       handleInfo(id){
         this.$emit('handleInfo',id)
       },

@@ -3,7 +3,7 @@
     
     <el-row class="content"> 
       <el-col class="content-left" :span="4">
-        <el-button icon="el-icon-back">测评管理</el-button>
+        <el-button  @click="subjectChoose" icon="el-icon-back">学课选择</el-button>
       </el-col>
       <el-col class="content-center" :span="16">
         <el-row class="center-title" type="flex" justify="center" :gutter="10">
@@ -45,6 +45,9 @@ import InfoSet from './element/InfoSet'
      
     },
     methods: {
+      subjectChoose(){
+        this.$router.push('/solve/zhomepage')
+      },
       forceUpdate(){
          setTimeout(()=>{
            this.ischeck = true
