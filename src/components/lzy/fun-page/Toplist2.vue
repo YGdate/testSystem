@@ -1,7 +1,7 @@
 <template>
   <div :topData="topData" class="top-list">
     <el-dropdown size="mini" split-button>
-      选择年级
+      {{isGrade?checkedGrade: '选择年级'}}
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getGrade(index)"
@@ -11,7 +11,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      选择学期
+      {{isSemester?checkedSemester: '选择学期'}}
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getSemester(index)"
@@ -21,7 +21,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      选择题型
+      {{isCategory?checkedCategory: '选择题型'}}
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getCategory(index)"
@@ -31,7 +31,7 @@
       </el-dropdown-menu>
     </el-dropdown>
     <el-dropdown size="mini" split-button>
-      选择难度
+      {{isDifficulty?checkedDifficulty: '选择难度'}}
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item
           @click.native="getDifficulty(index)"
@@ -40,7 +40,6 @@
         >{{item}}</el-dropdown-item>f
       </el-dropdown-menu>
     </el-dropdown>
-    <el-button @click.native="handleDelete" style="color: #409EFF" size="mini">批量删除</el-button>
   </div>
 </template>
 
@@ -98,36 +97,81 @@ export default {
         "作文",
         "听力"
       ],
-      semester: ["上册", "下册"]
+      category: ['single_select','multi_select','non_directional_select',
+      'true_or_false','fill','seven_selected_five','fill_blank','choose_fill_blank',
+      'text_mistake','translation','read_understand','composition','listening'],
+      semester: ["上册", "下册"],
+      isGrade: false,
+      isSemester: false,
+      isCategory: false,
+      isDifficulty: false,
+      checkedGrade: "",
+      checkedSemester: "",
+      checkedCategory: "",
+      checkedDifficulty: ""
     };
   },
   methods: {
     getGrade(index) {
       this.$http.get("searchLog?grade=" + index).then(res => {
+        // 取消选项
+        this.isSemester =false;
+        this.isDifficulty = false;
+        this.isCategory =false;
+
+        if (this.isGrade == false) {
+          this.isGrade = !this.isGrade;
+        }
+        this.checkedGrade = this.grade[index];
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getSemester(index) {
+      // 取消选项
+      this.isGrade = false
+      this.isDifficulty = false
+      this.isCategory = false
+
+      if (this.isSemester == false) {
+        this.isSemester = !this.isSemester;
+      }
+      this.checkedSemester = this.semester[index];
       this.$http.get("searchLog?semester=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getCategory(index) {
-      this.$http.get("searchLog?knowledge=" + index).then(res => {
+        // 取消选项
+        this.isSemester = false
+        this.isDifficulty = false
+        this.isGrade = false
+
+      if (this.isCategory == false) {
+        this.isCategory = !this.isCategory;
+      }
+      this.checkedCategory = this.type[index];
+      let category = this.category[index]
+      this.$http.get("searchLog?category=" + category).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
     },
     getDifficulty(index) {
+        // 取消选项
+        this.isSemester = false
+        this.isGrade = false
+        this.isCategory = false
+
+      if (this.isDifficulty == false) {
+        this.isDifficulty = !this.isDifficulty;
+      }
+      this.checkedDifficulty = this.difficulty[index];
       this.$http.get("searchLog?degree_of_difficulty=" + index).then(res => {
         let data = this.$decryptData(res.data.data);
         this.$emit("get-data", data);
       });
-    },
-    handleDelete() {
-      this.$emit("mul-delete");
     }
   }
 };
