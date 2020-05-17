@@ -13,33 +13,32 @@
         <p class="ac">
           <span class="wai">科目:<span class="nei">英语</span></span>
           <span class="wai">ID:<span class="nei">123456</span></span>
-        </p>
-        <ul class="oul">
-          <li>
-            <span class="zh zco">考生</span><span class="infor">{{allmsg.user_id}}</span>
-          </li>
-          <li>
-            <span class="zh zco">总分</span><span class="infor">{{allmsg.fullScore}}</span>
-          </li>
-          <li>
-            <span class="zh zco">成绩</span><span class="infor">{{allmsg.finalScore}}</span>
-          </li>
-          <li>
-            <span class="zh zco">绝对位置排行</span><span class="infor">30%</span></li>
-        </ul>
+       </p>
+       <ul class="oul">
+      <li>
+        <span class="zh zco">考生</span><span class="infor">{{allmsg.user_id}}</span>
+      </li>
+       <li>
+         <span class="zh zco">总分</span><span class="infor">{{allmsg.fullScore}}</span>
+       </li>
+       <li>
+         <span class="zh zco">成绩</span><span class="infor">{{allmsg.finalScore}}</span>
+       </li>
+       <li>
+         <span class="zh zco">绝对位置排行</span><span class="infor">30%</span></li>
+         </ul>
 
-        <p class="gainnum">
-          <span class="zh">试题得分</span> <span class="zhunum">主观题:999分</span>
-          <span class="kenum">客观题:666分</span>
-        </p>
-        <div class="knowledgenum">
-          <div class="kleft">
-            <p class="l1">
-              <span class="zh">知识点得分</span>
-              <span class="lspan" v-for="(item,key,i) in allmsg.knowledegePointsFullScore"
-                :key="i">{{key}}:{{item}}分</span>
-            </p>
-          </div>
+         <p class="gainnum">
+           <span class="zh">试题得分</span> <span class="zhunum">主观题:{{allmsg.objectiveScore}}分</span>
+           <span class="kenum">客观题:{{allmsg.notObjectiveScore}}分</span>
+         </p>
+         <div class="knowledgenum">
+           <div class="kleft">
+             <p class="l1">
+               <span class="zh">知识点得分</span>
+               <span class="lspan" v-for="(item,key,i) in allmsg.knowledegePointsFullScore" :key="i">{{key}}:{{item}}分</span>
+             </p>
+           </div>
 
 
           <!-- 第一个⚪图 -->
@@ -116,7 +115,6 @@
 </template>
 
 
-
 <script>
   export default {
     data() {
@@ -131,39 +129,49 @@
     created() {
       this.getmsg();
     },
-    mounted() {
-      // this.tutwo();
-      this.zoushi();
-    },
-    methods: {
-      // 获取开局信息
-      async getmsg() {
 
-        var storage = window.sessionStorage;
-        this.bbid = storage.getItem("bgid");
-        let msg = await this.$http.get('report/' + this.bbid);
-        //console.log(msg)
-        if (msg.data.code == 0) {
+mounted(){
+// this.tutwo();
+
+},
+methods:{
+  // 获取开局信息
+  async getmsg(){
+     
+      var storage = window.sessionStorage; 
+      this.bbid=storage.getItem("bgid");
+      let msg = await this.$http.get('report/'+this.bbid);
+      //console.log(msg)
+      if(msg.data.code==0){
           let ms = this.$decryptData(msg.data.data);
           let k;
-          let i = 0;
-          for (k in ms.knowledegePointsRatio) {
-            this.oy[i] = {
-              value: ms.knowledegePointsRatio[k],
-              name: k
-            }
-            i++;
-          }
-          //主要是这儿
-          let ex = [];
-          for (let k in this.oy) {
-            ex.push({
-              value: this.oy[k].value,
-              name: this.oy[k].name
-            })
+          let i=0;
+        for(k in ms.knowledegePointsRatio){
+          this.oy[i]={value:ms.knowledegePointsRatio[k],name:k}
+          i++;
+        }
+        //⚪表的数据处理
+        let ex = [];
+        for(let k in this.oy){
+          ex.push({
+           value:this.oy[k].value,
+           name:this.oy[k].name
+         })
+         
+        }
 
-          }
-          this.tuone(ex);
+        // 走势图的数据处理
+        let z1 = [];
+        let z2=[];
+        for(let i=0;i<ms.scorePicture.length;i++){
+          let sj = `第${i+1}次考试`
+         z1.push(sj)
+         z2.push(ms.scorePicture[i])
+        }
+        this.zoushi(z1,z2);
+
+this.tuone(ex);
+       
 
 
 
@@ -258,28 +266,31 @@
                 name: '形容词'
               },
             ]
-          }]
-        };
-        myChart.setOption(option)
-      },
-      zoushi: function () {
-        let myChart = this.$echarts.init(document.getElementById("zoushi"));
-        let option = {
-          xAxis: {
-            type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-          },
-          yAxis: {
-            type: 'value'
-          },
-          series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'line'
-          }]
-        };
-        myChart.setOption(option)
-      }
-    }
+
+        }
+    ]
+};
+myChart.setOption(option)
+  },
+  zoushi:function(x,y){
+     let myChart = this.$echarts.init(document.getElementById("zoushi"));
+    let option={
+    xAxis: {
+        type: 'category',
+        data: x
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [{
+        data: y,
+        type: 'line'
+    }]
+};
+    myChart.setOption(option)
+  }
+}
+
   }
 </script>
 <style lang="less" scoped>
