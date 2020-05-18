@@ -6,7 +6,7 @@
       <div class="content">
         <textarea v-model="title" :content="title" rows="10" cols="120"></textarea>
       </div>
-      <div @click="handleInsert" class="insert">插入空格</div>
+      <!-- <div @click="handleInsert" class="insert">插入空格</div> -->
     </div>
     <div class="anwser-edit">
       <div class="title">选项设置</div>

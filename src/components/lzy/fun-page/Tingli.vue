@@ -3,11 +3,11 @@
     <top>作文</top>
     <div class="row">
       <div class="left">
-        <div class="title">翻译文本</div>
+        <div class="title">作文文本</div>
         <textarea :content="title" class="fy" v-model="title" rows="10" cols="120"></textarea>
       </div>
       <div class="right">
-        <div class="title">翻译范文</div>
+        <div class="title">作文范文</div>
         <textarea :content="answer" class="fy" v-model="answer" rows="10" cols="120"></textarea>
       </div>
     </div>

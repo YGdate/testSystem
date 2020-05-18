@@ -6,7 +6,7 @@
       <div class="content">
         <textarea :content="title_content" v-model="title_content" rows="10" cols="120"></textarea>
       </div>
-      <div class="insert">插入空格</div>
+      <!-- <div class="insert">插入空格</div> -->
     </div>
     <div class="anwser-edit">
       <div class="title">选项设置</div>
@@ -24,26 +24,226 @@
       <div class="bottom-left">
         <div class="bottom-title">答案编辑</div>
         <div class="bottom-check">
-          <analysis :content="answer_1" v-model="answer_1" width="100px" title="选项1"></analysis>
-          <analysis :content="answer_2" v-model="answer_2" width="100px" title="选项2"></analysis>
-          <analysis :content="answer_3" v-model="answer_3" width="100px" title="选项3"></analysis>
-          <analysis :content="answer_4" v-model="answer_4" width="100px" title="选项4"></analysis>
-          <analysis :content="answer_5" v-model="answer_5" width="100px" title="选项5"></analysis>
-          <analysis :content="answer_6" v-model="answer_6" width="100px" title="选项6"></analysis>
-          <analysis :content="answer_7" v-model="answer_7" width="100px" title="选项7"></analysis>
-          <analysis :content="answer_8" v-model="answer_8" width="100px" title="选项8"></analysis>
-          <analysis :content="answer_9" v-model="answer_9" width="100px" title="选项9"></analysis>
-          <analysis :content="answer_10" v-model="answer_10" width="100px" title="选项10"></analysis>
-          <analysis :content="answer_11" v-model="answer_11" width="100px" title="选项11"></analysis>
-          <analysis :content="answer_12" v-model="answer_12" width="100px" title="选项12"></analysis>
-          <analysis :content="answer_13" v-model="answer_13" width="100px" title="选项13"></analysis>
-          <analysis :content="answer_14" v-model="answer_14" width="100px" title="选项14"></analysis>
-          <analysis :content="answer_15" v-model="answer_15" width="100px" title="选项15"></analysis>
-          <analysis :content="answer_16" v-model="answer_16" width="100px" title="选项16"></analysis>
-          <analysis :content="answer_17" v-model="answer_17" width="100px" title="选项17"></analysis>
-          <analysis :content="answer_18" v-model="answer_18" width="100px" title="选项18"></analysis>
-          <analysis :content="answer_19" v-model="answer_19" width="100px" title="选项19"></analysis>
-          <analysis :content="answer_20" v-model="answer_20" width="100px" title="选项20"></analysis>
+          <div>
+            选项1
+            <el-select v-model="answer_1" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项2
+            <el-select v-model="answer_2" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项3
+            <el-select v-model="answer_3" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_3"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项4
+            <el-select v-model="answer_4" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_4"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项5
+            <el-select v-model="answer_5" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_5"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项6
+            <el-select v-model="answer_6" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_6"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项7
+            <el-select v-model="answer_7" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_7"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项8
+            <el-select v-model="answer_8" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_8"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项9
+            <el-select v-model="answer_9" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_9"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项10
+            <el-select v-model="answer_10" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_10"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项11
+            <el-select v-model="answer_11" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_11"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项12
+            <el-select v-model="answer_12" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_12"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项13
+            <el-select v-model="answer_13" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_13"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项14
+            <el-select v-model="answer_14" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_14"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项15
+            <el-select v-model="answer_15" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_15"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项16
+            <el-select v-model="answer_16" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_16"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项17
+            <el-select v-model="answer_17" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_17"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项18
+            <el-select v-model="answer_18" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_18"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项19
+            <el-select v-model="answer_19" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_19"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项20
+            <el-select v-model="answer_20" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_20"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
         </div>
       </div>
       <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
@@ -153,6 +353,366 @@ export default {
   },
   data() {
     return {
+      answer_option_1: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_2: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_3: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_4: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_5: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_6: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_7: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_8: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_9: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_10: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_11: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_12: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_13: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_14: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_15: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_16: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_17: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_18: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_19: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
+      answer_option_20: [
+        {
+          value: "选项1",
+          label: "A"
+        },
+        {
+          value: "选项2",
+          label: "B"
+        },
+        {
+          value: "选项3",
+          label: "C"
+        },
+        {
+          value: "选项4",
+          label: "D"
+        }
+      ],
       count: 1,
       index: 0,
       answer_edit: [],
