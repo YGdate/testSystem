@@ -4,7 +4,15 @@
     <div class="fun-content">
       <div class="fun-row1">
         <analysis v-model="title" :content="title" title="题干"></analysis>
-        <analysis v-model="answer" :content="answer" placeholder=" " title="答案" width="50px"></analysis>
+        <div>
+          答案：
+          <el-radio-group v-model="answer">
+            <el-radio-button label="A"></el-radio-button>
+            <el-radio-button label="B"></el-radio-button>
+            <el-radio-button label="C"></el-radio-button>
+            <el-radio-button label="D"></el-radio-button>
+          </el-radio-group>
+        </div>
         <div class="optionList" ref="optionList">
           <analysis v-model="answer_one" :content="answer_one" width="500px" title="选项A"></analysis>
           <analysis v-model="answer_two" :content="answer_two" width="500px" title="选项B"></analysis>
@@ -185,7 +193,6 @@ export default {
         C: this.answer_three,
         D: this.answer_four
       };
-
 
       if (
         grade != -1 &&

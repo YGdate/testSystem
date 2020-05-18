@@ -2,7 +2,12 @@
   <div class="list-container">
     <top>题库列表</top>
     <div class="content">
-      <toplist v-on:mul-delete="getMul" v-on:get-data="upData($event)" :topData="tableData.data"></toplist>
+      <toplist
+        ref="toplist"
+        v-on:mul-delete="getMul"
+        v-on:get-data="upData($event)"
+        :topData="tableData.data"
+      ></toplist>
       <div class="table">
         <el-table
           ref="multipleTable"
@@ -84,7 +89,61 @@ export default {
       multipleSelection: [],
       model_data: "",
       top_title: "",
-      idArray: []
+      idArray: [],
+      s_grade: 0,
+      s_semester: 0,
+      s_category: 0,
+      s_difficulty: 0,
+      grade: [
+        "一年级",
+        "二年级",
+        "三年级",
+        "四年级",
+        "五年级",
+        "六年级",
+        "初一",
+        "初二",
+        "初三",
+        "高一",
+        "高二",
+        "高三",
+        "大一",
+        "大二",
+        "大三",
+        "大四"
+      ],
+      difficulty: ["简单", "一般", "适中", "困难", "很难"],
+      type: [
+        "单选题",
+        "多选题",
+        "不定项选择",
+        "判断题",
+        "填空题",
+        "7选5",
+        "完型填空",
+        "选词填空",
+        "短文改错",
+        "翻译",
+        "阅读理解",
+        "作文",
+        "听力"
+      ],
+      category: [
+        "single_select",
+        "multi_select",
+        "non_directional_select",
+        "true_or_false",
+        "fill",
+        "seven_selected_five",
+        "fill_blank",
+        "choose_fill_blank",
+        "text_mistake",
+        "translation",
+        "read_understand",
+        "composition",
+        "listening"
+      ],
+      semester: ["上册", "下册"]
     };
   },
   created() {
@@ -118,6 +177,19 @@ export default {
         this.tableData = data;
         console.log(data);
       });
+      let checkedGrade = this.grade.indexOf(this.$refs.toplist.checkedGrade);
+      let checkedSemester = this.semester.indexOf(
+        this.$refs.toplist.checkedSemester
+      );
+      let checkedCategory = this.type.indexOf(
+        this.$refs.toplist.checkedCategory
+      );
+      let checkedDifficulty = this.difficulty.indexOf(
+        this.$refs.toplist.checkedDifficulty
+      );
+      if (checkedGrade != "" && checkedGrade != -1) {
+        this.$http.get("question?grade=");
+      }
     },
     handleDelete(row, index) {
       this.$http.delete("question/" + row.id).then(res => {
@@ -157,7 +229,6 @@ export default {
       });
     },
     upData(event) {
-      console.log(event);
       this.tableData = event;
     },
     getMul() {

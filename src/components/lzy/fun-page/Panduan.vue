@@ -4,7 +4,13 @@
     <div class="fun-content">
       <div class="fun-row1">
         <analysis v-model="title" :content="title" title="题干"></analysis>
-        <analysis v-model="answer" :content="answer" placeholder="错误" title="答案" width="50px"></analysis>
+        <div>
+          答案：
+          <el-radio-group v-model="answer">
+            <el-radio-button label="正确"></el-radio-button>
+            <el-radio-button label="错误"></el-radio-button>
+          </el-radio-group>
+        </div>
       </div>
       <div class="fun-row3">
         <tmsz ref="tmsz" v-on:get-option="getOption($event)" width="600px"></tmsz>

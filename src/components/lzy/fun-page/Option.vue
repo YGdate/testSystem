@@ -4,19 +4,19 @@
       <div class="title">{{title}}</div>
       <div class="content">
         <div class="option">
-          <span style>(1)</span>
+          <span style>A</span>
           <textarea v-model="option_one" class="input"></textarea>
         </div>
         <div class="option">
-          <span>(2)</span>
+          <span>B</span>
           <textarea v-model="option_two" class="input"></textarea>
         </div>
         <div class="option">
-          <span>(3)</span>
+          <span>C</span>
           <textarea v-model="option_three" class="input"></textarea>
         </div>
         <div class="option">
-          <span>(4)</span>
+          <span>D</span>
           <textarea v-model="option_four" class="input"></textarea>
         </div>
         <!-- <div class="delete_container">

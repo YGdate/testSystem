@@ -6,7 +6,7 @@
       <div class="content">
         <textarea v-model="title_content" rows="10" cols="120"></textarea>
       </div>
-      <div class="insert">插入空格</div>
+      <!-- <div class="insert">插入空格</div> -->
     </div>
     <div class="anwser-edit">
       <div class="title">选项设置</div>

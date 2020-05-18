@@ -15,7 +15,7 @@
           v-for="(item,index) in answer_edit"
           :key="index"
           :title="index"
-          :content="item"
+          :content="item.content"
           v-model="item.content"
           width="150px"
         ></Analysis>
