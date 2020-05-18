@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <el-card v-show="isshow">
+    <el-card v-if="isshow">
       <el-row class="title">
         <el-alert title="试卷列表" type="success" :closable="false">
         </el-alert>
@@ -99,8 +99,7 @@
       </el-row>
     </el-card>
 
-    <publishPaper :paperID="paperID" v-if="!isshow"></publishPaper>
-    
+    <publishPaper @piblishPaper="piblishPaper" :paperID="paperID" v-if="!isshow"></publishPaper>
     
     <!-- 试卷共享 -->
     <shareDialog @shareVisible="shareVisible"  @updateCode="updateCode($event)" :isVisible="isVisible" :text="textpaperShare"></shareDialog>
@@ -286,6 +285,11 @@
       },
     },
     methods: {
+      piblishPaper(){
+        this.isshow = true
+        this.getTestScore()
+      this.getdropDown()
+      },
       measureTest(id){
         this.isshow = false
         this.paperID = id
@@ -336,6 +340,7 @@
             });
           })
       },
+
       // 批量导出
       exportWord(){
         console.log(111);
