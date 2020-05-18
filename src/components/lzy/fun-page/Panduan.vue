@@ -201,7 +201,7 @@ export default {
               category: "true_or_false",
               analyze: analysis,
               title: this.title,
-              answer: answer
+              answer: answer+''
             })
             .then(res => {
               this._msg(res.data);
@@ -220,6 +220,9 @@ export default {
           type: "success"
         });
       } else {
+        console.log(res);
+        console.log(res.data);
+        console.log(this.$decryptData(res.data));
         this.$message.error(res.msg);
       }
     }

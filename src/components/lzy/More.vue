@@ -20,7 +20,7 @@
       </div>
     </el-card>
     <div class="model">
-      <button class="card"><a class="card_export" href="http://47.113.121.50/api/import/question" download="">下载模板</a></button>
+      <button class="card"><a class="card_export" :href="'http://47.113.121.50/api/import/question?token='+token" download="">下载模板</a></button>
       <el-upload
         class="upload-demo"
         action="http://47.113.121.50/api/import/question"
@@ -78,6 +78,7 @@
 export default {
   data() {
     return {
+      token:window.sessionStorage.getItem('token'),
       fileList: [],
       httpHeader: {
         Authorization: ''
