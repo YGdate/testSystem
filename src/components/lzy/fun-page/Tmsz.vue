@@ -30,19 +30,6 @@
       </el-dropdown>
       <el-dropdown>
         <el-button type="primary">
-          {{isType?checkedType:'知识点选择'}}
-          <i class="el-icon-arrow-down el-icon--right"></i>
-        </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item
-            @click.native="getType(index)"
-            :key="index"
-            v-for="(item,index) in type"
-          >{{item}}</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <el-dropdown>
-        <el-button type="primary">
           {{isDifficulty?checkedDifficulty:'难度选择'}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
@@ -55,7 +42,8 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <analysis v-model="content" title="解析"></analysis>
+    <analysis v-model="analysis" :content="analysis" title="解析"></analysis>
+    <analysis v-model="knowledge_point" :content="knowledge_point" title="知识点" placeholder="选填"></analysis>
   </div>
 </template>
 
@@ -102,21 +90,6 @@ export default {
         "大四"
       ],
       difficulty: ["简单", "一般", "适中", "困难", "很难"],
-      type: [
-        "单选题",
-        "多选题",
-        "不定项选择",
-        "判断题",
-        "填空题",
-        "7选5",
-        "完型填空",
-        "选词填空",
-        "短文改错",
-        "翻译",
-        "阅读理解",
-        "作文",
-        "听力"
-      ],
       category: [
         "single_select",
         "multi_select",
@@ -132,8 +105,9 @@ export default {
         "composition",
         "listening"
       ],
-      content: "",
-      semester: ["上册", "下册"],
+      analysis: "",
+      knowledge_point: '',
+      semester: ["上学期", "下学期"],
       isGrade: null,
       isSemester: null,
       isType: null,
@@ -150,17 +124,6 @@ export default {
   },
   props: {
     width: String
-  },
-  computed: {
-    totalOption() {
-      return {
-        0: this.data_grade,
-        1: this.data_semester,
-        2: this.data_type,
-        3: this.data_difficulty,
-        4: this.content
-      };
-    }
   },
   watch: {
     totalOption: {
@@ -182,13 +145,6 @@ export default {
       let option = this.semester[index];
       this.isSemester = !this.isSemester;
       this.checkedSemester = option;
-    },
-    getType(index) {
-      this.data_type = this.category[index];
-
-      let option = this.type[index];
-      this.isType = !this.isType;
-      this.checkedType = option;
     },
     getDifficulty(index) {
       this.data_difficulty = index;

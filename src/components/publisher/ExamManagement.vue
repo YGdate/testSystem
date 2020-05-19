@@ -2,10 +2,8 @@
   <div class="main">
     
     <el-row class="content">
-      <el-col :span="4">
-        <sidebar 
-      name='试卷选择'
-      ></sidebar>
+      <el-col class="content-left" :span="4">
+        <el-button style=" background-color: #24c9e3; color:#fff"  @click="subjectChoose" icon="el-icon-back">{{title}}</el-button>
       </el-col>
       <el-col class="content-center" :span="16">
         <!-- 报考管理 展示 -->
@@ -19,20 +17,20 @@
 
 
 <script>
-import sidebar from './element/sidebar'
+
 import examManageshow from './element/examManageshow'
 import examManageInfo from './element/examManageInfo'
 
   export default {
     components:{
-      sidebar,
+      
       examManageshow,
       examManageInfo
     },
     data() {
       return {
-        isshow:true
-        
+        isshow:true,
+        title:'学课选择'
       }
     },
     mounted() {
@@ -40,8 +38,17 @@ import examManageInfo from './element/examManageInfo'
 
     },
     methods: {
+      subjectChoose(){
+        if( this.title == '返回'){
+           this.isshow = true
+        }else{
+          this.$router.push('/solve/zhomepage')
+        }
+        
+      },
       handleInfo(id){
         this.isshow = false
+        this.title = '返回'
         this.$refs.examManageInfo.getdata(id)
       }
     }

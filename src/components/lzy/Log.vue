@@ -2,7 +2,13 @@
   <div class="container">
     <top>日志记录</top>
     <div class="content">
-      <toplist2 v-on:mul-delete="getMul" v-on:get-data="upData($event)" :topData="tableData.data"></toplist2>
+      <toplist2
+        v-on:mul-delete="getMul"
+        v-on:get-data="upData($event)"
+        v-on:current-url="currentUrl($event)"
+        v-on:handle-search="handleSearch($event)"
+        :topData="tableData.data"
+      ></toplist2>
       <div class="table">
         <el-table
           ref="multipleTable"
@@ -11,7 +17,6 @@
           style="width: 100%"
           @selection-change="handleSelectionChange"
         >
-          <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column align="center" label="序号">
             <template slot-scope="scope">{{ scope.row.序号}}</template>
           </el-table-column>
@@ -29,6 +34,7 @@
           </el-table-column>
         </el-table>
       </div>
+
       <div class="detail" v-if="check">
         <el-card :body-style="{padding: 0}">
           <div slot="header" class="clearfix">
@@ -45,10 +51,23 @@
         </el-card>
       </div>
     </div>
+    <div class="pagination">
+      <el-pagination
+        @current-change="handleCurrentChange"
+        background
+        layout="prev, pager, next"
+        :total="tableData.total"
+      ></el-pagination>
+    </div>
   </div>
 </template>
 
 <style lang="less" scoped>
+.pagination {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+}
 .blue {
   color: #409eff;
   margin-right: 7px;
@@ -109,7 +128,8 @@ export default {
       tableData: [],
       detailData: [],
       multipleSelection: [],
-      check: false
+      check: false,
+      url: ""
     };
   },
   created() {
@@ -132,6 +152,21 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    handleCurrentChange(val) {
+      if (this.url == "") {
+        this.$http.get("getAllLog" + "?page=" + val).then(res => {
+          let data = this.$decryptData(res.data.data);
+          this.tableData = data;
+          console.log(data);
+        });
+      } else {
+        this.$http.get(this.url + "&page=" + val).then(res => {
+          let data = this.$decryptData(res.data.data);
+          this.tableData = data;
+          console.log(data);
+        });
+      }
+    },
     handleClose() {
       this.check = !this.check;
     },
@@ -143,7 +178,6 @@ export default {
       });
     },
     upData(event) {
-      console.log(event);
       this.tableData = event;
     },
     getMul() {
@@ -158,6 +192,13 @@ export default {
           type: "success"
         });
       });
+    },
+    handleSearch(event) {
+      this.tableData = event;
+    },
+    currentUrl(event) {
+      this.url = event;
+      console.log(event);
     }
   }
 };

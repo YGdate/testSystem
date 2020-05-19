@@ -448,7 +448,11 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                 // 非定向选择的处理
                 if(xf.non_directional_select){
  for(let i=0;i<this.allmsg.non_directional_select.length;i++){
+<<<<<<< HEAD
                        this.fei[i]=[];
+=======
+                       this.fei[i]=''
+>>>>>>> upstream/master
                     this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
                    }
                 }

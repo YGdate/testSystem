@@ -189,36 +189,26 @@
     },
     methods: {
       formatDate(date1) {
-
         var date = new Date(date1);
-
         var YY = date.getFullYear() + '-';
-
         var MM = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-
         var DD = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate());
-
         var hh = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-
         var mm = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-
         var ss = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-
         return YY + MM + DD + " " + hh + mm + ss;
-
       },
       submitForm(formName) {
         if (this.$store.state.isAuto == true) {
           const autoTableData = this.$store.state.autoTableData
           let basicInfo1 = {}
-          console.log(autoTableData);
-          autoTableData.forEach((item,index)=>{
-            item.number = item.number-0
-            item.single_score = item.single_score-0
+          autoTableData.forEach((item, index) => {
+            item.number = item.number - 0
+            item.single_score = item.single_score - 0
             basicInfo1[index] = item
           })
 
-          this.submitFun(formName, 'testPaper/autoMakePaper',basicInfo1)
+          this.submitFun(formName, 'testPaper/autoMakePaper', basicInfo1)
         } else {
           const tableData = this.$store.state.tableData
           let tableClass = []
@@ -242,26 +232,47 @@
               }
             }
           })
-          this.submitFun(formName, 'testPaper/handMakerPaper',basicInfo)
+          this.submitFun(formName, 'testPaper/handMakerPaper', basicInfo)
         }
 
       },
-      submitFun(formName, url,basicInfo) {
+      timesSolve(time) {
+        let item = time - 0
+        let m = '00'
+        let hours = '00'
+
+        if (item >= 60) {
+          hours = parseInt(item / 60)
+          m = item % 60
+        }
+        if (hours < 10) {
+          hours = '0' + hours
+        }
+        return hours + ':' + m + ':00'
+      },
+
+      submitFun(formName, url, basicInfo) {
         this.$refs[formName].validate((valid) => {
           if (!valid) return;
-
+          if(Number(this.timesSolve(this.form.testTime).slipt(':')[0])>=60){
+            return this.$message.warning('考试时间长不能超过60小时')
+          }
           let config = {
             "testName": this.form.name,
             "test_start": this.formatDate(this.form.beginTime),
             "test_end": this.formatDate(this.form.endTime),
             "all_score": this.form.allScore - 0,
+
             "pass_score": this.form.passScore - 0,
-            "test_use_time": this.form.num - 0,
-            "test_num": this.form.testTime - 0,
+
+            "test_use_time": this.timesSolve(this.form.testTime),
+
+            "test_num": this.form.num - 0,
+
             "test_time": this.form.times - 0,
+
             "can_view": this.form.function-0
           }
-
 
           let FormDataItem = {
             "basicInfo": basicInfo,

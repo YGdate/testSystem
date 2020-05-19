@@ -7,6 +7,7 @@
           <div class="title">公开发布</div>
         </el-card>
         <div style="margin-top:10px">在报考管理中进行审核</div>
+        <el-button @click="piblishPaper(0)" size="small" type="primary" plain>公 开 发 布</el-button>
       </el-row>
       <el-row class="public">
         <el-card>
@@ -17,13 +18,9 @@
           <div @click="updataCode">刷新验证码</div>
         </el-card>
         <div style="margin-top:10px">获取验证码可直接考试</div>
+        <el-button @click="piblishPaper(1)" size="small" type="primary" plain>验 证 码 发 布</el-button>
       </el-row>
-
-
-    </el-row>
-    <el-row style="margin-top:80px;text-align:center;">
-      <el-button size="small" type="primary" plain>发 布</el-button>
-    </el-row>
+</el-row>
   </div>
 </template>
 
@@ -39,11 +36,34 @@
     },
     created(){
       this.paperShare(this.paperID)
+      
     },
     methods:{
+      piblishPaper(method){
+        this.$http.put('testPaper/updateTestStatus',{
+         
+          id: this.paperShareID,
+          test_method:method,
+          test_status:1
+          
+        })
+          .then(res => {
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+           this.$message.success(res.data.msg)
+            setTimeout(()=>{
+              this.$emit('piblishPaper')
+            },1500)
+          }).catch(err => {
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
       paperShare(id) {
         this.paperShareID = id
-        this.isVisible = true
         this.$http.get('testPaper/findShareCode',{
           params:{
             id:id
@@ -88,15 +108,20 @@
     height: 100%;
 }
   .main {
- 
+
     display: flex;
     justify-content: space-around;
     margin-top: 100px;
 
     .public {
+      text-align: center;
       background: #e7e7e7;
       height: 300px;
       border-radius: 5px;
+      .el-button{
+        margin: 0 auto;
+        margin-top: 40px;
+      }
 
       .el-card {
         height: 86%;

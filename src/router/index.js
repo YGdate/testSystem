@@ -57,6 +57,7 @@ import Xuanci from '../components/lzy/fun-page/Xuanci'
 import Ydlj from '../components/lzy/fun-page/Ydlj'
 import Wxtk from '../components/lzy/fun-page/Wxtk'
 import Qxw from '../components/lzy/fun-page/Qxw'
+import Tingli from '../components/lzy/fun-page/Tingli';
 
 //发布者子页面
 import Promulgator from '../components/publisher/Promulgator.vue'
@@ -228,54 +229,72 @@ const asyncRouterMap = [
 
             {
                 path: 'dxuan',
+                name: 'dxuan',
                 component: Dxuan
             },
             {
                 path: 'panduan',
+                name: 'panduan',
                 component: Panduan
             },
             {
                 path: 'duoxuan',
+                name: 'duoxuan',
                 component: Duoxuan
             },
             {
+                path: 'tingli',
+                name: 'tingli',
+                component: Tingli
+            },
+            {
                 path: 'fanyi',
+                name: 'fanyi',
                 component: Fanyi
             },
             {
                 path: 'bdx',
+                name: 'bdx',
                 component: Bdx
             },
             {
                 path: 'xuanci',
+                name: 'xuanci',
                 component: Xuanci
             },
             {
                 path: 'wxtk',
+                name: 'wxtk',
                 component: Wxtk
             },
             {
                 path: 'ydlj',
+                name: 'ydlj',
                 component: Ydlj
             },
             {
                 path: 'qxw',
+                name: 'qxw',
                 component: Qxw
             },
             {
                 path: 'tiankong',
+                name: 'tiankong',
                 component: Tiankong
             },
             {
                 path: 'zuowen',
+                name: 'zuowen',
                 component: Zuowen
             },
             {
                 path: 'dwgc',
+                name: 'dwgc',
                 component: Dwgc
             },
             {
                 path: 'log',
+                name: 'log',
                 component: Log
             }
         ]

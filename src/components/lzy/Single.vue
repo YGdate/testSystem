@@ -33,10 +33,10 @@
     <router-link tag="div" to="/ydlj" class="img-yd item">
       <div class="bgr">阅读理解</div>
     </router-link>
-    <router-link tag="div" to="/zuowen" class="img-zw item">
+    <router-link tag="div" to="/tingli" class="img-zw item">
       <div class="bgr">作文</div>
     </router-link>
-    <router-link tag="div" to class="img-tl item">
+    <router-link tag="div" to="/zuowen" class="img-tl item">
       <div class="bgr">听力</div>
     </router-link>
   </div>

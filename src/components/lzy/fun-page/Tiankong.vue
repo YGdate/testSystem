@@ -4,7 +4,7 @@
     <div class="cardContent">
       <div class="title">题目内容</div>
       <div class="content">
-        <input v-model="title_content" class="area" type="text" />
+        <textarea v-model="title_content" rows="10" cols="120"></textarea>
       </div>
       <div @click="handleInsert" class="insert">插入空格</div>
     </div>
@@ -14,13 +14,14 @@
         <Analysis
           v-for="(item,index) in answer_edit"
           :key="index"
-          :title="item.title"
+          :title="index"
+          :content="item.content"
           v-model="item.content"
           width="150px"
         ></Analysis>
       </div>
     </div>
-    <tmsz v-on:get-option="getOption($event)"></tmsz>
+    <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
     <div class="end">
       <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
     </div>
@@ -95,8 +96,67 @@ export default {
       category: "",
       degree_of_difficulty: "",
       analyze: "",
-      options: {}
+      options: {},
+      semester_c: ["上学期", "下学期"],
+      grade_c: [
+        "一年级",
+        "二年级",
+        "三年级",
+        "四年级",
+        "五年级",
+        "六年级",
+        "初一",
+        "初二",
+        "初三",
+        "高一",
+        "高二",
+        "高三",
+        "大一",
+        "大二",
+        "大三",
+        "大四"
+      ],
+      difficulty_c: ["简单", "一般", "适中", "困难", "很难"],
+      category_c: [
+        "single_select",
+        "multi_select",
+        "non_directional_select",
+        "true_or_false",
+        "fill",
+        "seven_selected_five",
+        "fill_blank",
+        "choose_fill_blank",
+        "text_mistake",
+        "translation",
+        "read_understand",
+        "composition",
+        "listening"
+      ],
+      newData: ""
     };
+  },
+  created() {
+    let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
+
+      let answer = newData.right_ans.answer;
+      this.answer_edit = answer;
+      console.log(answer);
+    }
+  },
+  mounted() {
+    if (this.newData != "") {
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     handleInsert() {
@@ -114,28 +174,63 @@ export default {
       this.degree_of_difficulty = event[3];
       this.analyze = event[4];
     },
+
     handleSubmit() {
-      let anwser = {};
-      for (let i = 0; i < this.answer_edit.length; i++) {
-        let title = this.answer_edit[i].title;
-        let value = this.answer_edit[i].content;
-        anwser[title] = value;
+      let answer = {};
+      for (let i in this.answer_edit) {
+        answer[i] = this.answer_edit[i];
       }
-      this.$http
-        .post("question", {
-          grade: this.grade,
-          semester: this.semester,
-          category: this.category,
-          degree_of_difficulty: this.degree_of_difficulty,
-          title: this.title_content,
-          answer: anwser
-        })
-        .then(res => {
-          this.$message({
-            message: res.data.msg,
-            type: "success"
+
+      let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
+      let semester = this.semester_c.indexOf(this.$refs.tmsz.checkedSemester);
+      let difficulty = this.difficulty_c.indexOf(
+        this.$refs.tmsz.checkedDifficulty
+      );
+      let analysis = this.$refs.tmsz.analysis;
+      let knowledge_point = this.$refs.tmsz.knowledge_point;
+
+      let isPass = false;
+      for (let i = 0; i < this.answer_edit.length; i++) {
+        if (
+          this.answer_edit[i].content != "" &&
+          this.title_content != "" &&
+          grade != -1 &&
+          semester != -1 &&
+          difficulty != -1 &&
+          analysis != ""
+        ) {
+          isPass = true;
+        } else {
+          isPass = false;
+          this.$message.error("请检查表格内容是否合理");
+        }
+      }
+      if (isPass == true) {
+        this.$http
+          .post("question", {
+            grade: grade,
+            semester: semester,
+            category: "fill",
+            degree_of_difficulty: difficulty,
+            analyze: analysis,
+            knowledge_point: knowledge_point,
+            title: this.title_content,
+            answer: answer
+          })
+          .then(res => {
+            this._msg(res.data);
           });
+      }
+    },
+    _msg(res) {
+      if (res.code == 0) {
+        this.$message({
+          message: res.msg,
+          type: "success"
         });
+      } else {
+        this.$message.error(res.msg);
+      }
     }
   }
 };

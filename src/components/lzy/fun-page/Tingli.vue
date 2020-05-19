@@ -1,23 +1,19 @@
 <template>
   <div class="fun-container">
-    <top>英语多选题</top>
-    <div class="fun-content">
-      <div class="fun-row1">
-        <analysis v-model="title" :content="title" title="题干"></analysis>
-        <answer ref="answer"></answer>
-        <div class="optionList" ref="optionList">
-          <analysis v-model="answer_one" :content="answer_one" width="500px" title="选项A"></analysis>
-          <analysis v-model="answer_two" :content="answer_two" width="500px" title="选项B"></analysis>
-          <analysis v-model="answer_three" :content="answer_three" width="500px" title="选项C"></analysis>
-          <analysis v-model="answer_four" :content="answer_four" width="500px" title="选项D"></analysis>
-        </div>
+    <top>作文</top>
+    <div class="row">
+      <div class="left">
+        <div class="title">作文文本</div>
+        <textarea :content="title" class="fy" v-model="title" rows="10" cols="120"></textarea>
       </div>
-      <div class="fun-row3">
-        <tmsz ref="tmsz" v-on:get-option="getOption($event)" width="600px"></tmsz>
+      <div class="right">
+        <div class="title">作文范文</div>
+        <textarea :content="answer" class="fy" v-model="answer" rows="10" cols="120"></textarea>
       </div>
-      <div class="fun-row4">
-        <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
-      </div>
+    </div>
+    <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
+    <div class="end">
+      <el-button @click.native="handleSubmit" type="primary">确定录入</el-button>
     </div>
   </div>
 </template>
@@ -25,69 +21,67 @@
 <style lang="less" scoped>
 @import url("./common.less");
 
-.fun-container {
-  .fun-content {
-    width: 1200px;
-    .fun-row1 {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-    .fun-row2 {
-      margin-top: 10px;
-      .fun-button {
-        width: 150px;
-        border: 0;
-        color: #fff;
-        margin-right: 20px;
-        margin-bottom: 20px;
-        padding: 10px 0;
-      }
-    }
-    .fun-row4 {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
+.row {
+  display: flex;
+  margin-bottom: 20px;
+  .left,
+  .right {
+    width: 350px;
+    margin-right: 15px;
+    height: 270px;
+    box-shadow: 2px 2px 1px gainsboro, -2px -2px 1px gainsboro;
+    padding: 10px;
+    .title {
+      margin-bottom: 10px;
     }
   }
 }
-.optionList {
-  display: flex;
-  flex-wrap: wrap;
+.label {
   margin: 20px 0;
+  .item {
+    background-color: #118aff;
+    color: #fff;
+    border-radius: 15px;
+    padding: 4px 5px;
+    outline: none;
+    border: 0;
+    width: 70px;
+    margin-left: 10px;
+  }
+}
+.fy {
+  width: 350px;
+  height: 200px;
+}
+.add {
+  background-color: orange;
+  padding: 5px;
+  border-radius: 50%;
+  margin-left: 5px;
+  cursor: pointer;
 }
 </style>
 
 <script>
 import Tmsz from "./Tmsz";
-import Analysis from "./Analysis";
 import Top from "../Title";
-import Answer from "./Answer";
 
 export default {
   components: {
     Tmsz,
-    Analysis,
-    Top,
-    Answer
+    Top
   },
   data() {
     return {
-      option: ["A", "B", "C", "D"],
-      index: 0,
-      optionItem: [],
       title: "",
       answer: "",
+      word: [],
       grade: "",
       semester: "",
       category: "",
       degree_of_difficulty: "",
       analyze: "",
-      options: {},
-      answer_one: "",
-      answer_two: "",
-      answer_three: "",
-      answer_four: "",
+      // _c
       semester_c: ["上学期", "下学期"],
       grade_c: [
         "一年级",
@@ -132,20 +126,12 @@ export default {
       let newData = JSON.parse(paramData);
       this.newData = newData;
 
-      console.log(newData);
       this.title = newData.topic_and_stem.title;
-      this.answer = newData.right_ans.answer.split(",");
-
-      let options = newData.topic_and_stem.options;
-      this.answer_one = options["A"].toString();
-      this.answer_two = options["B"].toString();
-      this.answer_three = options["C"].toString();
-      this.answer_four = options["D"].toString();
+      this.answer = newData.right_ans.answer;
     }
   },
   mounted() {
     if (this.newData != "") {
-      console.log(this.$refs.tmsz);
       this.$refs.tmsz.analysis = this.newData.test_analyze;
       this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
       this.$refs.tmsz.isGrade = true;
@@ -154,20 +140,13 @@ export default {
       this.$refs.tmsz.checkedGrade = this.newData.grade;
       this.$refs.tmsz.checkedSemester = this.newData.semester;
       this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
-      // 答案
-      this.$refs.answer.checkedCities = this.answer;
     }
   },
   methods: {
-    handleDelete() {
-      this.optionItem.pop();
-    },
-    handleAdd() {
-      this.optionItem.push({
-        title: "选项" + this.option[this.index],
-        content: ""
+    handlInsert() {
+      this.word.push({
+        value: ""
       });
-      this.index++;
     },
     getOption(event) {
       this.grade = event[0];
@@ -177,7 +156,7 @@ export default {
       this.analyze = event[4];
     },
     handleSubmit() {
-      console.log(this.$refs.tmsz);
+      console.log(this.$refs.xuanci_option);
       let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
       let semester = this.semester_c.indexOf(this.$refs.tmsz.checkedSemester);
       let difficulty = this.difficulty_c.indexOf(
@@ -185,39 +164,26 @@ export default {
       );
       let analysis = this.$refs.tmsz.analysis;
       let knowledge_point = this.$refs.tmsz.knowledge_point;
-      let answer_array = this.$refs.answer.checkedCities;
-      let answer = answer_array.join(",");
-
-      let option = {
-        A: this.answer_one,
-        B: this.answer_two,
-        C: this.answer_three,
-        D: this.answer_four
-      };
-
-      console.log(grade, semester, difficulty);
 
       if (
         grade != -1 &&
         semester != -1 &&
         difficulty != -1 &&
         analysis != "" &&
-        option != "" &&
-        answer_array.length != 1 &&
-        answer_array.length != 0
+        this.title != "" &&
+        this.answer != ""
       ) {
         if (this.$route.params.type == "edit") {
           this.$http
             .patch("question/" + this.newData.id, {
               grade: grade,
               semester: semester,
-              degree_of_difficulty: difficulty,
               knowledge_point: knowledge_point,
-              category: "multi_select",
+              category: "composition",
               analyze: analysis,
+              degree_of_difficulty: difficulty,
               title: this.title,
-              answer: answer,
-              options: option
+              answer: this.answer
             })
             .then(res => {
               this._msg(res.data);
@@ -227,20 +193,19 @@ export default {
             .post("question", {
               grade: grade,
               semester: semester,
-              degree_of_difficulty: difficulty,
               knowledge_point: knowledge_point,
-              category: "multi_select",
+              category: "composition",
               analyze: analysis,
+              degree_of_difficulty: difficulty,
               title: this.title,
-              answer: answer,
-              options: option
+              answer: this.answer
             })
             .then(res => {
               this._msg(res.data);
             });
         }
       } else {
-        this.$message.error("请检查表格内容是否合理");
+        this.$message.error("请检查内容是否合理");
       }
     },
     _msg(res) {

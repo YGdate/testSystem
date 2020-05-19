@@ -78,7 +78,7 @@
   import mixin from '../../mixins/skip'
   export default {
     mixins: [mixin],
-    created(){
+    created(){ 
      
     },
     methods:{

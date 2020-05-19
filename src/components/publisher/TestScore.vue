@@ -37,7 +37,7 @@ import testSubmit from './element/testSubmit'
       return{
         isshow:true,
         paperID:0,
-        leftSkip:'测评管理'
+        leftSkip:'学课选择'
       }
       },
       methods:{
@@ -49,7 +49,9 @@ import testSubmit from './element/testSubmit'
         skipBtn(text){
           if(text=='返回'){
              this.isshow = true
-             this.leftSkip = '测评管理'
+             this.leftSkip = '学课选择'
+          }else{
+            this.$router.push('/solve/zhomepage')
           }
         }
       }
