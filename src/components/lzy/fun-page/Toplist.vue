@@ -127,53 +127,50 @@ export default {
   },
   methods: {
     handleSearch() {
-      console.log(
-        this.checkedGrade,
-        this.checkedSemester,
-        this.checkedCategory,
-        this.checkedDifficulty
-      );
       let grade = this.grade.indexOf(this.checkedGrade);
       let semester = this.semester.indexOf(this.checkedSemester);
       let category = this.category[this.type.indexOf(this.checkedCategory)];
       let difficulty = this.difficulty.indexOf(this.checkedDifficulty);
-      
-      let obj = {}
-      if(grade!=-1){
-        obj['1'] = grade
-      }
-      if(semester!=-1){
-        obj['2'] = semester
-      }
-      if(category!=undefined){
-        obj['3'] = category
-      }
-      if(difficulty!=-1){
-        obj['4'] = difficulty
-      }
-      console.log(obj)
 
-      // let list_page = ["semester", "categoray", "degree_of_difficulty"];
+      let obj = {
+        grade: null,
+        semester: null,
+        category: null,
+        degree_of_difficulty: null
+      };
+      if (grade != -1) {
+        obj["grade"] = grade;
+      }
+      if (semester != -1) {
+        obj["semester"] = semester;
+      }
+      if (category != undefined) {
+        obj["category"] = category;
+      }
+      if (difficulty != -1) {
+        obj["degree_of_difficulty"] = difficulty;
+      }
+      console.log(obj);
 
-      // if (list[0] != -1) {
-      //   this.$http.get("question?grade=" + list[0]).then(res => {
-      //     let data = this.$decryptData(res.data.data);
-      //     this.$emit("get-data", data);
-      //   });
-      // }
-
-      // let basic = "question?grade=" + list[0];
-      // let i = 0;
-      // for (i; i < list_page.length; i++) {
-      //   basic = basic + "&" + list_page[i] + "=" + list[i + 1];
-      //   if (list[i + 1] != -1 && list[i + 1] != undefined) {
-      //     this.$http.get(basic).then(res => {
-      //       console.log(res);
-      //       let data = this.$decryptData(res.data.data);
-      //       this.$emit("get-data", data);
-      //     });
-      //   }
-      // }
+      let basic = "";
+      for (let item in obj) {
+        if (obj[item] != null) {
+          basic += item + "=" + obj[item] + "&";
+        }
+      }
+      let result = "?" + basic;
+      let url = result.slice(0, result.length - 1);
+      console.log(url);
+      if (url == "") {
+        this.$message.error("请选择搜索内容");
+      } else {
+        this.$http.get("question" + url).then(res => {
+          let data = this.$decryptData(res.data.data)
+          let currentUrl = 'question'+url
+          this.$emit("handle-search", data);
+          this.$emit('current-url',currentUrl)
+        });
+      }
     },
     getGrade(index) {
       if (this.isGrade == false) {

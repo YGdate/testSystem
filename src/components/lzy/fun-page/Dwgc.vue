@@ -198,41 +198,42 @@ export default {
         "composition",
         "listening"
       ],
-      newData: ''
+      newData: ""
     };
   },
   created() {
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
-
-    this.title_content = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
-
+      this.title_content = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
+    }
   },
   mounted() {
-    let options = this.newData.right_ans.answer;
-    console.log(options)
-    this.$refs.xuanci_option[0].option = options[0]
-    this.$refs.xuanci_option[1].option = options[1]
-    this.$refs.xuanci_option[2].option = options[2]
-    this.$refs.xuanci_option[3].option = options[3]
-    this.$refs.xuanci_option[4].option = options[4]
-    this.$refs.xuanci_option[5].option = options[5]
-    this.$refs.xuanci_option[6].option = options[6]
-    this.$refs.xuanci_option[7].option = options[7]
-    this.$refs.xuanci_option[8].option = options[8]
-    this.$refs.xuanci_option[9].option = options[9]
+    if (this.newData != "") {
+      let options = this.newData.right_ans.answer;
+      this.$refs.xuanci_option[0].value = options[0];
+      this.$refs.xuanci_option[1].value = options[1];
+      this.$refs.xuanci_option[2].value = options[2];
+      this.$refs.xuanci_option[3].value = options[3];
+      this.$refs.xuanci_option[4].value = options[4];
+      this.$refs.xuanci_option[5].value = options[5];
+      this.$refs.xuanci_option[6].value = options[6];
+      this.$refs.xuanci_option[7].value = options[7];
+      this.$refs.xuanci_option[8].value = options[8];
+      this.$refs.xuanci_option[9].value = options[9];
 
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     getOption(event) {
@@ -253,44 +254,49 @@ export default {
       let knowledge_point = this.$refs.tmsz.knowledge_point;
 
       let answer = {
-        "1": this.answer_1,
-        "2": this.answer_2,
-        "3": this.answer_3,
-        "4": this.answer_4,
-        "5": this.answer_5,
-        "6": this.answer_6,
-        "7": this.answer_7,
-        "8": this.answer_8,
-        "9": this.answer_9,
-        "10": this.answer_10
+        "1": this.$refs.xuanci_option[0].value,
+        "2": this.$refs.xuanci_option[1].value,
+        "3": this.$refs.xuanci_option[2].value,
+        "4": this.$refs.xuanci_option[3].value,
+        "5": this.$refs.xuanci_option[4].value,
+        "6": this.$refs.xuanci_option[5].value,
+        "7": this.$refs.xuanci_option[6].value,
+        "8": this.$refs.xuanci_option[7].value,
+        "9": this.$refs.xuanci_option[8].value,
+        "10": this.$refs.xuanci_option[9].value
       };
 
-      let options = {};
-      for (let i = 0; i < this.$refs.xuanci_option.length; i++) {
-        let position = i + 1;
-        options[position] = {
-          A: this.$refs.xuanci_option[i].option_one,
-          B: this.$refs.xuanci_option[i].option_two,
-          C: this.$refs.xuanci_option[i].option_three,
-          D: this.$refs.xuanci_option[i].option_four
-        };
+      if (this.$route.params.type == "edit") {
+        this.$http
+          .patch("question/" + this.newData.id, {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "text_mistake",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            answer: answer
+          })
+          .then(res => {
+            this._msg(res.data);
+          });
+      } else {
+        this.$http
+          .post("question", {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "text_mistake",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            answer: answer
+          })
+          .then(res => {
+            this._msg(res.data);
+          });
       }
-
-      this.$http
-        .post("question", {
-          grade: grade,
-          semester: semester,
-          knowledge_point: knowledge_point,
-          category: "choose_fill_blank",
-          analyze: analysis,
-          degree_of_difficulty: difficulty,
-          title: this.title_content,
-          options: options,
-          answer: answer
-        })
-        .then(res => {
-          this._msg(res.data);
-        });
     },
     Delete(index) {
       console.log(index);

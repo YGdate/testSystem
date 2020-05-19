@@ -18,6 +18,7 @@
           v-for="(item,index) in option_list"
           :key="index"
           :title="item"
+          :value="select_set"
         ></Option>
       </div>
     </div>
@@ -25,16 +26,116 @@
       <div class="bottom-left">
         <div class="bottom-title">答案编辑</div>
         <div class="bottom-check">
-          <analysis :content="answer_1" v-model="answer_1" width="100px" title="选项1"></analysis>
-          <analysis :content="answer_2" v-model="answer_2" width="100px" title="选项2"></analysis>
-          <analysis :content="answer_3" v-model="answer_3" width="100px" title="选项3"></analysis>
-          <analysis :content="answer_4" v-model="answer_4" width="100px" title="选项4"></analysis>
-          <analysis :content="answer_5" v-model="answer_5" width="100px" title="选项5"></analysis>
-          <analysis :content="answer_6" v-model="answer_6" width="100px" title="选项6"></analysis>
-          <analysis :content="answer_7" v-model="answer_7" width="100px" title="选项7"></analysis>
-          <analysis :content="answer_8" v-model="answer_8" width="100px" title="选项8"></analysis>
-          <analysis :content="answer_9" v-model="answer_9" width="100px" title="选项9"></analysis>
-          <analysis :content="answer_10" v-model="answer_10" width="100px" title="选项10"></analysis>
+          <div>
+            选项1
+            <el-select v-model="answer_1" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项2
+            <el-select v-model="answer_2" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项3
+            <el-select v-model="answer_3" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_3"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项4
+            <el-select v-model="answer_4" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_4"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项5
+            <el-select v-model="answer_5" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_5"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项6
+            <el-select v-model="answer_6" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_6"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项7
+            <el-select v-model="answer_7" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_7"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项8
+            <el-select v-model="answer_8" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_8"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项9
+            <el-select v-model="answer_9" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_9"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项10
+            <el-select v-model="answer_10" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_10"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
         </div>
       </div>
       <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
@@ -130,14 +231,12 @@
 </style>
 
 <script>
-import Analysis from "./Analysis";
 import Tmsz from "./Tmsz";
 import Top from "../Title";
 import Option from "./XuanciOption";
 
 export default {
   components: {
-    Analysis,
     Tmsz,
     Top,
     Option
@@ -147,19 +246,429 @@ export default {
       count: 1,
       index: 0,
       answer_edit: [],
-      option_edit: [],
-      option_list: [
-        "选项1",
-        "选项2",
-        "选项3",
-        "选项4",
-        "选项5",
-        "选项6",
-        "选项7",
-        "选项8",
-        "选项9",
-        "选项10"
+      answer_option_1: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
       ],
+      answer_option_2: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_3: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_4: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_5: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_6: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_7: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_8: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_9: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+      answer_option_10: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        },
+        {
+          value: "E",
+          label: "E"
+        },
+        {
+          value: "F",
+          label: "F"
+        },
+        {
+          value: "G",
+          label: "G"
+        },
+        {
+          value: "H",
+          label: "H"
+        },
+        {
+          value: "I",
+          label: "I"
+        },
+        {
+          value: "J",
+          label: "J"
+        }
+      ],
+
+      option_edit: [],
+      option_list: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
       // answer
       answer_1: "",
       answer_2: "",
@@ -214,51 +723,56 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: "",
+      select_set: ""
     };
   },
   created() {
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
+      this.title_content = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
 
-    this.title_content = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
-
-    // 答案
-    this.answer_1 = newData.right_ans.answer["1"];
-    this.answer_2 = newData.right_ans.answer["2"];
-    this.answer_3 = newData.right_ans.answer["3"];
-    this.answer_4 = newData.right_ans.answer["4"];
-    this.answer_5 = newData.right_ans.answer["5"];
-    this.answer_6 = newData.right_ans.answer["6"];
-    this.answer_7 = newData.right_ans.answer["7"];
-    this.answer_8 = newData.right_ans.answer["8"];
-    this.answer_9 = newData.right_ans.answer["9"];
-    this.answer_10 = newData.right_ans.answer["10"];
+      // 答案
+      this.answer_1 = newData.right_ans.answer["1"];
+      this.answer_2 = newData.right_ans.answer["2"];
+      this.answer_3 = newData.right_ans.answer["3"];
+      this.answer_4 = newData.right_ans.answer["4"];
+      this.answer_5 = newData.right_ans.answer["5"];
+      this.answer_6 = newData.right_ans.answer["6"];
+      this.answer_7 = newData.right_ans.answer["7"];
+      this.answer_8 = newData.right_ans.answer["8"];
+      this.answer_9 = newData.right_ans.answer["9"];
+      this.answer_10 = newData.right_ans.answer["10"];
+    }
   },
   mounted() {
-    let options = this.newData.topic_and_stem.options;
-    this.$refs.xuanci_option[0].option = options.A
-    this.$refs.xuanci_option[1].option = options.B
-    this.$refs.xuanci_option[2].option = options.C
-    this.$refs.xuanci_option[3].option = options.D
-    this.$refs.xuanci_option[4].option = options.E
-    this.$refs.xuanci_option[5].option = options.F
-    this.$refs.xuanci_option[6].option = options.G
-    this.$refs.xuanci_option[7].option = options.H
-    this.$refs.xuanci_option[8].option = options.I
-    this.$refs.xuanci_option[9].option = options.J
+    if (this.newData != "") {
+      let options = this.newData.topic_and_stem.options;
+      this.$refs.xuanci_option[0].value = options.A;
+      this.$refs.xuanci_option[1].value = options.B;
+      this.$refs.xuanci_option[2].value = options.C;
+      this.$refs.xuanci_option[3].value = options.D;
+      this.$refs.xuanci_option[4].value = options.E;
+      this.$refs.xuanci_option[5].value = options.F;
+      this.$refs.xuanci_option[6].value = options.G;
+      this.$refs.xuanci_option[7].value = options.H;
+      this.$refs.xuanci_option[8].value = options.I;
+      this.$refs.xuanci_option[9].value = options.J;
 
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     getOption(event) {
@@ -292,31 +806,61 @@ export default {
       };
 
       let options = {};
+      let array = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+      let array_check = [];
       for (let i = 0; i < this.$refs.xuanci_option.length; i++) {
-        let position = i + 1;
-        options[position] = {
-          A: this.$refs.xuanci_option[i].option_one,
-          B: this.$refs.xuanci_option[i].option_two,
-          C: this.$refs.xuanci_option[i].option_three,
-          D: this.$refs.xuanci_option[i].option_four
-        };
+        let title = array[i];
+        // options[position] = {
+        //   A: this.$refs.xuanci_option[i].option_one,
+        //   B: this.$refs.xuanci_option[i].option_two,
+        //   C: this.$refs.xuanci_option[i].option_three,
+        //   D: this.$refs.xuanci_option[i].option_four
+        // };
+        array_check[i] = this.$refs.xuanci_option[i].value;
+        options[title] = this.$refs.xuanci_option[i].value;
       }
 
-      this.$http
-        .post("question", {
-          grade: grade,
-          semester: semester,
-          knowledge_point: knowledge_point,
-          category: "choose_fill_blank",
-          analyze: analysis,
-          degree_of_difficulty: difficulty,
-          title: this.title_content,
-          options: options,
-          answer: answer
-        })
-        .then(res => {
-          this._msg(res.data);
-        });
+      var norepeat2 = array_check.filter(function(item, index, self) {
+        return self.indexOf(item) === index && self.lastIndexOf(item) !== index;
+      });
+
+      if (norepeat2.length == 0) {
+        if (this.$route.params.type == "edit") {
+          this.$http
+            .patch("question/" + this.newData.id, {
+              grade: grade,
+              semester: semester,
+              knowledge_point: knowledge_point,
+              category: "choose_fill_blank",
+              analyze: analysis,
+              degree_of_difficulty: difficulty,
+              title: this.title_content,
+              options: options,
+              answer: answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        } else {
+          this.$http
+            .post("question", {
+              grade: grade,
+              semester: semester,
+              knowledge_point: knowledge_point,
+              category: "choose_fill_blank",
+              analyze: analysis,
+              degree_of_difficulty: difficulty,
+              title: this.title_content,
+              options: options,
+              answer: answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        }
+      } else {
+        this.$message.error("选项设置不能重复");
+      }
     },
     Delete(index) {
       console.log(index);

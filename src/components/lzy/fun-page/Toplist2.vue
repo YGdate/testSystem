@@ -127,40 +127,47 @@ export default {
   },
   methods: {
     handleSearch() {
-      console.log(
-        this.checkedGrade,
-        this.checkedSemester,
-        this.checkedCategory,
-        this.checkedDifficulty
-      );
       let grade = this.grade.indexOf(this.checkedGrade);
       let semester = this.semester.indexOf(this.checkedSemester);
       let category = this.category[this.type.indexOf(this.checkedCategory)];
       let difficulty = this.difficulty.indexOf(this.checkedDifficulty);
-      console.log(grade, semester, category, difficulty);
 
-      let list = [];
-      let list_page = ["semester", "categoray", "degree_of_difficulty"];
-      list.push(grade);
-      list.push(semester);
-      list.push(category);
-      list.push(difficulty);
-
-      if (list[0] != -1) {
-        this.$http.get("getAllLog?grade=" + list[0]).then(res => {
-          let data = this.$decryptData(res.data.data);
-          this.$emit("get-data", data);
-        });
+      let obj = {
+        grade: null,
+        semester: null,
+        category: null,
+        degree_of_difficulty: null
+      };
+      if (grade != -1) {
+        obj["grade"] = grade;
       }
-      let basic = "getAllLog?grade=" + list[0];
-      for (let i = 1; i < list.length; i++) {
-        if (list[i] != -1 && list[i] != undefined) {
-          basic = basic + "&" + list_page[i] + "=" + list[i];
-          this.$http.get(basic).then(res => {
-            let data = this.$decryptData(res.data.data);
-            this.$emit("get-data", data);
-          });
+      if (semester != -1) {
+        obj["semester"] = semester;
+      }
+      if (category != undefined) {
+        obj["category"] = category;
+      }
+      if (difficulty != -1) {
+        obj["degree_of_difficulty"] = difficulty;
+      }
+
+      let basic = "";
+      for (let item in obj) {
+        if (obj[item] != null) {
+          basic += item + "=" + obj[item] + "&";
         }
+      }
+      let result = "?" + basic;
+      let url = result.slice(0, result.length - 1);
+      if (url == "") {
+        this.$message.error("请选择搜索内容");
+      } else {
+        this.$http.get("searchLog" + url).then(res => {
+          let data = this.$decryptData(res.data.data)
+          let currentUrl = 'searchLog'+url
+          this.$emit("handle-search", data);
+          this.$emit('current-url',currentUrl)
+        });
       }
     },
     getGrade(index) {

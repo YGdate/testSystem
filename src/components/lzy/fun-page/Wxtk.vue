@@ -339,14 +339,12 @@
 </style>
 
 <script>
-import Analysis from "./Analysis";
 import Tmsz from "./Tmsz";
 import Top from "../Title";
 import Option from "./Option";
 
 export default {
   components: {
-    Analysis,
     Tmsz,
     Top,
     Option
@@ -355,361 +353,361 @@ export default {
     return {
       answer_option_1: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_2: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_3: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_4: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_5: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_6: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_7: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_8: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_9: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_10: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_11: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_12: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_13: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_14: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_15: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_16: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_17: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_18: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_19: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
       answer_option_20: [
         {
-          value: "选项1",
+          value: "A",
           label: "A"
         },
         {
-          value: "选项2",
+          value: "B",
           label: "B"
         },
         {
-          value: "选项3",
+          value: "C",
           label: "C"
         },
         {
-          value: "选项4",
+          value: "D",
           label: "D"
         }
       ],
@@ -809,145 +807,148 @@ export default {
   },
   created() {
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
+      this.title_content = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
 
-    this.title_content = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
-
-    // 答案
-    this.answer_1 = newData.right_ans.answer["1"];
-    this.answer_2 = newData.right_ans.answer["2"];
-    this.answer_3 = newData.right_ans.answer["3"];
-    this.answer_4 = newData.right_ans.answer["4"];
-    this.answer_5 = newData.right_ans.answer["5"];
-    this.answer_6 = newData.right_ans.answer["6"];
-    this.answer_7 = newData.right_ans.answer["7"];
-    this.answer_8 = newData.right_ans.answer["8"];
-    this.answer_9 = newData.right_ans.answer["9"];
-    this.answer_10 = newData.right_ans.answer["10"];
-    this.answer_11 = newData.right_ans.answer["11"];
-    this.answer_12 = newData.right_ans.answer["12"];
-    this.answer_13 = newData.right_ans.answer["13"];
-    this.answer_14 = newData.right_ans.answer["14"];
-    this.answer_15 = newData.right_ans.answer["15"];
-    this.answer_16 = newData.right_ans.answer["16"];
-    this.answer_17 = newData.right_ans.answer["17"];
-    this.answer_18 = newData.right_ans.answer["18"];
-    this.answer_19 = newData.right_ans.answer["19"];
-    this.answer_20 = newData.right_ans.answer["20"];
+      // 答案
+      this.answer_1 = newData.right_ans.answer["1"];
+      this.answer_2 = newData.right_ans.answer["2"];
+      this.answer_3 = newData.right_ans.answer["3"];
+      this.answer_4 = newData.right_ans.answer["4"];
+      this.answer_5 = newData.right_ans.answer["5"];
+      this.answer_6 = newData.right_ans.answer["6"];
+      this.answer_7 = newData.right_ans.answer["7"];
+      this.answer_8 = newData.right_ans.answer["8"];
+      this.answer_9 = newData.right_ans.answer["9"];
+      this.answer_10 = newData.right_ans.answer["10"];
+      this.answer_11 = newData.right_ans.answer["11"];
+      this.answer_12 = newData.right_ans.answer["12"];
+      this.answer_13 = newData.right_ans.answer["13"];
+      this.answer_14 = newData.right_ans.answer["14"];
+      this.answer_15 = newData.right_ans.answer["15"];
+      this.answer_16 = newData.right_ans.answer["16"];
+      this.answer_17 = newData.right_ans.answer["17"];
+      this.answer_18 = newData.right_ans.answer["18"];
+      this.answer_19 = newData.right_ans.answer["19"];
+      this.answer_20 = newData.right_ans.answer["20"];
+    }
   },
   mounted() {
-    let options = this.newData.topic_and_stem.options;
-    this.$refs.option[0].option_one = options["1"].A;
-    this.$refs.option[0].option_one = options["1"].B;
-    this.$refs.option[0].option_one = options["1"].C;
-    this.$refs.option[0].option_one = options["1"].D;
+    if (this.newData != "") {
+      let options = this.newData.topic_and_stem.options;
+      this.$refs.option[0].option_one = options["1"].A;
+      this.$refs.option[0].option_two = options["1"].B;
+      this.$refs.option[0].option_three = options["1"].C;
+      this.$refs.option[0].option_four = options["1"].D;
 
-    this.$refs.option[1].option_one = options["2"].A;
-    this.$refs.option[1].option_one = options["2"].B;
-    this.$refs.option[1].option_one = options["2"].C;
-    this.$refs.option[1].option_one = options["2"].D;
+      this.$refs.option[1].option_one = options["2"].A;
+      this.$refs.option[1].option_two = options["2"].B;
+      this.$refs.option[1].option_three = options["2"].C;
+      this.$refs.option[1].option_four = options["2"].D;
 
-    this.$refs.option[2].option_one = options["3"].A;
-    this.$refs.option[2].option_one = options["3"].B;
-    this.$refs.option[2].option_one = options["3"].C;
-    this.$refs.option[2].option_one = options["3"].D;
+      this.$refs.option[2].option_one = options["3"].A;
+      this.$refs.option[2].option_two = options["3"].B;
+      this.$refs.option[2].option_three = options["3"].C;
+      this.$refs.option[2].option_four = options["3"].D;
 
-    this.$refs.option[3].option_one = options["4"].A;
-    this.$refs.option[3].option_one = options["4"].B;
-    this.$refs.option[3].option_one = options["4"].C;
-    this.$refs.option[3].option_one = options["4"].D;
+      this.$refs.option[3].option_one = options["4"].A;
+      this.$refs.option[3].option_two = options["4"].B;
+      this.$refs.option[3].option_three = options["4"].C;
+      this.$refs.option[3].option_four = options["4"].D;
 
-    this.$refs.option[4].option_one = options["5"].A;
-    this.$refs.option[4].option_one = options["5"].B;
-    this.$refs.option[4].option_one = options["5"].C;
-    this.$refs.option[4].option_one = options["5"].D;
+      this.$refs.option[4].option_one = options["5"].A;
+      this.$refs.option[4].option_two = options["5"].B;
+      this.$refs.option[4].option_three = options["5"].C;
+      this.$refs.option[4].option_four = options["5"].D;
 
-    this.$refs.option[5].option_one = options["6"].A;
-    this.$refs.option[5].option_one = options["6"].B;
-    this.$refs.option[5].option_one = options["6"].C;
-    this.$refs.option[5].option_one = options["6"].D;
+      this.$refs.option[5].option_one = options["6"].A;
+      this.$refs.option[5].option_two = options["6"].B;
+      this.$refs.option[5].option_three = options["6"].C;
+      this.$refs.option[5].option_four = options["6"].D;
 
-    this.$refs.option[6].option_one = options["7"].A;
-    this.$refs.option[6].option_one = options["7"].B;
-    this.$refs.option[6].option_one = options["7"].C;
-    this.$refs.option[6].option_one = options["7"].D;
+      this.$refs.option[6].option_one = options["7"].A;
+      this.$refs.option[6].option_two = options["7"].B;
+      this.$refs.option[6].option_three = options["7"].C;
+      this.$refs.option[6].option_four = options["7"].D;
 
-    this.$refs.option[7].option_one = options["8"].A;
-    this.$refs.option[7].option_one = options["8"].B;
-    this.$refs.option[7].option_one = options["8"].C;
-    this.$refs.option[7].option_one = options["8"].D;
+      this.$refs.option[7].option_one = options["8"].A;
+      this.$refs.option[7].option_two = options["8"].B;
+      this.$refs.option[7].option_three = options["8"].C;
+      this.$refs.option[7].option_four = options["8"].D;
 
-    this.$refs.option[8].option_one = options["9"].A;
-    this.$refs.option[8].option_one = options["9"].B;
-    this.$refs.option[8].option_one = options["9"].C;
-    this.$refs.option[8].option_one = options["9"].D;
+      this.$refs.option[8].option_one = options["9"].A;
+      this.$refs.option[8].option_two = options["9"].B;
+      this.$refs.option[8].option_three = options["9"].C;
+      this.$refs.option[8].option_four = options["9"].D;
 
-    this.$refs.option[9].option_one = options["10"].A;
-    this.$refs.option[9].option_one = options["10"].B;
-    this.$refs.option[9].option_one = options["10"].C;
-    this.$refs.option[9].option_one = options["10"].D;
+      this.$refs.option[9].option_one = options["10"].A;
+      this.$refs.option[9].option_two = options["10"].B;
+      this.$refs.option[9].option_three = options["10"].C;
+      this.$refs.option[9].option_four = options["10"].D;
 
-    this.$refs.option[10].option_one = options["11"].A;
-    this.$refs.option[10].option_one = options["11"].B;
-    this.$refs.option[10].option_one = options["11"].C;
-    this.$refs.option[10].option_one = options["11"].D;
+      this.$refs.option[10].option_one = options["11"].A;
+      this.$refs.option[10].option_two = options["11"].B;
+      this.$refs.option[10].option_three = options["11"].C;
+      this.$refs.option[10].option_four = options["11"].D;
 
-    this.$refs.option[11].option_one = options["12"].A;
-    this.$refs.option[11].option_one = options["12"].B;
-    this.$refs.option[11].option_one = options["12"].C;
-    this.$refs.option[11].option_one = options["12"].D;
+      this.$refs.option[11].option_one = options["12"].A;
+      this.$refs.option[11].option_two = options["12"].B;
+      this.$refs.option[11].option_three = options["12"].C;
+      this.$refs.option[11].option_four = options["12"].D;
 
-    this.$refs.option[12].option_one = options["13"].A;
-    this.$refs.option[12].option_one = options["13"].B;
-    this.$refs.option[12].option_one = options["13"].C;
-    this.$refs.option[12].option_one = options["13"].D;
+      this.$refs.option[12].option_one = options["13"].A;
+      this.$refs.option[12].option_two = options["13"].B;
+      this.$refs.option[12].option_three = options["13"].C;
+      this.$refs.option[12].option_four = options["13"].D;
 
-    this.$refs.option[13].option_one = options["14"].A;
-    this.$refs.option[13].option_one = options["14"].B;
-    this.$refs.option[13].option_one = options["14"].C;
-    this.$refs.option[13].option_one = options["14"].D;
+      this.$refs.option[13].option_one = options["14"].A;
+      this.$refs.option[13].option_two = options["14"].B;
+      this.$refs.option[13].option_three = options["14"].C;
+      this.$refs.option[13].option_four = options["14"].D;
 
-    this.$refs.option[14].option_one = options["15"].A;
-    this.$refs.option[14].option_one = options["15"].B;
-    this.$refs.option[14].option_one = options["15"].C;
-    this.$refs.option[14].option_one = options["15"].D;
+      this.$refs.option[14].option_one = options["15"].A;
+      this.$refs.option[14].option_two = options["15"].B;
+      this.$refs.option[14].option_three = options["15"].C;
+      this.$refs.option[14].option_four = options["15"].D;
 
-    this.$refs.option[15].option_one = options["16"].A;
-    this.$refs.option[15].option_one = options["16"].B;
-    this.$refs.option[15].option_one = options["16"].C;
-    this.$refs.option[15].option_one = options["16"].D;
+      this.$refs.option[15].option_one = options["16"].A;
+      this.$refs.option[15].option_two = options["16"].B;
+      this.$refs.option[15].option_three = options["16"].C;
+      this.$refs.option[15].option_four = options["16"].D;
 
-    this.$refs.option[16].option_one = options["17"].A;
-    this.$refs.option[16].option_one = options["17"].B;
-    this.$refs.option[16].option_one = options["17"].C;
-    this.$refs.option[16].option_one = options["17"].D;
+      this.$refs.option[16].option_one = options["17"].A;
+      this.$refs.option[16].option_two = options["17"].B;
+      this.$refs.option[16].option_three = options["17"].C;
+      this.$refs.option[16].option_four = options["17"].D;
 
-    this.$refs.option[17].option_one = options["18"].A;
-    this.$refs.option[17].option_one = options["18"].B;
-    this.$refs.option[17].option_one = options["18"].C;
-    this.$refs.option[17].option_one = options["18"].D;
+      this.$refs.option[17].option_one = options["18"].A;
+      this.$refs.option[17].option_two = options["18"].B;
+      this.$refs.option[17].option_three = options["18"].C;
+      this.$refs.option[17].option_four = options["18"].D;
 
-    this.$refs.option[18].option_one = options["19"].A;
-    this.$refs.option[18].option_one = options["19"].B;
-    this.$refs.option[18].option_one = options["19"].C;
-    this.$refs.option[18].option_one = options["19"].D;
+      this.$refs.option[18].option_one = options["19"].A;
+      this.$refs.option[18].option_two = options["19"].B;
+      this.$refs.option[18].option_three = options["19"].C;
+      this.$refs.option[18].option_four = options["19"].D;
 
-    this.$refs.option[19].option_one = options["20"].A;
-    this.$refs.option[19].option_one = options["20"].B;
-    this.$refs.option[19].option_one = options["20"].C;
-    this.$refs.option[19].option_one = options["20"].D;
+      this.$refs.option[19].option_one = options["20"].A;
+      this.$refs.option[19].option_two = options["20"].B;
+      this.$refs.option[19].option_three = options["20"].C;
+      this.$refs.option[19].option_four = options["20"].D;
 
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     getOption(event) {
@@ -1001,21 +1002,39 @@ export default {
         };
       }
 
-      this.$http
-        .post("question", {
-          grade: grade,
-          semester: semester,
-          knowledge_point: knowledge_point,
-          category: "fill_blank",
-          analyze: analysis,
-          degree_of_difficulty: difficulty,
-          title: this.title_content,
-          options: options,
-          answer: answer
-        })
-        .then(res => {
-          this._msg(res.data);
-        });
+      if (this.$route.params.type == "edit") {
+        this.$http
+          .patch("question/" + this.newData.id, {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "fill_blank",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            options: options,
+            answer: answer
+          })
+          .then(res => {
+            this._msg(res.data);
+          });
+      } else {
+        this.$http
+          .post("question", {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "fill_blank",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            options: options,
+            answer: answer
+          })
+          .then(res => {
+            this._msg(res.data);
+          });
+      }
     },
     Delete(index) {
       console.log(index);

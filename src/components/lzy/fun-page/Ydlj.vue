@@ -24,11 +24,61 @@
       <div class="bottom-left">
         <div class="bottom-title">答案编辑</div>
         <div class="bottom-check">
-          <analysis v-model="answer_1" width="100px" title="选项1"></analysis>
-          <analysis v-model="answer_2" width="100px" title="选项2"></analysis>
-          <analysis v-model="answer_3" width="100px" title="选项3"></analysis>
-          <analysis v-model="answer_4" width="100px" title="选项4"></analysis>
-          <analysis v-model="answer_5" width="100px" title="选项5"></analysis>
+          <div>
+            选项1
+            <el-select v-model="answer_1" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_1"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项2
+            <el-select v-model="answer_2" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_2"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项3
+            <el-select v-model="answer_3" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_3"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项4
+            <el-select v-model="answer_4" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_4"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            选项5
+            <el-select v-model="answer_5" placeholder="请选择">
+              <el-option
+                v-for="item in answer_option_5"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
         </div>
       </div>
       <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
@@ -124,31 +174,114 @@
 </style>
 
 <script>
-import Analysis from "./Analysis";
 import Tmsz from "./Tmsz";
 import Top from "../Title";
-import Option from "./Option";
+import Option from "./YdljOption";
 
 export default {
   components: {
-    Analysis,
     Tmsz,
     Top,
     Option
   },
   data() {
     return {
+      answer_option_1: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        }
+      ],
+      answer_option_2: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        }
+      ],
+      answer_option_3: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        }
+      ],
+      answer_option_4: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        }
+      ],
+      answer_option_5: [
+        {
+          value: "A",
+          label: "A"
+        },
+        {
+          value: "B",
+          label: "B"
+        },
+        {
+          value: "C",
+          label: "C"
+        },
+        {
+          value: "D",
+          label: "D"
+        }
+      ],
+
       count: 1,
       index: 0,
       answer_edit: [],
       option_edit: [],
-      option_list: [
-        "选项1",
-        "选项2",
-        "选项3",
-        "选项4",
-        "选项5"
-      ],
+      option_list: ["选项1", "选项2", "选项3", "选项4", "选项5"],
       // answer
       answer_1: "",
       answer_2: "",
@@ -164,7 +297,7 @@ export default {
       analyze: "",
       options: [],
       // _c
-      semester_c: ["上册", "下册"],
+      semester_c: ["上学期", "下学期"],
       grade_c: [
         "一年级",
         "二年级",
@@ -198,8 +331,81 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: ""
     };
+  },
+  created() {
+    let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
+
+      this.title_content = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
+
+      // 答案
+      this.answer_1 = newData.right_ans.answer["1"];
+      this.answer_2 = newData.right_ans.answer["2"];
+      this.answer_3 = newData.right_ans.answer["3"];
+      this.answer_4 = newData.right_ans.answer["4"];
+      this.answer_5 = newData.right_ans.answer["5"];
+      this.answer_6 = newData.right_ans.answer["6"];
+      this.answer_7 = newData.right_ans.answer["7"];
+      this.answer_8 = newData.right_ans.answer["8"];
+      this.answer_9 = newData.right_ans.answer["9"];
+      this.answer_10 = newData.right_ans.answer["10"];
+    }
+  },
+  mounted() {
+    if (this.newData != "") {
+      let options = this.newData.topic_and_stem.options;
+
+      this.$refs.option[0].option_one = options["1"].options.A;
+      this.$refs.option[0].option_two = options["1"].options.B;
+      this.$refs.option[0].option_three = options["1"].options.C;
+      this.$refs.option[0].option_four = options["1"].options.D;
+      this.$refs.option[0].option_title = options["1"].title;
+
+      this.$refs.option[1].option_one = options["2"].options.A;
+      this.$refs.option[1].option_two = options["2"].options.B;
+      this.$refs.option[1].option_three = options["2"].options.C;
+      this.$refs.option[1].option_four = options["2"].options.D;
+      this.$refs.option[1].option_title = options["2"].title;
+
+      this.$refs.option[2].option_one = options["3"].options.A;
+      this.$refs.option[2].option_two = options["3"].options.B;
+      this.$refs.option[2].option_three = options["3"].options.C;
+      this.$refs.option[2].option_four = options["3"].options.D;
+      this.$refs.option[2].option_title = options["3"].title;
+
+      this.$refs.option[3].option_one = options["4"].options.A;
+      this.$refs.option[3].option_two = options["4"].options.B;
+      this.$refs.option[3].option_three = options["4"].options.C;
+      this.$refs.option[3].option_four = options["4"].options.D;
+      this.$refs.option[3].option_title = options["4"].title;
+
+      this.$refs.option[4].option_one = options["5"].options.A;
+      this.$refs.option[4].option_two = options["5"].options.B;
+      this.$refs.option[4].option_three = options["5"].options.C;
+      this.$refs.option[4].option_four = options["5"].options.D;
+      this.$refs.option[4].option_title = options["5"].title;
+
+      this.$refs.option[5].option_one = options["5"].options.A;
+      this.$refs.option[5].option_two = options["5"].options.B;
+      this.$refs.option[5].option_three = options["5"].options.C;
+      this.$refs.option[5].option_four = options["5"].options.D;
+      this.$refs.option[5].option_title = options["5"].title;
+
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     getOption(event) {
@@ -231,26 +437,51 @@ export default {
       for (let i = 0; i < this.$refs.option.length; i++) {
         let position = i + 1;
         options[position] = {
-          A: this.$refs.option[i].option_one,
-          B: this.$refs.option[i].option_two,
-          C: this.$refs.option[i].option_three,
-          D: this.$refs.option[i].option_four
+          title: this.$refs.option[i].option_title,
+          options: {
+            A: this.$refs.option[i].option_one,
+            B: this.$refs.option[i].option_two,
+            C: this.$refs.option[i].option_three,
+            D: this.$refs.option[i].option_four
+          }
         };
       }
 
-      this.$http.post("question", {
-        grade: grade,
-        semester: semester,
-        knowledge_point: knowledge_point,
-        category: "fill_blank",
-        analyze: analysis,
-        degree_of_difficulty: difficulty,
-        title: this.title_content,
-        options: options,
-        answer: answer
-      }).then(res=>{
-        this._msg(res.data)
-      })
+      if (this.$route.params.type == "edit") {
+        this.$http
+          .patch("question/" + this.newData.id, {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "read_understand",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            options: options,
+            answer: answer
+          })
+          .then(res => {
+            console.log(res);
+            this._msg(res.data);
+          });
+      } else {
+        this.$http
+          .post("question", {
+            grade: grade,
+            semester: semester,
+            knowledge_point: knowledge_point,
+            category: "read_understand",
+            analyze: analysis,
+            degree_of_difficulty: difficulty,
+            title: this.title_content,
+            options: options,
+            answer: answer
+          })
+          .then(res => {
+            console.log(res);
+            this._msg(res.data);
+          });
+      }
     },
     Delete(index) {
       console.log(index);

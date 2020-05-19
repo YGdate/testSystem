@@ -131,28 +131,32 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: ""
     };
   },
-    created() {
+  created() {
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
-
-    let answer = newData.right_ans.answer
-    this.answer_edit = answer
-    console.log(answer)
+      let answer = newData.right_ans.answer;
+      this.answer_edit = answer;
+      console.log(answer);
+    }
   },
   mounted() {
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    if (this.newData != "") {
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     handleInsert() {
@@ -170,10 +174,11 @@ export default {
       this.degree_of_difficulty = event[3];
       this.analyze = event[4];
     },
+
     handleSubmit() {
       let answer = {};
       for (let i in this.answer_edit) {
-        answer[i] = this.answer_edit[i]
+        answer[i] = this.answer_edit[i];
       }
 
       let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
@@ -184,16 +189,23 @@ export default {
       let analysis = this.$refs.tmsz.analysis;
       let knowledge_point = this.$refs.tmsz.knowledge_point;
 
-      console.log(this.title_content,grade,semester,difficulty)
-
-      if (
-        this.title_content != "" &&
-        grade != -1 &&
-        semester != -1 &&
-        difficulty != -1 &&
-        analysis != "" &&
-        Object.keys(answer) != 0
-      ) {
+      let isPass = false;
+      for (let i = 0; i < this.answer_edit.length; i++) {
+        if (
+          this.answer_edit[i].content != "" &&
+          this.title_content != "" &&
+          grade != -1 &&
+          semester != -1 &&
+          difficulty != -1 &&
+          analysis != ""
+        ) {
+          isPass = true;
+        } else {
+          isPass = false;
+          this.$message.error("请检查表格内容是否合理");
+        }
+      }
+      if (isPass == true) {
         this.$http
           .post("question", {
             grade: grade,
@@ -208,8 +220,6 @@ export default {
           .then(res => {
             this._msg(res.data);
           });
-      } else {
-        this.$message.error("请检查表格内容是否合理");
       }
     },
     _msg(res) {
