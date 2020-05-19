@@ -206,22 +206,40 @@ export default {
           this.answer == "B" ||
           this.answer == "C" ||
           this.answer == "D"
-        ) {
-          this.$http
-            .post("question", {
-              grade: grade,
-              semester: semester,
-              degree_of_difficulty: difficulty,
-              knowledge_point: knowledge_point,
-              category: "single_select",
-              analyze: analysis,
-              title: this.title,
-              answer: this.answer,
-              options: option
-            })
-            .then(res => {
-              this._msg(res.data);
-            });
+        ) { 
+          if (this.$route.params.type == "edit") {
+            this.$http
+              .patch("question/"+this.newData.id, {
+                grade: grade,
+                semester: semester,
+                degree_of_difficulty: difficulty,
+                knowledge_point: knowledge_point,
+                category: "single_select",
+                analyze: analysis,
+                title: this.title,
+                answer: this.answer,
+                options: option
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+          } else {
+            this.$http
+              .post("question", {
+                grade: grade,
+                semester: semester,
+                degree_of_difficulty: difficulty,
+                knowledge_point: knowledge_point,
+                category: "single_select",
+                analyze: analysis,
+                title: this.title,
+                answer: this.answer,
+                options: option
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+          }
         } else {
           this.$message.error("请检查答案格式");
         }

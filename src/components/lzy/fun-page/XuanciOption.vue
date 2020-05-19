@@ -3,7 +3,7 @@
     <div class="option_list">
       <div class="title">{{title}}</div>
       <div class="option_content">
-        <textarea rows="10" v-model="option" class="input"></textarea>
+        <textarea rows="10" v-model="value" class="input"></textarea>
         <div class="delete_container">
           <el-button @click.native="handleDelete" type="text">删除</el-button>
         </div>
@@ -57,11 +57,15 @@
 export default {
   data() {
     return {
-      option: "fsf"
+      value: ''
     };
   },
   props: {
-    title: String
+    title: String,
+    textContent: String
+  },
+  mounted(){
+    this.value = this.textContent
   },
   methods: {
     handleDelete() {

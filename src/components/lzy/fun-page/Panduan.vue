@@ -119,7 +119,8 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: ""
     };
   },
   created() {
@@ -192,20 +193,38 @@ export default {
         this.answer != ""
       ) {
         if (this.answer == "正确" || this.answer == "错误") {
-          this.$http
-            .post("question", {
-              grade: grade,
-              semester: semester,
-              degree_of_difficulty: difficulty,
-              knowledge_point: knowledge_point,
-              category: "true_or_false",
-              analyze: analysis,
-              title: this.title,
-              answer: answer+''
-            })
-            .then(res => {
-              this._msg(res.data);
-            });
+          if (this.$route.params.type == "edit") {
+            this.$http
+              .patch("question/" + this.newData.id, {
+                grade: grade,
+                semester: semester,
+                degree_of_difficulty: difficulty,
+                knowledge_point: knowledge_point,
+                category: "true_or_false",
+                analyze: analysis,
+                title: this.title,
+                answer: answer + ""
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+            F;
+          } else {
+            this.$http
+              .post("question", {
+                grade: grade,
+                semester: semester,
+                degree_of_difficulty: difficulty,
+                knowledge_point: knowledge_point,
+                category: "true_or_false",
+                analyze: analysis,
+                title: this.title,
+                answer: answer + ""
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+          }
         } else {
           this.$message.error("请检查答案格式");
         }

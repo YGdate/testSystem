@@ -4,6 +4,8 @@
       <div class="title">{{title}}</div>
       <div class="content">
         <div class="option">
+          <span>标题</span>
+          <textarea v-model="option_title" class="input"></textarea>
           <span style>A</span>
           <textarea v-model="option_one" class="input"></textarea>
         </div>
@@ -73,11 +75,12 @@ export default {
       option_one: "",
       option_two: "",
       option_three: "",
-      option_four: ""
+      option_four: "",
+      option_title: ''
     };
   },
   props:{
-      title: String,
+      title: String
   },
   methods:{
       handleDelete(){

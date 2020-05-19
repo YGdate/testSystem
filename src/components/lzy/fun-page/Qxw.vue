@@ -24,11 +24,41 @@
       <div class="bottom-left">
         <div class="bottom-title">答案编辑</div>
         <div class="bottom-check">
-          <analysis placeholder="A" :content="answer_one" v-model="answer_one" width="50px" title="1"></analysis>
-          <analysis placeholder="A" :content="answer_two" v-model="answer_two" width="50px" title="2"></analysis>
-          <analysis placeholder="A" :content="answer_three" v-model="answer_three" width="50px" title="3"></analysis>
-          <analysis placeholder="A" :content="answer_four" v-model="answer_four" width="50px" title="4"></analysis>
-          <analysis placeholder="A" :content="answer_five" v-model="answer_five" width="50px" title="5"></analysis>
+          <analysis
+            placeholder="A"
+            :content="answer_one"
+            v-model="answer_one"
+            width="50px"
+            title="1"
+          ></analysis>
+          <analysis
+            placeholder="A"
+            :content="answer_two"
+            v-model="answer_two"
+            width="50px"
+            title="2"
+          ></analysis>
+          <analysis
+            placeholder="A"
+            :content="answer_three"
+            v-model="answer_three"
+            width="50px"
+            title="3"
+          ></analysis>
+          <analysis
+            placeholder="A"
+            :content="answer_four"
+            v-model="answer_four"
+            width="50px"
+            title="4"
+          ></analysis>
+          <analysis
+            placeholder="A"
+            :content="answer_five"
+            v-model="answer_five"
+            width="50px"
+            title="5"
+          ></analysis>
         </div>
       </div>
       <tmsz ref="tmsz" v-on:get-option="getOption($event)"></tmsz>
@@ -196,44 +226,47 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: ""
     };
   },
   created() {
-
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
-
-    console.log(newData);
-    this.title = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
-    let options = newData.topic_and_stem.options;
-    this.option_one = options["A"];
-    this.option_two = options["B"];
-    this.option_three = options["C"];
-    this.option_four = options["D"];
-    this.option_five = options['E']
-    this.option_six = options['F']
-    this.option_seven = options['G']
-    // 答案
-    this.answer_one = newData.right_ans.answer['1']
-    this.answer_two = newData.right_ans.answer['2']
-    this.answer_three = newData.right_ans.answer['3']
-    this.answer_four = newData.right_ans.answer['4']
-    this.answer_five = newData.right_ans.answer['5']
+      console.log(newData);
+      this.title = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
+      let options = newData.topic_and_stem.options;
+      this.option_one = options["A"];
+      this.option_two = options["B"];
+      this.option_three = options["C"];
+      this.option_four = options["D"];
+      this.option_five = options["E"];
+      this.option_six = options["F"];
+      this.option_seven = options["G"];
+      // 答案
+      this.answer_one = newData.right_ans.answer["1"];
+      this.answer_two = newData.right_ans.answer["2"];
+      this.answer_three = newData.right_ans.answer["3"];
+      this.answer_four = newData.right_ans.answer["4"];
+      this.answer_five = newData.right_ans.answer["5"];
+    }
   },
   mounted() {
-    console.log(this.$refs.tmsz);
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    if (this.newData != "") {
+      console.log(this.$refs.tmsz);
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     handleInsert() {},
@@ -296,21 +329,39 @@ export default {
           this.word.indexOf(this.answer_four) != -1 &&
           this.word.indexOf(this.answer_five) != -1
         ) {
-          this.$http
-            .post("question", {
-              grade: grade,
-              semester: semester,
-              knowledge_point: knowledge_point,
-              category: "seven_selected_five",
-              analyze: analysis,
-              title: this.title,
-              degree_of_difficulty: difficulty,
-              options: options,
-              answer: answer
-            })
-            .then(res => {
-              this._msg(res.data);
-            });
+          if (this.$route.params.type == "edit") {
+            this.$http
+              .patch("question/" + this.newData.id, {
+                grade: grade,
+                semester: semester,
+                knowledge_point: knowledge_point,
+                category: "seven_selected_five",
+                analyze: analysis,
+                title: this.title,
+                degree_of_difficulty: difficulty,
+                options: options,
+                answer: answer
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+          } else {
+            this.$http
+              .post("question", {
+                grade: grade,
+                semester: semester,
+                knowledge_point: knowledge_point,
+                category: "seven_selected_five",
+                analyze: analysis,
+                title: this.title,
+                degree_of_difficulty: difficulty,
+                options: options,
+                answer: answer
+              })
+              .then(res => {
+                this._msg(res.data);
+              });
+          }
         } else {
           this.$message.error("请检查答案格式");
         }

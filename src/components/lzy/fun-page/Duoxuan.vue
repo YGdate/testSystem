@@ -187,7 +187,6 @@ export default {
       let knowledge_point = this.$refs.tmsz.knowledge_point;
       let answer_array = this.$refs.answer.checkedCities;
       let answer = answer_array.join(",");
-      console.log(answer);
 
       let option = {
         A: this.answer_one,
@@ -203,23 +202,43 @@ export default {
         semester != -1 &&
         difficulty != -1 &&
         analysis != "" &&
-        option != ""
+        option != "" &&
+        answer_array.length != 1 &&
+        answer_array.length != 0
       ) {
-        this.$http
-          .post("question", {
-            grade: grade,
-            semester: semester,
-            degree_of_difficulty: difficulty,
-            knowledge_point: knowledge_point,
-            category: "multi_select",
-            analyze: analysis,
-            title: this.title,
-            answer: answer,
-            options: option
-          })
-          .then(res => {
-            this._msg(res.data);
-          });
+        if (this.$route.params.type == "edit") {
+          this.$http
+            .patch("question/" + this.newData.id, {
+              grade: grade,
+              semester: semester,
+              degree_of_difficulty: difficulty,
+              knowledge_point: knowledge_point,
+              category: "multi_select",
+              analyze: analysis,
+              title: this.title,
+              answer: answer,
+              options: option
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        } else {
+          this.$http
+            .post("question", {
+              grade: grade,
+              semester: semester,
+              degree_of_difficulty: difficulty,
+              knowledge_point: knowledge_point,
+              category: "multi_select",
+              analyze: analysis,
+              title: this.title,
+              answer: answer,
+              options: option
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        }
       } else {
         this.$message.error("请检查表格内容是否合理");
       }

@@ -5,6 +5,8 @@
       <toplist
         ref="toplist"
         v-on:mul-delete="getMul"
+        v-on:current-url="currentUrl($event)"
+        v-on:handle-search="handleSearch($event)"
         v-on:get-data="upData($event)"
         :topData="tableData.data"
       ></toplist>
@@ -143,7 +145,8 @@ export default {
         "composition",
         "listening"
       ],
-      semester: ["上册", "下册"]
+      semester: ["上册", "下册"],
+      url: ""
     };
   },
   created() {
@@ -172,23 +175,18 @@ export default {
       this.idArray = array;
     },
     handleCurrentChange(val) {
-      this.$http.get("question" + "?page=" + val).then(res => {
-        let data = this.$decryptData(res.data.data);
-        this.tableData = data;
-        console.log(data);
-      });
-      let checkedGrade = this.grade.indexOf(this.$refs.toplist.checkedGrade);
-      let checkedSemester = this.semester.indexOf(
-        this.$refs.toplist.checkedSemester
-      );
-      let checkedCategory = this.type.indexOf(
-        this.$refs.toplist.checkedCategory
-      );
-      let checkedDifficulty = this.difficulty.indexOf(
-        this.$refs.toplist.checkedDifficulty
-      );
-      if (checkedGrade != "" && checkedGrade != -1) {
-        this.$http.get("question?grade=");
+      if (this.url == "") {
+        this.$http.get("question" + "?page=" + val).then(res => {
+          let data = this.$decryptData(res.data.data);
+          this.tableData = data;
+          console.log(data);
+        });
+      }else{
+        this.$http.get(this.url+'&page='+val).then(res => {
+          let data = this.$decryptData(res.data.data);
+          this.tableData = data;
+          console.log(data);
+        });
       }
     },
     handleDelete(row, index) {
@@ -260,82 +258,91 @@ export default {
         case "单选":
           this.$router.push({
             name: "dxuan",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "多选题":
           this.$router.push({
             name: "duoxuan",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "不定向选择":
           this.$router.push({
             name: "bdx",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "判断题":
           this.$router.push({
             name: "panduan",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "填空题":
           this.$router.push({
             name: "tiankong",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "七选五":
           this.$router.push({
             name: "qxw",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "阅读理解":
           this.$router.push({
             name: "ydlj",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "完型填空":
           this.$router.push({
             name: "wxtk",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "选词填空":
           this.$router.push({
             name: "xuanci",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "短文改错":
           this.$router.push({
             name: "dwgc",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "翻译":
           this.$router.push({
             name: "fanyi",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "作文":
           this.$router.push({
             name: "tingli",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
         case "听力":
           this.$router.push({
             name: "zuowen",
-            params: { paramData: rowString }
+            params: { paramData: rowString, type: "edit" }
           });
           break;
       }
+    },
+    // 搜索页面
+    handleSearch(event) {
+      // console.log(event)
+      this.tableData = event;
+    },
+    currentUrl(event) {
+      this.url = event;
+      console.log(event);
     }
   }
 };

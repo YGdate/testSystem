@@ -116,27 +116,31 @@ export default {
         "read_understand",
         "composition",
         "listening"
-      ]
+      ],
+      newData: ""
     };
   },
-    created() {
+  created() {
     let paramData = this.$route.params.paramData;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
 
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
-
-    this.title = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
+      this.title = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
+    }
   },
-    mounted() {
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+  mounted() {
+    if (this.newData != "") {
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     handlInsert() {
@@ -169,18 +173,37 @@ export default {
         this.title != "" &&
         this.answer != ""
       ) {
-        this.$http("question", {
-          grade: grade,
-          semester: semester,
-          knowledge_point: knowledge_point,
-          category: "translation",
-          analyze: analysis,
-          degree_of_difficulty: difficulty,
-          title: this.title,
-          answer: this.answer
-        }).then(res => {
-          this._msg(res.data);
-        });
+        if (this.$route.params.type == "edit") {
+          this.$http
+            .patch("question/" + this.newData.id, {
+              grade: grade,
+              semester: semester,
+              knowledge_point: knowledge_point,
+              category: "composition",
+              analyze: analysis,
+              degree_of_difficulty: difficulty,
+              title: this.title,
+              answer: this.answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        } else {
+          this.$http
+            .post("question", {
+              grade: grade,
+              semester: semester,
+              knowledge_point: knowledge_point,
+              category: "composition",
+              analyze: analysis,
+              degree_of_difficulty: difficulty,
+              title: this.title,
+              answer: this.answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        }
       } else {
         this.$message.error("请检查内容是否合理");
       }

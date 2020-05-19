@@ -7,20 +7,15 @@
         <div v-for="(item,index) in list" :key="index" class="option-input">
           <analysis v-model="item.title" :content="item.title" width="250px" title="题干"></analysis>
           <analysis
-            v-model="item.answer"
-            :content="item.answer"
+            v-model="answer[index+1]"
+            :content="answer[index+1]"
             placeholder=" "
             width="50px"
             title="答案"
           ></analysis>
-          <analysis v-model="item.option_one" :content="item.option_one" width="250px" title="选项A"></analysis>
-          <analysis v-model="item.option_two" :content="item.option_two" width="250px" title="选项B"></analysis>
-          <analysis
-            v-model="item.option_three"
-            :content="item.option_three"
-            width="250px"
-            title="选项C"
-          ></analysis>
+          <analysis v-model="item.options.A" :content="item.options.A" width="250px" title="选项A"></analysis>
+          <analysis v-model="item.options.B" :content="item.options.B" width="250px" title="选项B"></analysis>
+          <analysis v-model="item.options.C" :content="item.options.C" width="250px" title="选项C"></analysis>
         </div>
         <div @click="handleAdd" class="option-add">增加题目</div>
       </div>
@@ -30,18 +25,14 @@
           <span style="margin-right: 10px">听力录音上传</span>
           <el-upload
             class="upload-demo"
-            action="http://47.113.121.50/api/question"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
-            :before-remove="beforeRemove"
-            :headers="submitFile"
-            multiple
-            :limit="3"
-            :on-exceed="handleExceed"
+            ref="upload"
+            action="http://47.113.121.50/api/qustion"
+            :on-change="handleChange"
             :file-list="fileList"
+            :auto-upload="false"
           >
+            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <div slot="tip" class="el-upload__tip">只能上传mp3文件</div>
-            <i style="cursor: pointer" class="el-icon-upload2"></i>
           </el-upload>
         </div>
       </div>
@@ -161,43 +152,61 @@ export default {
       submitFile: {
         Authorization: sessionStorage.getItem("token")
       },
-      newData: ""
+      newData: "",
+      voice: ""
     };
   },
   created() {
     let paramData = this.$route.params.paramData;
-    let newData = JSON.parse(paramData);
-    this.newData = newData;
-    console.log(newData)
-    this.title = newData.topic_and_stem.title;
-    this.answer = newData.right_ans.answer;
+    if (paramData != undefined) {
+      let newData = JSON.parse(paramData);
+      this.newData = newData;
+      console.log(newData);
+      this.title = newData.topic_and_stem.title;
+      this.answer = newData.right_ans.answer;
 
-    let obj
+      let question_1 = newData.topic_and_stem.title.question_1;
+      let question_2 = newData.topic_and_stem.title.question_2;
+      let question_3 = newData.topic_and_stem.title.question_3;
+      let question_4 = newData.topic_and_stem.title.question_4;
 
+      this.list.push(question_1);
+      this.list.push(question_2);
+      this.list.push(question_3);
+      this.list.push(question_4);
+    }
   },
   mounted() {
-    this.$refs.tmsz.analysis = this.newData.test_analyze;
-    this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
-    this.$refs.tmsz.isGrade = true;
-    this.$refs.tmsz.isSemester = true;
-    this.$refs.tmsz.isDifficulty = true;
-    this.$refs.tmsz.checkedGrade = this.newData.grade;
-    this.$refs.tmsz.checkedSemester = this.newData.semester;
-    this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    if (this.newData != "") {
+      this.$refs.tmsz.analysis = this.newData.test_analyze;
+      this.$refs.tmsz.knowledge_point = this.newData.knowledge_point;
+      this.$refs.tmsz.isGrade = true;
+      this.$refs.tmsz.isSemester = true;
+      this.$refs.tmsz.isDifficulty = true;
+      this.$refs.tmsz.checkedGrade = this.newData.grade;
+      this.$refs.tmsz.checkedSemester = this.newData.semester;
+      this.$refs.tmsz.checkedDifficulty = this.newData.degree_of_difficulty;
+    }
   },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handleAdd() {
-      this.list.push({
-        title: "",
-        answer: "",
-        option_one: "",
-        option_two: "",
-        option_three: ""
-      });
-      this.index++;
+      if (this.list.length != 4) {
+        this.list.push({
+          title: "",
+          answer: "",
+          options: {
+            option_one: "",
+            option_two: "",
+            option_three: ""
+          }
+        });
+        this.index++;
+      } else {
+        this.$message.error("不能继续添加题目");
+      }
     },
     handlePreview(file) {
       console.log(file);
@@ -219,6 +228,10 @@ export default {
       this.degree_of_difficulty = event[3];
       this.analyze = event[4];
     },
+    handleChange(file, fileList) {
+      this.fileList = fileList.slice(-3);
+      this.voice = file
+    },
     handleSubmit() {
       let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
       let semester = this.semester_c.indexOf(this.$refs.tmsz.checkedSemester);
@@ -229,34 +242,43 @@ export default {
       let knowledge_point = this.$refs.tmsz.knowledge_point;
 
       let title = {};
-      let answer = {};
-      for (let i = 0; i < this.list.length; i++) {
-        let position = i + 1;
-        title["question_" + position] = {
-          title: this.list[i].title,
-          options: {
-            A: this.list[i].option_one,
-            B: this.list[i].option_two,
-            C: this.list[i].option_three
-          }
-        };
-        answer["" + position] = this.list[i].answer;
-      }
-      this.title = title,
-      this.answer = answer
-
-        this.$http("question", {
-          grade: grade,
-          semester: semester,
-          knowledge_point: knowledge_point,
-          category: "translation",
-          analyze: analysis,
-          degree_of_difficulty: difficulty,
-          title: this.title,
-          answer: this.answer
-        }).then(res => {
-          this._msg(res.data);
-        });
+      console.log(this.voice);
+      // if (this.list.length != 0) {
+      //   for (let i = 0; i < this.list.length; i++) {
+      //     let num = i + 1;
+      //     title["question_" + num] = this.list[i];
+      //   }
+      // }
+      // if (this.$route.params.type == "edit") {
+      //   this.$http
+      //     .patch("question/" + this.newData.id, {
+      //       grade: grade,
+      //       semester: semester,
+      //       knowledge_point: knowledge_point,
+      //       category: "listening",
+      //       analyze: analysis,
+      //       degree_of_difficulty: difficulty,
+      //       title: title,
+      //       answer: this.answer
+      //     })
+      //     .then(res => {
+      //       this._msg(res.data);
+      //     });
+      // } else {
+      //   this.$http("question", {
+      //     grade: grade,
+      //     semester: semester,
+      //     knowledge_point: knowledge_point,
+      //     category: "listening ",
+      //     analyze: analysis,
+      //     degree_of_difficulty: difficulty,
+      //     title: title,
+      //     answer: this.answer,
+      //     voice: ''
+      //   }).then(res => {
+      //     this._msg(res.data);
+      //   });
+      // }
     },
     _msg(res) {
       if (res.code == 0) {
