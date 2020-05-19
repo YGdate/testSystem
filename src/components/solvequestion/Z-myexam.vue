@@ -98,6 +98,7 @@ methods:{
      let msg = await this.$http.get('exams?page='+page);
      if(msg.data.code==0){
 let ms = this.$decryptData(msg.data.data);
+console.log(ms)
      this.pagecount = ms.last_page*10;
  let x = ms.data;
      let len = ms.data.length;
