@@ -3,7 +3,7 @@
     <div class="option_list">
       <div class="title">{{title}}</div>
       <div class="option_content">
-        <textarea rows="10" v-model="value" class="input"></textarea>
+        <textarea v-model="value" class="input"></textarea>
         <div class="delete_container">
           <el-button @click.native="handleDelete" type="text">删除</el-button>
         </div>
@@ -12,7 +12,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scope>
 .option_container {
   display: flex;
   height: 50px;
@@ -32,7 +32,7 @@
       display: flex;
       align-items: center;
       height: 50px;
-      width: 300px;
+      width: 500px;
       padding: 0 40px;
       .input {
         background-color: transparent;
@@ -41,7 +41,7 @@
         border-left: 0;
         border-right: 0;
         height: 15px;
-        width: 150px;
+        width: 200px;
         margin-left: 10px;
         margin-right: 20px;
       }
