@@ -57,7 +57,7 @@
             <!-- 单选题demo -->
             <div class="dxs" :class="tab!=tabs[0]?'tt':''">
                 <p class="headp">单选题</p>
-                           <div class="danxuan zong"  v-for="(item,i) in allmsg.single_select" :key="i">
+                           <div class="danxuan zong"  v-for="(item,i) in allmsg.single_select" :key="item.id">
                 <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                 <template>
             <el-radio v-model="dan[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
@@ -70,9 +70,9 @@
             </div>
 
             <!-- 多选题demo -->
-            <div class="dxs" :class="tab!=tabs[1]?'tt':''">
+             <div class="dxs" :class="tab!=tabs[1]?'tt':''">
                 <p class="headp" >多选题</p>
-                <div class="duoxuan zong" v-for="(item,i) in allmsg.multi_select" :key="i">
+                <div class="duoxuan zong" v-for="(item,i) in allmsg.multi_select" :key="item.id">
                      <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
    <template>
   <el-checkbox v-model="duo[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
@@ -83,13 +83,13 @@
                 </div>
 
 
-            </div>
+            </div> 
              <!-- 七选五demo --> 
              <div class="qiwus" :class="tab!=tabs[2]?'tt':''">
                   <p class="headp">7选五</p>
-                    <div class="qiwu zong" v-for="(item,i) in allmsg.seven_selected_five" :key="i">
+                    <div class="qiwu zong" v-for="(item,i) in allmsg.seven_selected_five" :key="item.id">
                    <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
-                   <p v-for="(itx,s,x) in allmsg.seven_selected_five[i].topic_and_stem.options" :key="x">
+                   <p v-for="(itx,s,x) in allmsg.seven_selected_five[i].topic_and_stem.options" :key="x+1000">
                    {{s}}.{{itx}}
                    </p>
                      <el-input v-model="qi[i][0]" maxlength=1 style="width:50px;"  :placeholder="1"></el-input>
@@ -103,7 +103,7 @@
                 <!-- 判断题 -->
             <div class="dxs" :class="tab!=tabs[3]?'tt':''">
                 <p class="headp">判断题</p>
-                  <div class="danxuan zong" v-for="(item,i) in allmsg.true_or_false" :key="i">
+                  <div class="danxuan zong" v-for="(item,i) in allmsg.true_or_false" :key="item.id">
                 <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                 <template>
             <el-radio v-model="pan[i]" label="true" class="xuanze">对</el-radio>
@@ -115,7 +115,7 @@
                 <!-- 填空题demo -->
                 <div class="tks" :class="tab!=tabs[4]?'tt':''">
                     <p class="headp">填空题</p>
-                      <div class="tk zong" v-for="(item,i) in allmsg.fill" :key="i">
+                      <div class="tk zong" v-for="(item,i) in allmsg.fill" :key="item.id">
                         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                              <!-- <p>解析:{{item.knowledge_point}}</p> -->
                 </div>
@@ -124,10 +124,10 @@
                 <!-- 选词填空demo -->
                 <div class="xctks" :class="tab!=tabs[5]?'tt':''">
                      <p class="headp">选词填空</p>
-                    <div clas="xctk zong" v-for="(item,i) in allmsg.choose_fill_blank" :key="i">
+                    <div clas="xctk zong" v-for="(item,i) in allmsg.choose_fill_blank" :key="item.id">
                         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                           <div v-for="(item, key, x) in allmsg.choose_fill_blank[i].topic_and_stem.options" :key="x">{{key}}:{{item}}</div>           
-           <el-input v-model="xuan[i][y]" maxlength=1 style="width:50px;" v-for="(itm,y) in xuan[i]" :key="y" :placeholder="y+1"  @input="updateView($event)"></el-input>
+           <el-input v-model="xuan[i][y]" maxlength=1 style="width:50px;" v-for="(itm,y) in xuan[i]" :key="y+2000" :placeholder="y+1"  @input="updateView($event)"></el-input>
                     </div>
                 </div>
 
@@ -135,26 +135,28 @@
                 <!-- 完形填空demo -->
                 <div class="wxtks" :class="tab!=tabs[6]?'tt':''">
                      <p class="headp">完型填空</p>
-                     <div class="wxtk zong" v-for="(item,i) in allmsg.fill_blank" :key="i">
+                     <div class="wxtk zong" v-for="(item,h) in allmsg.fill_blank" :key="item.id">
                          <p>{{allmsg.fill_blank[0].topic_and_stem[0]}}
-                         <div v-for="(nei,key,i) in allmsg.fill_blank[0].topic_and_stem[1]" :key="i">
+                             <div class="wxclass">
+                         <div v-for="(nei,key,i) in allmsg.fill_blank[0].topic_and_stem[1]" :key="i+3000">
                              <p>第{{i+1}}题</p>
                              <el-radio v-model="wan[i]" label="A" class="xuanze">{{nei.A}}</el-radio>
                              <el-radio v-model="wan[i]" label="B" class="xuanze">{{nei.B}}</el-radio>
                             <el-radio v-model="wan[i]" label="C" class="xuanze">{{nei.C}}</el-radio>
                         <el-radio v-model="wan[i]" label="D" class="xuanze">{{nei.D}}</el-radio>
                          </div>
+                         </div>
                      </div>
                 </div>
                 <!-- 听力demo -->
                 <div class="tinglis" :class="tab!=tabs[7]?'tt':''">
                     <p class="headp">听力(双击选择)</p>
-                    <div v-for="(item2,i2) in allmsg.listening" :key="i2">
+                    <div v-for="(item2,i2) in allmsg.listening" :key="item2.id">
                         <p>听力第{{i2+1}}题</p>
                                   <audio :src="item2.topic_and_stem.accessory" controls="controls">
                     Your browser does not support the audio element.
                             </audio>
-                    <div class="tingli zong" v-for="(item,i) in allmsg.listening[0].topic_and_stem.title" :key="i" @input="updateView($event)">
+                    <div class="tingli zong" v-for="(item,i) in allmsg.listening[0].topic_and_stem.title" :key="i+4000" @input="updateView($event)">
                         <p>{{i+1}}.{{item.title}}</p>
                          <template >
             <el-radio v-model="ting[i2][i]" label="A" class="xuanze" >{{item.options.A}}</el-radio>
@@ -169,22 +171,22 @@
         <!-- 非定向demo -->
         <div class="fdxs" :class="tab!=tabs[8]?'tt':''">
                     <p class="headp">非定向选择</p>
-                    <div class="fdx zong" v-for="(item,i) in allmsg.non_directional_select" :key="i">
+                    <div class="fdx zong" v-for="(item,i) in allmsg.non_directional_select" :key="item.id">
                         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                          <template>
-            <el-radio v-model="fei[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
-            <el-radio v-model="fei[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-radio>
-            <el-radio v-model="fei[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-radio>
-            <el-radio v-model="fei[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-radio>
+            <el-checkbox v-model="fei[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
+            <el-checkbox v-model="fei[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
+            <el-checkbox v-model="fei[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
+            <el-checkbox v-model="fei[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-checkbox>
                 </template>
                     </div>
         </div>
 <!-- 阅读理解的demo -->
 <div class="rdljs" :class="tab!=tabs[9]?'tt':''">
     <p class="headp">阅读理解(双击选择)</p>
-    <div class="rdlj" v-for="(item,i) in allmsg.read_understand" :key="i">
+    <div class="rdlj" v-for="(item,i) in allmsg.read_understand" :key="item.id">
         <p>{{i+1}}.{{item.topic_and_stem[0]}}</p>
-        <div v-for="(ite,key,y) in item.topic_and_stem[1]" :key="y" @input="updateView($event)">
+        <div v-for="(ite,key,y) in item.topic_and_stem[1]" :key="y+5000" @input="updateView($event)">
             <p>{{ite.title}}</p>
             <el-radio v-model="yuedu[i][y]" label="A" class="xuanze">{{ite.options.A}}</el-radio>
             <el-radio v-model="yuedu[i][y]" label="B"  class="xuanze">{{ite.options.B}}</el-radio>
@@ -198,7 +200,7 @@
 <!-- 短文改错的demo -->
 <div class="dwgcs" :class="tab!=tabs[10]?'tt':''">
     <p class="headp">短文改错</p>
-    <div class="dwgc zong" v-for="(item,i) in allmsg.text_mistake" :key="i">
+    <div class="dwgc zong" v-for="(item,i) in allmsg.text_mistake" :key="item.id">
         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
     </div>
 </div>
@@ -208,7 +210,7 @@
 
 <div class="fys" :class="tab!=tabs[11]?'tt':''">
      <p class="headp">翻译</p>
-     <div class="fy zong" v-for="(item,i) in allmsg.translation" :key="i">
+     <div class="fy zong" v-for="(item,i) in allmsg.translation" :key="item.id">
         <p>{{item.topic_and_stem.title}}</p>
         <el-input
   type="textarea"
@@ -224,7 +226,7 @@
 
 <div class="zws" :class="tab!=tabs[12]?'tt':''">
     <p class="headp">作文</p>
-    <div class="zw zong" v-for="(item,i) in allmsg.composition" :key="i">
+    <div class="zw zong" v-for="(item,i) in allmsg.composition" :key="item.id">
            <p>{{item.topic_and_stem.title}}</p>
                  <el-input
   type="textarea"
@@ -249,7 +251,7 @@
             答题卡
         </p>
 
-            <div class="tkt" v-for="(item,i) in tian" :key="i">
+            <div class="tkt" v-for="(item,i) in tian" :key="item.id">
             <p>填空第{{i+1}}题</p>
             <el-input placeholder="请输入内容"  @input="updateView($event)" v-model="tian[i][y]" v-for="(ite,y) in tian[i]" :key="y"></el-input> -->
             
@@ -281,7 +283,7 @@
   export default {
           // 开局调用
     created(){
-        this.exammsg();
+        //this.exammsg();
        
     },
        data() {
@@ -446,7 +448,11 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                 // 非定向选择的处理
                 if(xf.non_directional_select){
  for(let i=0;i<this.allmsg.non_directional_select.length;i++){
+<<<<<<< HEAD
+                       this.fei[i]=[];
+=======
                        this.fei[i]=''
+>>>>>>> upstream/master
                     this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
                    }
                 }
@@ -516,6 +522,7 @@ for(let i=0;i<this.allmsg.composition.length;i++){
         },
         // 开始考试
         starexam:function(){
+            this.exammsg();
              
             let that = this;
             this.ishidden=true;
@@ -703,10 +710,11 @@ solve.fill_blank=[]
             let za = JSON.stringify(solve);
             console.log(za)
             // 最后的工作交互
-          let msg = await this.$http.post('exam/'+examid,{
+          let msg = await this.$http.post('exam/'+examid+'/stop',{
               candidate_id:examid,
               answer:za
              });
+             //console.log(msg.data)
             if(msg.data.code==0){
                  this.$message.success("考试结束！")
          this.$router.push("testpage");
@@ -831,9 +839,15 @@ solve.fill_blank=[]
     padding: 10px;
     font-weight: 600;
     border-bottom: 1px solid lightgray;
+    padding-right: 0;
+    margin-bottom: 20px !important;
+}
+.wxclass{
+    max-height: 300px;
+    overflow: auto;
 }
 .xuanze{
-    width: 100%;
+    width: 60%;
     margin-bottom: 10px;
 }
 // 翻译的大盒子

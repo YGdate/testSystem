@@ -213,11 +213,59 @@
         // console.log(wcdata)
       }
     },
+<<<<<<< HEAD
+methods:{
+  // 获取所有信息的函数
+   async allexam(page){
+     let msg = await this.$http.get('exams?page='+page);
+     if(msg.data.code==0){
+let ms = this.$decryptData(msg.data.data);
+console.log(ms)
+     this.pagecount = ms.last_page*10;
+ let x = ms.data;
+     let len = ms.data.length;
+     for(let i=0;i<len;i++){
+       let tid = ms.data[i].test_id
+       let ids = await this.$http.get('people/'+tid);
+       let gaintest = this.$decryptData(ids.data.data);
+       x[i].notUp = gaintest.notUp;
+       x[i].hasUp = gaintest.hasUp;
+     }
+     this.alltest2=[];
+     this.alltest = x;
+     console.log(this.alltest)
+     //console.log(ms)
+     }else{
+     this.$message.error("获取数据失败！")
+     }
+    //  获取考试完成情况
+    // let wcqk = await this.$http.get('reports',{
+    //   pagrams:{
+    //     page:page
+    //   }
+    // });
+    // let wcdata = this.$decryptData(wcqk.data.data);
+    // console.log(wcdata)
+   },
+  //  返回testpage
+  gotp:function(){
+     this.$router.push("testpage")
+  },
+  //  获取当前页数的函数
+  huanye:function(e){
+    if(this.qf==1){
+        this.allexam(e)
+    }else if (this.qf==2) {
+      this.up(e)
+    }else{
+      this.noup(e);
+=======
     created() {
       this.allexam(1);
       setInterval(function () {
 
       }, 500)
+>>>>>>> upstream/master
     }
   }
 </script>
