@@ -54,7 +54,7 @@
         border-left: 0;
         border-right: 0;
         height: 15px;
-        width: 70px;
+        width: 150px;
         margin-left: 10px;
         margin-right: 20px;
       }

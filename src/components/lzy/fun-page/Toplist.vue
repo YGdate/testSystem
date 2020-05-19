@@ -40,6 +40,16 @@
         >{{item}}</el-dropdown-item>f
       </el-dropdown-menu>
     </el-dropdown>
+    <el-dropdown size="mini" split-button>
+      {{isStatus?checkedStatus: '选择状态'}}
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item
+          @click.native="getStatus(index)"
+          :key="index"
+          v-for="(item,index) in status"
+        >{{item}}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
     <el-button @click.native="handleDelete" style="color: #409EFF" size="mini">批量删除</el-button>
     <el-button @click.native="handleSearch" type="primary" size="mini" icon="el-icon-search"></el-button>
   </div>
@@ -114,15 +124,19 @@ export default {
         "composition",
         "listening"
       ],
+      status: ["被删除","全部题型"],
       semester: ["上册", "下册"],
       isGrade: false,
       isSemester: false,
       isCategory: false,
       isDifficulty: false,
+      isCheckedStatus: false,
+      isStatus: false,
       checkedGrade: "",
       checkedSemester: "",
       checkedCategory: "",
-      checkedDifficulty: ""
+      checkedDifficulty: "",
+      checkedStatus: ""
     };
   },
   methods: {
@@ -131,12 +145,14 @@ export default {
       let semester = this.semester.indexOf(this.checkedSemester);
       let category = this.category[this.type.indexOf(this.checkedCategory)];
       let difficulty = this.difficulty.indexOf(this.checkedDifficulty);
+      let status = this.status.indexOf(this.checkedStatus);
 
       let obj = {
         grade: null,
         semester: null,
         category: null,
-        degree_of_difficulty: null
+        degree_of_difficulty: null,
+        status: null
       };
       if (grade != -1) {
         obj["grade"] = grade;
@@ -149,6 +165,9 @@ export default {
       }
       if (difficulty != -1) {
         obj["degree_of_difficulty"] = difficulty;
+      }
+      if (status != -1) {
+        obj["status"] = status;
       }
       console.log(obj);
 
@@ -165,10 +184,10 @@ export default {
         this.$message.error("请选择搜索内容");
       } else {
         this.$http.get("question" + url).then(res => {
-          let data = this.$decryptData(res.data.data)
-          let currentUrl = 'question'+url
+          let data = this.$decryptData(res.data.data);
+          let currentUrl = "question" + url;
           this.$emit("handle-search", data);
-          this.$emit('current-url',currentUrl)
+          this.$emit("current-url", currentUrl);
         });
       }
     },
@@ -221,22 +240,16 @@ export default {
       // });
     },
     getDifficulty(index) {
-      // 取消选项
-      // this.isSemester = false
-      // this.isGrade = false
-      // this.isCategory = false
-      // this.checkedCategory = ''
-      // this.checkedSemester = ''
-      // this.checkedGrade = ''
-
       if (this.isDifficulty == false) {
         this.isDifficulty = !this.isDifficulty;
       }
       this.checkedDifficulty = this.difficulty[index];
-      // this.$http.get("question?degree_of_difficulty=" + index).then(res => {
-      //   let data = this.$decryptData(res.data.data);
-      //   this.$emit("get-data", data);
-      // });
+    },
+    getStatus(index) {
+      if (this.isStatus == false) {
+        this.isStatus = !this.isStatus;
+      }
+      this.checkedStatus = this.status[index];
     },
     handleDelete() {
       this.$emit("mul-delete");
