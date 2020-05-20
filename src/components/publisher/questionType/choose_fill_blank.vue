@@ -6,7 +6,6 @@
         {{title}}（{{scoer}}分）
       </el-col>
     </el-row>
-
     <el-row>
       <el-row>
         答案选择：
@@ -16,16 +15,13 @@
         </el-col>
       </el-row>
     </el-row>
-
     <!-- 选择内容 -->
     <el-row class="questionSelect">
       <el-col style="font-weight:600;margin-bottom:10px">
         考生答案：
       </el-col>
       <span>{{answer}}</span>
-     
     </el-row>
-
     <!-- 正确答案 -->
     <el-row class="answer">
       <el-row style="font-weight:600;margin-bottom:10px">
@@ -33,7 +29,6 @@
       </el-row>
        <span v-for="(item,i) in question" :key="i">{{item.name}}--{{item.value}} ， </span>
     </el-row>
-
     <el-row>
       答案解析：{{answerAnalyze}}
     </el-row>

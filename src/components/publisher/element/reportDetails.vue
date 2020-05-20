@@ -138,9 +138,9 @@
             <el-table :data="tableData" :header-cell-style="tableHeaderStyle" style="width: 100%">
               <el-table-column type="index" label="序号">
               </el-table-column>
-              <el-table-column prop="date" label="考生姓名" width="180">
+              <el-table-column prop="user_id[1]" label="考生姓名" width="180">
               </el-table-column>
-              <el-table-column prop="name" label="提交状态" width="180">
+              <el-table-column label="提交状态" width="180">
                 <template scope="scope">
                   <div>
                     {{scope.row.user_end_at!=null?'已提交':'未提交'}}
@@ -289,6 +289,7 @@
               data,
               total
             } = this.$decryptData(res.data.data)
+            console.log(data);
             this.tableData = data
             this.current_page = current_page
             this.total = total

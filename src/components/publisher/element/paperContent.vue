@@ -325,41 +325,24 @@
         this.multipleSelection = val;
       },
       exportPaper(id){
-        let arr = []
-        arr.push(id)
-        this.$http.post('word/export',{ids:arr})
-          .then(res => {
-            if (res.data.code != 0) return this.$message.error(res.data.msg)
-            return this.$message.success(res.data.msg)
-          }).catch(err => {
-            this.$message({
-              dangerouslyUseHTMLString: true,
-              showClose: true,
-              message: err.response.data.data.join('<br><br>'),
-              type: 'error'
-            });
-          })
+        let aEle = document.createElement("a")
+        aEle.download = 'paper';
+        
+        aEle.href = 'http://47.113.121.50/api/word/export?ids='+id+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
+        aEle.click();
       },
 
       // 批量导出
       exportWord(){
-        console.log(111);
+        console.log(this.multipleSelection);
        let idList =  this.multipleSelection.map(e=>{
           return e.id
         })
-         this.$http.post('word/export',{ids:idList})
-          .then(res => {
-            if (res.data.code != 0) return this.$message.error(res.data.msg)
-            return this.$message.success(res.data.msg)
-          }).catch(err => {
-            // console.log(err);
-            this.$message({
-              dangerouslyUseHTMLString: true,
-              showClose: true,
-              message: err.response.data.data.join('<br><br>'),
-              type: 'error'
-            });
-          })
+        console.log(idList.join(','));
+         let aEle = document.createElement("a")
+        aEle.download = 'paper';
+        aEle.href = 'http://47.113.121.50/api/word/export?ids='+idList.join(',')+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
+        aEle.click();
       },
       // 批量删除
       deleteData(){

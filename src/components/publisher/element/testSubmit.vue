@@ -10,19 +10,34 @@
           <el-table-column label="考生姓名">
             <template scope="scope">
               <div>
-                {{scope.row.user_id[1]}}
+                {{scope.row[0].user_id[1]}}
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="all_score" label="试卷总分">
+          <el-table-column label="试卷总分">
+            <template scope="scope">
+              <div>
+                {{scope.row[0].all_score}}
+              </div>
+            </template>
           </el-table-column>
-          <el-table-column prop="auto_score" label="系统评分">
+          <el-table-column label="系统评分">
+             <template scope="scope">
+              <div>
+                {{scope.row[0].auto_score}}
+              </div>
+            </template>
           </el-table-column>
-          <el-table-column prop="manual_score" label="手动评分">
+          <el-table-column  label="手动评分">
+             <template scope="scope">
+              <div>
+                {{scope.row[0].manual_score}}
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="address" label="操作">
             <template scope="scope">
-             <el-button @click="scoreEdit(scope.row.user_id[0])" size="mini" icon="el-icon-edit">评分</el-button>
+             <el-button @click="scoreEdit(scope.row[0].user_id[0])" size="mini" icon="el-icon-edit">评分</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -38,9 +53,19 @@
         <el-table :data="tableNoSubmit" :header-cell-style="tableHeaderStyle" style="width: 100%">
           <el-table-column type="index" label="序号">
           </el-table-column>
-          <el-table-column prop="user_id[1]" label="考生姓名">
+          <el-table-column label="考生姓名">
+             <template scope="scope">
+              <div>
+                {{scope.row[0].user_id[1]}}
+              </div>
+            </template>
           </el-table-column>
-          <el-table-column prop="user_id[2]" label="考生电话">
+          <el-table-column label="考生电话">
+             <template scope="scope">
+              <div>
+                {{scope.row[0].user_id[2]}}
+              </div>
+            </template>
           </el-table-column>
         </el-table>
         <!-- 分页 -->
@@ -110,6 +135,10 @@ import markPaper from './markPaper'
               data,
               total
             } = this.$decryptData(res.data.data)
+            if(data[0]==null){
+              data = []
+              
+            }
             this.tableNoSubmit = data
             this.current_page1 = current_page
             this.total1 = total
@@ -146,6 +175,9 @@ import markPaper from './markPaper'
               data,
               total
             } = this.$decryptData(res.data.data)
+            if(data[0]==null){
+              data = []
+            }
             this.tableData = data
             this.current_page = current_page
             this.total = total

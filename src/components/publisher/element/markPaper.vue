@@ -73,14 +73,10 @@
           </translation>
           <textMistake ref="com" :content="content" :scoreNum="scoreNum" v-if="isQuestionType=='text_mistake'">
           </textMistake>
-
-
           <!-- <el-row class="selectBtn">
             <el-button @click="nextQuestion" size="mini">上一题</el-button>
             <el-button @click="lastQuestion" size="mini">下一题</el-button>
           </el-row> -->
-
-
         </el-card>
       </el-col>
     </el-row>
@@ -224,8 +220,10 @@
         }).then(() => {
           let scoreNum = 0
           this.$store.state.questionTile.forEach(item => {
+            this.allData.content[item.category][item.id].score = item.score
             scoreNum += (item.score - 0)
           })
+          console.log(this.allData);
           this.$http.put('testPaper/updateScore', {
               test_id: this.test_id,
               test_user_id: this.test_user_id,
@@ -279,7 +277,7 @@
         this.$http.get('testPaper/getTestPaperInfoByTestId', {
             params: {
               test_id: this.test_id,
-              test_user_id: this.test_user_id
+              test_user_id: this.test_user_id 
             }
           })
           .then(res => {
@@ -293,6 +291,7 @@
             this.manual_score = this.$decryptData(res.data.data).manual_score
             this.questionData = this.$decryptData(res.data.data).content
             this.$store.commit('alertQuestionTile', this.dataEdit(this.questionData))
+            
           }).catch(err => {
             this.$message({
               dangerouslyUseHTMLString: true,

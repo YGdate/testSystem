@@ -240,20 +240,20 @@
         let item = time - 0
         let m = '00'
         let hours = '00'
-
+        m = item % 60
         if (item >= 60) {
           hours = parseInt(item / 60)
-          m = item % 60
         }
-        if(item < 10){
+        if (item < 10) {
           m = '0' + item
+
         }
-        if (hours < 10) {
+        if (hours < 10 && hours > 0) {
           hours = '0' + hours
         }
+        console.log(m);
         return hours + ':' + m + ':00'
       },
-
       submitFun(formName, url, basicInfo) {
         console.log(this.timesSolve(this.form.testTime));
         this.$refs[formName].validate((valid) => {
