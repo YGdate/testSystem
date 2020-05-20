@@ -53,8 +53,8 @@
         this.title = testData.title
         console.log(this.option);
         this.option = testData.options
-        this.radio = data.right_ans
-        this.answer = data.ans
+        this.radio = data.ans
+        this.answer = data.right_ans
         this.answerAnalyze = data.test_analyze
         this.scoer = data.score
       }

@@ -13,11 +13,19 @@
         </div>
       </el-col>
     </el-row>
+    <el-row>
+     <el-row style="margin-bottom:10px">
+        考生答案：
+     </el-row>
+      <el-row>
+        {{aws}}
+     </el-row>
+    </el-row>
 
 
     <!-- 正确答案 -->
     <el-row class="answer">
-      答题内容：
+      正确范文：
     </el-row>
     <el-row class="analysis" style="text-align: justify;text-justify:inter-ideograph;">
       {{answer}}
@@ -33,6 +41,7 @@
         scoreALL:'',
         title:'',
         answer:'',
+        aws:'',
         score:0,
         questionId:0
       }
@@ -53,6 +62,7 @@
         })
       },
       changeValue(){
+
        console.log(this.questionId);
         let questionData = this.$store.state.questionTile
         if(this.scoreALL!=''){
@@ -69,12 +79,12 @@
      
       dataComputed(){
        let data = this.content
+       console.log(data);
         this.title = JSON.parse(data.topic_and_stem).title
-        console.log( eval('(' + data.topic_and_stem + ')'));
-        console.log( data.topic_and_stem);
-        console.log(this.title);
         this.answer = data.right_ans
         this.score = data.score
+        // 答案
+        this.aws = data.ans
 
       }
     }

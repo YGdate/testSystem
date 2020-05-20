@@ -31,7 +31,7 @@
     data() {
       return {
         radio:'',
-        isright:true,
+        
         scoreALL: '',
         title: '',
         answer: '',
@@ -61,13 +61,9 @@
           )
         }
         this.option = newOption
-        this.radio = data.right_ans
-        this.answer = data.ans
-        if(this.answer==this.radio){
-          this.isright = true
-        }else{
-          this.isright = false
-        }
+        this.radio = data.ans
+        this.answer = data.right_ans
+        
         this.answerAnalyze = data.test_analyze
         this.scoer = data.score
       }

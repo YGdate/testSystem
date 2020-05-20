@@ -245,6 +245,9 @@
           hours = parseInt(item / 60)
           m = item % 60
         }
+        if(item < 10){
+          m = '0' + item
+        }
         if (hours < 10) {
           hours = '0' + hours
         }
@@ -252,11 +255,12 @@
       },
 
       submitFun(formName, url, basicInfo) {
+        console.log(this.timesSolve(this.form.testTime));
         this.$refs[formName].validate((valid) => {
           if (!valid) return;
-          if(Number(this.timesSolve(this.form.testTime).slipt(':')[0])>=60){
-            return this.$message.warning('考试时间长不能超过60小时')
-          }
+          // if(Number(this.timesSolve(this.form.testTime).slipt(':')[0])>=60){
+          //   return this.$message.warning('考试时间长不能超过60小时')
+          // }
           let config = {
             "testName": this.form.name,
             "test_start": this.formatDate(this.form.beginTime),

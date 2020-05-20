@@ -86,6 +86,8 @@ import markPaper from './markPaper'
     methods:{
       quitScore(){
         this.isshow = true
+        this.getTestScore()
+        this.getNoSubmit()
       },
       scoreEdit(id){
         this.isshow = false

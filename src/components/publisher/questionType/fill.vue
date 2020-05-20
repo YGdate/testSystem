@@ -14,6 +14,15 @@
       </el-col>
     </el-row>
     
+     <el-row>
+     <el-row style="margin-bottom:10px">
+        考生答案：
+     </el-row>
+      <el-row>
+        {{ans}}
+     </el-row>
+    </el-row>
+
     <!-- 正确答案 -->
     <el-row class="answer">
       答题内容：
@@ -33,6 +42,7 @@
         title: '',
         answer: '',
         scoer: 0,
+        ans:'',
         questionId: 0
       }
     }, 
@@ -73,6 +83,11 @@
           stranw += data.right_ans[i] + ' | '
         }
         this.answer = stranw
+         let stranw1 = ''
+        for (let i in data.ans) {
+          stranw1 += data.ans[i] + ' | '
+        }
+        this.ans = stranw1
         this.scoer = data.score
       }
     }

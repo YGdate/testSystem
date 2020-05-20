@@ -11,8 +11,9 @@
       <el-row>
         答案选择：
       </el-row>
-      <el-row style="dispaly:flex;flex-warp:warp;margin-top:20px" >
-        <el-col style="margin-bottom:10px" :span="6" v-for="(item,i) in option" :key="i">{{item.name}} : {{item.value}}</el-col>
+      <el-row style="dispaly:flex;flex-warp:warp;margin-top:20px">
+        <el-col style="margin-bottom:10px" :span="6" v-for="(item,i) in option" :key="i">{{item.name}} : {{item.value}}
+        </el-col>
       </el-row>
     </el-row>
 
@@ -21,14 +22,16 @@
       <el-col style="font-weight:600;margin-bottom:10px">
         考生答案：
       </el-col>
-     <span v-for="(item,i) in question" :key="i">{{item.name}}--{{item.value}} ， </span>
+      <span>{{answer}}</span>
+     
     </el-row>
 
     <!-- 正确答案 -->
     <el-row class="answer">
-     <el-row style="font-weight:600;margin-bottom:10px">
+      <el-row style="font-weight:600;margin-bottom:10px">
         正确答案：
-       </el-row><span>{{answer}}</span>
+      </el-row>
+       <span v-for="(item,i) in question" :key="i">{{item.name}}--{{item.value}} ， </span>
     </el-row>
 
     <el-row>
@@ -65,22 +68,22 @@
         console.log(testData);
         this.title = testData.title
         let newOption = []
-       
-        for(let item in testData.options){
+
+        for (let item in testData.options) {
           newOption.push({
-            name:item,
-            value:testData.options[item]
+            name: item,
+            value: testData.options[item]
           })
         }
-       
+
         this.option = newOption
-         console.log(this.option);
-//选择题目
+        console.log(this.option);
+        //选择题目
         let newQuestion = []
-        for(let item in data.right_ans){
+        for (let item in data.right_ans) {
           newQuestion.push({
-            name:item,
-            value:data.right_ans[item]
+            name: item,
+            value: data.right_ans[item]
           })
         }
         this.question = newQuestion

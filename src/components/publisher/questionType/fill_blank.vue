@@ -81,12 +81,12 @@
         this.question = newOption
         //正确答案
         let rightData = []
-        for(let i in data.right_ans){
-          rightData.push(data.right_ans[i])
+        for(let i in data.ans){
+          rightData.push(data.ans[i])
         }
         this.radio = rightData
         //我的答案
-        this.answer = data.ans
+        this.answer = data.right_ans
         //解析
         this.answerAnalyze = data.test_analyze
         //分数

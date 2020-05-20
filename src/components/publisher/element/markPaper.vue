@@ -9,9 +9,9 @@
             <el-row class="card-title">
               客观题（系统评分）
             </el-row>
-            <el-row class="card-info"   type="flex" :gutter="30">
+            <el-row class="card-info" type="flex" :gutter="30">
               <el-col @click.native="chooseQuestionAuto(item.id,item.category,index)" :span="5"
-                v-for="(item,index) in $store.state.autoQuestionTile"  :key="index">
+                v-for="(item,index) in $store.state.autoQuestionTile" :key="index">
                 <span :class="(isindexTitleAuto==index)?'truebg':''">{{index+1}}</span>
               </el-col>
 
@@ -25,7 +25,7 @@
             </el-row>
             <el-row class="card-info" type="flex" :gutter="30">
               <el-col @click.native="chooseQuestion(item.id,item.category,index)" :span="5"
-                v-for="(item,index) in $store.state.questionTile"  :key="index">
+                v-for="(item,index) in $store.state.questionTile" :key="index">
                 <span :class="(item.score!=0 || isindexTitle==index)?'truebg':''">{{index+1}}</span>
               </el-col>
             </el-row>
@@ -65,6 +65,7 @@
           <readUnderstand :content="content" v-if="isQuestionType=='read_understand'"></readUnderstand>
           <chooseFillBlank :content="content" v-if="isQuestionType=='choose_fill_blank'"></chooseFillBlank>
           <sevenSelectedFive :content="content" v-if="isQuestionType=='seven_selected_five'"></sevenSelectedFive>
+          <nonDiretionalSelect :content="content" v-if="isQuestionType=='non_directional_select'"></nonDiretionalSelect>
           <composition ref="com" :content="content" :scoreNum="scoreNum" v-if="isQuestionType=='composition'">
           </composition>
           <fill ref="com" :content="content" v-if="isQuestionType=='fill'"></fill>
@@ -99,6 +100,7 @@
   import readUnderstand from '../questionType/read_understand'
   import chooseFillBlank from '../questionType/choose_fill_blank'
   import sevenSelectedFive from '../questionType/seven_selected_five'
+  import nonDiretionalSelect from '../questionType/nonDiretionalSelect'
   export default {
     components: {
       singleSelect,
@@ -112,13 +114,14 @@
       trueOrFalse,
       readUnderstand,
       chooseFillBlank,
-      sevenSelectedFive
+      sevenSelectedFive,
+      nonDiretionalSelect
     },
     data() {
       return {
         scoreNum: '',
         isindexTitle: '',
-        isindexTitleAuto:'',
+        isindexTitleAuto: '',
         isQuestionType: '',
         test_id: '',
         test_user_id: '',
@@ -189,18 +192,18 @@
         this.content = this.questionData[this.isQuestionType][index]
       },
       quitScore() {
-        this.$confirm('推出之后，评分记录不会被保存, 是否继续?', '提示', {
+        this.$confirm('退出之后，评分记录不会被保存, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-         
-          
-          console.log(11);
-          setTimeout(()=>{
-            
+
+
+
+          setTimeout(() => {
+
             this.$emit('quitScore')
-          },1000)
+          }, 1000)
           this.$message({
             type: 'success',
             message: '退出成功!'
@@ -232,6 +235,11 @@
             .then(res => {
               if (res.data.code != 0) return this.$message.error(res.data.msg)
               this.$message.success(res.data.msg)
+
+              setTimeout(() => {
+
+                this.$emit('quitScore')
+              }, 1500)
             }).catch(err => {
               this.$message({
                 dangerouslyUseHTMLString: true,
@@ -248,7 +256,7 @@
           });
         });
       },
-      chooseQuestionAuto(index, category, e){
+      chooseQuestionAuto(index, category, e) {
         this.isindexTitleAuto = e
         this.isQuestionType = category
         this.content = this.questionDataAuto[category][index]
@@ -294,7 +302,7 @@
             });
           })
       },
-      getDataAuto(){
+      getDataAuto() {
         this.$http.get('testPaper/getObject', {
             params: {
               test_id: this.test_id,
@@ -306,7 +314,7 @@
             console.log(this.$decryptData(res.data.data));
             this.questionDataAuto = this.$decryptData(res.data.data)
             this.$store.commit('alertAutoQuestionTile', this.dataEdit(this.$decryptData(res.data.data)))
-            
+
           }).catch(err => {
             this.$message({
               dangerouslyUseHTMLString: true,
@@ -315,7 +323,7 @@
               type: 'error'
             });
           })
-      }, 
+      },
       dataEdit(content) {
         let arr = []
         for (let item in content) {
@@ -478,6 +486,7 @@
     .card-info {
       display: flex;
       flex-wrap: wrap;
+
       .truebg {
         background: #24c9e3;
         color: #fff !important;

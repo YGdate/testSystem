@@ -16,6 +16,17 @@
       </el-col>
     </el-row>
 
+
+    
+     <el-row>
+     <el-row style="margin-bottom:10px">
+        考生答案：
+     </el-row>
+      <el-row>
+        {{ans}}
+     </el-row>
+    </el-row>
+
     <!-- 正确答案 -->
     <el-row class="answer">
       答题内容：
@@ -35,7 +46,8 @@
         title:'',
         answer:'',
         scoer:0,
-        questionId:0
+        questionId:0,
+        ans:''
       }
     },
     created(){
@@ -71,10 +83,12 @@
      
       dataComputed(){
        let data = this.content
+       console.log(data);
         this.title = JSON.parse(data.topic_and_stem).title
         this.answer = data.right_ans
         this.scoer = data.score
          this.questionId = data.id
+          this.ans = data.ans
 
       }
     }
