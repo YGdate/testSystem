@@ -4,7 +4,8 @@
     <div class="option">
       <el-dropdown>
         <el-button type="primary">
-          {{isGrade?checkedGrade:'年级选择'}}
+          <!-- {{isGrade?checkedGrade:'年级选择'}} -->
+          {{checkedGrade}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
@@ -17,7 +18,8 @@
       </el-dropdown>
       <el-dropdown>
         <el-button type="primary">
-          {{isSemester?checkedSemester:'学期选择'}}
+          <!-- {{isSemester?checkedSemester:'学期选择'}} -->
+          {{checkedSemester}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
@@ -30,7 +32,8 @@
       </el-dropdown>
       <el-dropdown>
         <el-button type="primary">
-          {{isDifficulty?checkedDifficulty:'难度选择'}}
+          <!-- {{isDifficulty?checkedDifficulty:'难度选择'}} -->
+          {{checkedDifficulty}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
@@ -112,10 +115,13 @@ export default {
       isSemester: null,
       isType: null,
       isDifficulty: null,
-      checkedGrade: "",
-      checkedSemester: "",
+      // checkedGrade: "",
+      checkedGrade: '年级选择',
+      // checkedSemester: "",
+      checkedSemester: '学期选择',
       checkedType: "",
-      checkedDifficulty: "",
+      // checkedDifficulty: "",
+      checkedDifficulty: '难度选择',
       data_grade: "",
       data_semester: "",
       data_difficulty: "",
@@ -137,19 +143,19 @@ export default {
     getGrade(index) {
       this.data_grade = index;
       let option = this.grade[index];
-      this.isGrade = !this.isGrade;
+      // this.isGrade = !this.isGrade;
       this.checkedGrade = option;
     },
     getSemester(index) {
       this.data_semester = index;
       let option = this.semester[index];
-      this.isSemester = !this.isSemester;
+      // this.isSemester = !this.isSemester;
       this.checkedSemester = option;
     },
     getDifficulty(index) {
       this.data_difficulty = index;
       let option = this.difficulty[index];
-      this.isDifficulty = !this.isDifficulty;
+      // this.isDifficulty = !this.isDifficulty;
       this.checkedDifficulty = option;
     }
   }
