@@ -199,27 +199,46 @@ export default {
           difficulty != -1 &&
           analysis != ""
         ) {
+          console.log(this.answer_edit[i].content)
           isPass = true;
         } else {
           isPass = false;
           this.$message.error("请检查表格内容是否合理");
+          break
         }
       }
       if (isPass == true) {
-        this.$http
-          .post("question", {
-            grade: grade,
-            semester: semester,
-            category: "fill",
-            degree_of_difficulty: difficulty,
-            analyze: analysis,
-            knowledge_point: knowledge_point,
-            title: this.title_content,
-            answer: answer
-          })
-          .then(res => {
-            this._msg(res.data);
-          });
+        if (this.$route.params.type == "edit") {
+          this.$http
+            .patch("question/" + this.newData.id, {
+              grade: grade,
+              semester: semester,
+              category: "fill",
+              degree_of_difficulty: difficulty,
+              analyze: analysis,
+              knowledge_point: knowledge_point,
+              title: this.title_content,
+              answer: answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        } else {
+          this.$http
+            .post("question", {
+              grade: grade,
+              semester: semester,
+              category: "fill",
+              degree_of_difficulty: difficulty,
+              analyze: analysis,
+              knowledge_point: knowledge_point,
+              title: this.title_content,
+              answer: answer
+            })
+            .then(res => {
+              this._msg(res.data);
+            });
+        }
       }
     },
     _msg(res) {
