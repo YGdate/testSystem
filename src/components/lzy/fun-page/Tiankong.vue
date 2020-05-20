@@ -177,8 +177,10 @@ export default {
 
     handleSubmit() {
       let answer = {};
+      let j = 0
       for (let i in this.answer_edit) {
-        answer[i] = this.answer_edit[i];
+        answer[j+''] = this.answer_edit[i].content;
+        j++
       }
 
       let grade = this.grade_c.indexOf(this.$refs.tmsz.checkedGrade);
