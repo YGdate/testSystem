@@ -204,7 +204,7 @@ export default {
         difficulty != -1 &&
         analysis != "" &&
         option != "" &&
-        answer_array.length != 1 &&
+        answer_array.length <2&&
         answer_array.length != 0
       ) {
         if (this.$route.params.type == "edit") {

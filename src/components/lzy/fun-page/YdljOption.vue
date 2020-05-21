@@ -5,21 +5,21 @@
       <div class="content">
         <div class="option">
           <span>标题</span>
-          <textarea v-model="option_title" class="input"></textarea>
+          <textarea v-model="option_title" class="area_input"></textarea>
           <span style>A</span>
-          <textarea v-model="option_one" class="input"></textarea>
+          <textarea v-model="option_one" class="area_input"></textarea>
         </div>
         <div class="option">
           <span>B</span>
-          <textarea v-model="option_two" class="input"></textarea>
+          <textarea v-model="option_two" class="area_input"></textarea>
         </div>
         <div class="option">
           <span>C</span>
-          <textarea v-model="option_three" class="input"></textarea>
+          <textarea v-model="option_three" class="area_input"></textarea>
         </div>
         <div class="option">
           <span>D</span>
-          <textarea v-model="option_four" class="input"></textarea>
+          <textarea v-model="option_four" class="area_input"></textarea>
         </div>
         <!-- <div class="delete_container">
           <el-button @click.native="handleDelete" type="text">删除</el-button>
@@ -50,13 +50,13 @@
       height: 50px;
       width: 800px;
       padding: 0 40px;
-      .input {
+      .area_input {
         background-color: transparent;
         border-top: 0;
         border-left: 0;
         border-right: 0;
         height: 15px;
-        width: 70px;
+        width: 100px;
         margin-left: 10px;
         margin-right: 20px;
       }
