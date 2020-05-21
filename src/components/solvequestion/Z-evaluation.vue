@@ -276,7 +276,23 @@
            this.$message.error("请选择完整！")
            
         }else{
-          let gsx = this.zgstring+this.zsxstring;
+          let msg = await this.$http.get('exam_operation/online_assessment/customize',{
+               params:{
+                 grade:parseInt(this.zdy.g),
+                  semester:parseInt(this.zdy.sx)
+               }
+             });
+               let ms = this.$decryptData(msg.data.data);
+               console.log(ms)
+               let num=0;
+            for(let k in ms){
+              let h = k
+              num=num+ms[h].length;
+            }
+            if(num==0){
+this.$message.error("抱歉改年级未存在试卷！")
+            }else{
+let gsx = this.zgstring+this.zsxstring;
            var storage5 = window.sessionStorage;  
                  storage5.setItem('zdystring', gsx);
            this.$router.push("testone")
@@ -284,6 +300,8 @@
                 storage2.setItem('zdyg', this.zdy.g);
                  var storage3 = window.sessionStorage;  
                 storage3.setItem('zdysx', this.zdy.sx);
+            }
+          
         }
       }
     }

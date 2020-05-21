@@ -14,7 +14,7 @@
   </el-select>
 </el-dropdown>
     <div class="cheng" v-for="(item,i) in alltest" :key="i">
-        <div class="chengtop">语文 id:{{item.candidate_id}}</div>
+        <div class="chengtop">语文 id:{{item.candidate_id}}(考试名称:{{item.get_test_paper_info.test_name}})</div>
         <p class="endor">
 考试信息
             <span class="examspan">{{item.hasUp}}人已经提交</span>
@@ -29,7 +29,7 @@
     </div>
 
     <!-- 筛选的部分 -->
-     <div class="cheng" v-for="(item,i) in alltest2" :key="i">
+     <!-- <div class="cheng" v-for="(item,i) in alltest2" :key="i">
         <div class="chengtop">语文 id:{{item.candidate_id}}</div>
         <p class="endor">
 考试信息
@@ -42,7 +42,7 @@
            <span class="chakan">{{zt}}</span>
            <span class="download" @click="item.panduan==true?goexam(item.candidate_id,item.get_test_paper_info.test_use_time):tanchu()">去考试</span>
         </div>
-    </div>
+    </div> -->
 
     <!-- 分页按钮 -->
     <el-pagination
@@ -233,8 +233,8 @@ if(dt>nt||x[i].exam_time_log.user_start_at==null){
 }
        }
      }
-     this.alltest = [];
-     this.alltest2 = x;
+     console.log(x);
+     this.alltest = x;
      console.log(this.alltest2)
      //console.log(ms)
      }else{
@@ -287,8 +287,7 @@ if(dt>nt||x[i].exam_time_log.user_start_at==null){
 }
        }
      }
-     this.alltest = [];
-     this.alltest2 = x;
+     this.alltest = x;
      console.log(this.alltest2)
      //console.log(ms)
      }else{
