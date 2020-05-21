@@ -3,7 +3,7 @@
      <p class="c1">考试报告</p>
     <div class="c2"></div>
     <div class="cheng" v-for="(item,i) in allarry" :key="i">
-        <div class="chengtop">英语</div>
+        <div class="chengtop">英语(考试名称:{{item.get_test_paper_info.test_name}})</div>
         <p class="endor">考试结束</p>
         <p>开始时间:{{item.get_test_paper_info.test_start}} | 科目:英语 | 我创建的 | 题目数量:{{item.get_test_paper_info.test_num}}</p>
         <p>截至时间:{{item.get_test_paper_info.test_end}} | 总分:{{item.get_test_paper_info.all_score}} | 及格分:{{item.get_test_paper_info.pass_score}} | 考试时长:{{item.get_test_paper_info.test_use_time}}</p>

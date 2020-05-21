@@ -41,7 +41,6 @@ methods:{
   //进入题库
   inQuestionBank(){
     this.$router.push("/publisher")
-    window.sessionStorage.setItem('index','1')
   },
   pkonline:function(){
      this.$router.push("pkonline")

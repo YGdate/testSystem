@@ -203,16 +203,20 @@ methods:{
                 let s = that.allmsg.seven_selected_five[i].right_ans.answer;
                 let daan = [];
                  for (let i in s) {
-    daan.push(s[i]);
-    //arr.push(obj[i]); //值
+     daan.push(s[i]);
 }             
-            if(daan==that.qi){
+let k = 0;
+for(let l=0;l<daan.length;l++){
+
+if(daan[l]!=that.qi[i][l]){
+    k++;
+}
+}
+            if(k==0){
                 zdyfs = zdyfs+2;
             }
             
-            var storage = window.sessionStorage;  
-                 storage.setItem('zdyfs', zdyfs);
-                  storage.setItem('ztime', 1800-that.alltime)
+
             }
 
 
@@ -232,8 +236,21 @@ methods:{
                         }
                 }
             }
-            console.log(zdyfs)
-            console.log(this.qi)
+            // 去看详情的答案seeyou
+            let seeyou = {
+                "A":that.dan,
+                "B":that.duo,
+                "C":that.qi,
+                "D":that.pan,
+                "E":that.tian
+            }
+            seeyou =  JSON.stringify(seeyou);
+            console.log(seeyou)
+                 var storage = window.sessionStorage;  
+                 storage.setItem('zdyfs', zdyfs);
+                  storage.setItem('ztime', 1800-that.alltime)
+                   storage.setItem('seeyou', seeyou)
+
 
             
 
@@ -282,6 +299,7 @@ methods:{
                             l[i][g]=""
                         }
                         this.qi=l;
+                        this.allmsg.seven_selected_five[i].right_ans = JSON.parse(this.allmsg.seven_selected_five[i].right_ans)
                     this.allmsg.seven_selected_five[i].topic_and_stem = JSON.parse(this.allmsg.seven_selected_five[i].topic_and_stem)
                    }
                 // 判断的处理                

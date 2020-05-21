@@ -29,19 +29,19 @@
             题目类型
         </p>
         <ul class="qc">
-            <li :class="tab==tabs[0]?'lactive':''" data-aid="1" @click="qian($event.srcElement.dataset.aid)" >单选题</li>
-            <li :class="tab==tabs[1]?'lactive':''" data-aid="2" @click="qian($event.srcElement.dataset.aid)">多选题</li>
-            <li :class="tab==tabs[2]?'lactive':''" data-aid="3" @click="qian($event.srcElement.dataset.aid)">七选五</li>
-            <li :class="tab==tabs[3]?'lactive':''" data-aid="4" @click="qian($event.srcElement.dataset.aid)">判断题</li>
-            <li :class="tab==tabs[4]?'lactive':''" data-aid="5" @click="qian($event.srcElement.dataset.aid)">填空题</li>
-            <li :class="tab==tabs[5]?'lactive':''" data-aid="6" @click="qian($event.srcElement.dataset.aid)">选词填空</li>
-            <li :class="tab==tabs[6]?'lactive':''" data-aid="7" @click="qian($event.srcElement.dataset.aid)">完型填空</li>
-            <li :class="tab==tabs[7]?'lactive':''" data-aid="8" @click="qian($event.srcElement.dataset.aid)">听力</li>
-            <li :class="tab==tabs[8]?'lactive':''" data-aid="9" @click="qian($event.srcElement.dataset.aid)">非定向选择</li>
-            <li :class="tab==tabs[9]?'lactive':''" data-aid="10" @click="qian($event.srcElement.dataset.aid)">阅读理解</li>
-            <li :class="tab==tabs[10]?'lactive':''" data-aid="11" @click="qian($event.srcElement.dataset.aid)">短文改错</li>
-             <li :class="tab==tabs[11]?'lactive':''" data-aid="12" @click="qian($event.srcElement.dataset.aid)">翻译</li>
-              <li :class="tab==tabs[12]?'lactive':''" data-aid="13" @click="qian($event.srcElement.dataset.aid)">作文</li>
+            <li :class="tab==tabs[0]?'lactive':''" data-aid="1" @click="qian($event.srcElement.dataset.aid)" v-if="show[0]">单选题</li>
+            <li :class="tab==tabs[1]?'lactive':''" data-aid="2" @click="qian($event.srcElement.dataset.aid)" v-if="show[1]">多选题</li>
+            <li :class="tab==tabs[2]?'lactive':''" data-aid="3" @click="qian($event.srcElement.dataset.aid)" v-if="show[2]">七选五</li>
+            <li :class="tab==tabs[3]?'lactive':''" data-aid="4" @click="qian($event.srcElement.dataset.aid)" v-if="show[3]">判断题</li>
+            <li :class="tab==tabs[4]?'lactive':''" data-aid="5" @click="qian($event.srcElement.dataset.aid)" v-if="show[4]">填空题</li>
+            <li :class="tab==tabs[5]?'lactive':''" data-aid="6" @click="qian($event.srcElement.dataset.aid)" v-if="show[5]">选词填空</li>
+            <li :class="tab==tabs[6]?'lactive':''" data-aid="7" @click="qian($event.srcElement.dataset.aid)" v-if="show[6]">完型填空</li>
+            <li :class="tab==tabs[7]?'lactive':''" data-aid="8" @click="qian($event.srcElement.dataset.aid)" v-if="show[7]">听力</li>
+            <li :class="tab==tabs[8]?'lactive':''" data-aid="9" @click="qian($event.srcElement.dataset.aid)" v-if="show[8]">非定向选择</li>
+            <li :class="tab==tabs[9]?'lactive':''" data-aid="10" @click="qian($event.srcElement.dataset.aid)" v-if="show[9]">阅读理解</li>
+            <li :class="tab==tabs[10]?'lactive':''" data-aid="11" @click="qian($event.srcElement.dataset.aid)" v-if="show[10]">短文改错</li>
+             <li :class="tab==tabs[11]?'lactive':''" data-aid="12" @click="qian($event.srcElement.dataset.aid)" v-if="show[11]">翻译</li>
+              <li :class="tab==tabs[12]?'lactive':''" data-aid="13" @click="qian($event.srcElement.dataset.aid)" v-if="show[12]">作文</li>
         </ul>
     </div>
     <div class="con-center">
@@ -338,7 +338,9 @@
         // 音频
         mp3:'',
         // 判断
-        hello:''
+        hello:'',
+        // 左边的是否显示的那啥
+        show:[false,false,false,false,false,false,false,false,false,false,false,false,false]
       }
     },
 methods:{
@@ -377,6 +379,7 @@ methods:{
           //单选题的处理
           if(xf.single_select){
  for(let i=0;i<this.allmsg.single_select.length;i++){
+                this.show[0]=true;
                        this.dan[i]=''
                     this.allmsg.single_select[i].topic_and_stem = JSON.parse(this.allmsg.single_select[i].topic_and_stem)
                    }
@@ -384,6 +387,7 @@ methods:{
                   
             // 多选题的处理
              if(xf.multi_select){
+                 this.show[1]=true;
   for(let i=0;i<this.allmsg.multi_select.length;i++){
                        this.duo[i]=[];
                    
@@ -393,6 +397,7 @@ methods:{
           
              // 七选五的处理      
               if(xf.seven_selected_five){
+                  this.show[2]=true;
  let l = [];     
                  for(let i=0;i<this.allmsg.seven_selected_five.length;i++){
                      l[i]=[];
@@ -406,6 +411,7 @@ methods:{
             
                // 判断的处理
                if(xf.true_or_false){
+                   this.show[3]=true;
 for(let i=0;i<this.allmsg.true_or_false.length;i++){
                        this.pan[i]='';
                     this.allmsg.true_or_false[i].topic_and_stem = JSON.parse(this.allmsg.true_or_false[i].topic_and_stem)
@@ -414,6 +420,7 @@ for(let i=0;i<this.allmsg.true_or_false.length;i++){
                     
                 // 选词填空的处理
                 if(xf.choose_fill_blank){
+                    this.show[5]=true;
 for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                         this.xuan[i]=[];
                     this.allmsg.choose_fill_blank[i].topic_and_stem = JSON.parse(this.allmsg.choose_fill_blank[i].topic_and_stem);
@@ -425,6 +432,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                     
                 // 完型填空的处理
               if(xf.fill_blank){
+                  this.show[6]=true;
    for(let i=0;i<this.allmsg.fill_blank.length;i++){
                     this.allmsg.fill_blank[i].topic_and_stem = JSON.parse(this.allmsg.fill_blank[i].topic_and_stem);
                     this.wan.length=20;
@@ -442,6 +450,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                 
                 // 听力的处理
                  if(xf.listening){
+                     this.show[7]=true;
    for(let i=0;i<this.allmsg.listening.length;i++){
                        this.ting[i]=[];
                        let k;
@@ -456,6 +465,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
               
                 // 非定向选择的处理
                 if(xf.non_directional_select){
+                    this.show[8]=true;
  for(let i=0;i<this.allmsg.non_directional_select.length;i++){
                        this.fei[i]=[];
                     this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
@@ -465,6 +475,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                 
                 // 阅读理解的处理
                  if(xf.read_understand){
+                     this.show[9]=true;
    for(let i=0;i<this.allmsg.read_understand.length;i++){
                       this.yuedu[i]=[];
                       let m=0;
@@ -482,6 +493,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                    
                     // 填空题的处理
                      if(xf.fill){
+                         this.show[4]=true;
      for(let i=0;i<this.allmsg.fill.length;i++){
                        this.tian[i]=[];
                        for(let g=0;g<this.allmsg.fill[i].space_num;g++){
@@ -495,6 +507,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
 
                     // 短文改错的处理
                      if(xf.text_mistake){
+                         this.show[10]=true;
    for(let i=0;i<this.allmsg.text_mistake.length;i++){
                      this.dwgc[i]='';
                     this.allmsg.text_mistake[i].topic_and_stem = JSON.parse(this.allmsg.text_mistake[i].topic_and_stem)
@@ -504,6 +517,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
                   
                     // 翻译的处理
                      if(xf.translation){
+                         this.show[11]=true;
   for(let i=0;i<this.allmsg.translation.length;i++){
                     this.allmsg.translation[i].topic_and_stem = JSON.parse(this.allmsg.translation[i].topic_and_stem)
                    }
@@ -512,6 +526,7 @@ for(let i=0;i<this.allmsg.choose_fill_blank.length;i++){
 
                 //  作文的处理
                 if(xf.composition){
+                    this.show[12]=true;
 for(let i=0;i<this.allmsg.composition.length;i++){
                     this.allmsg.composition[i].topic_and_stem = JSON.parse(this.allmsg.composition[i].topic_and_stem)
                    }
