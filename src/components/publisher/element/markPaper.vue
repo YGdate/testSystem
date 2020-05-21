@@ -49,8 +49,8 @@
             <el-col>考试名称：{{test_name}}</el-col>
             <el-col>组卷方式：{{test_method==0?'手动组卷':'自动组卷'}}</el-col>
             <el-col>试卷科目：{{subject}}</el-col>
-            <el-col>客观题得分：{{auto_score}}（60分）</el-col>
-            <el-col>主观题得分：{{manual_score}}（60分）</el-col>
+            <el-col>客观题得分：{{auto_score}}</el-col>
+            <el-col>主观题得分：{{manual_score}}</el-col>
             <el-col>总分：{{all_score}}分</el-col>
           </el-row>
           <!-- 试题内容 -->
@@ -220,7 +220,7 @@
         }).then(() => {
           let scoreNum = 0
           this.$store.state.questionTile.forEach(item => {
-            this.allData.content[item.category][item.id].score = item.score
+            this.allData.content[item.category][item.id].getScore = item.score
             scoreNum += (item.score - 0)
           })
           console.log(this.allData);
