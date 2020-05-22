@@ -220,7 +220,7 @@
         }).then(() => {
           let scoreNum = 0
           this.$store.state.questionTile.forEach(item => {
-            this.allData.content[item.category][item.id].getScore = item.score
+            this.allData.content[item.category][item.id].getScore = item.score-0
             scoreNum += (item.score - 0)
           })
           console.log(this.allData);

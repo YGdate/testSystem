@@ -62,8 +62,9 @@
         })
       },
       changeValue(){
+        if(Number(this.scoreALL)<0 || Number(this.scoreALL)>this.score)
+        return this.$message.warning('评分大小不能超过0~'+this.score+'分')
 
-       console.log(this.questionId);
         let questionData = this.$store.state.questionTile
         if(this.scoreALL!=''){
           questionData.forEach(item=>{

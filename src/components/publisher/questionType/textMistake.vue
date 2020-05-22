@@ -6,8 +6,6 @@
         {{title}}（{{scoer}}分）
       </el-col>
       <el-col :span="4">
-        <!-- <el-button size="mini" :class="isright ?'':'falsebg'" icon="el-icon-check" circle></el-button>
-        <el-button size="mini" :class="!isright ?'':'truebg'" icon="el-icon-close" circle></el-button> -->
         <div style="display:flex;justify-content:flex-end;align-items:center">
           <el-input @blur="changeValue" size="mini"  maxlength="3" type="number" style="width:80%;margin:0 5px" v-model="scoreALL"
             placeholder="0.0">
@@ -50,11 +48,7 @@
     },
     created(){
       this.dataComputed()
-      // this.$store.state.questionTile.forEach(item=>{
-      //   if(item.idIndex==this.questionId){
-      //     this.scoreALL = item.score
-      //   }
-      // })
+
     },
     methods:{
       change(id) {
@@ -66,7 +60,9 @@
         })
       },
        changeValue(){
-       console.log(this.questionId);
+         if(Number(this.scoreALL)<0 || Number(this.scoreALL)>this.scoer)
+        return this.$message.warning('评分大小不能超过0~'+this.scoer+'分')
+
         let questionData = this.$store.state.questionTile
         if(this.scoreALL!=''){
           questionData.forEach(item=>{

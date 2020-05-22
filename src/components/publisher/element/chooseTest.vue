@@ -30,7 +30,7 @@
                   已选试题
                 </el-col>
                 <el-col :span="10">
-                  当前总分：100分 | 当前题数：12道
+                  当前总分：{{allScore}} 分 | 当前题数：{{questionNumber}} 道
                 </el-col>
               </el-row>
               <el-row style="margin-top:20px">
@@ -56,18 +56,20 @@
                       </div>
                     </template>
                   </el-table-column>
-                  <el-table-column  prop="score" label="设置分值" width="80">
+                  <el-table-column prop="score" label="设置分值" width="80">
                     <template slot-scope="scope">
-                        <el-input size="mini" @blur="inputValue(scope.row.score)" @input="change($event)" type="text"  placeholder="分数" v-model="scope.row.score"></el-input>
+                      <el-input size="mini" @blur="inputValue(scope.row.score)" @input="change($event)" type="text"
+                        placeholder="分数" v-model="scope.row.score"></el-input>
                     </template>
                   </el-table-column>
-                  <el-table-column  label="操作" width="50">
-                   <template scope="scope">
-                     <div>
-                        <el-button size="mini" type="danger" icon="el-icon-delete" circle  @click="deleteQuestion(scope.row)">
-                    </el-button>
-                     </div>
-                   </template>
+                  <el-table-column label="操作" width="50">
+                    <template scope="scope">
+                      <div>
+                        <el-button size="mini" type="danger" icon="el-icon-delete" circle
+                          @click="deleteQuestion(scope.row)">
+                        </el-button>
+                      </div>
+                    </template>
                   </el-table-column>
                 </el-table>
                 <!-- 分页 -->
@@ -151,7 +153,7 @@
     </el-row>
     <!-- 下一步 -->
     <el-row class="content-footer">
-      <el-button @click="nextStep"  size="small">下一步</el-button>
+      <el-button @click="nextStep" size="small">下一步</el-button>
     </el-row>
   </div>
 </template>
@@ -160,6 +162,8 @@
   export default {
     data() {
       return {
+        //总分
+        allScore:0,
         // 当前题型
         categoryIndex: 0,
         // tabledata
@@ -317,8 +321,8 @@
         // questionTotal: 0,
         // 已选试题
         selectQuestionData: [],
-        reportClass:[],
-        reportNum:[]
+        reportClass: [],
+        reportNum: []
       }
     },
     computed: {
@@ -337,7 +341,10 @@
             return '艰难'
           }
         }
-      }
+      },
+      questionNumber() {
+        return this.selectQuestionData.length
+      },
     },
     mounted() {
       // 设置题目marginLeft
@@ -350,45 +357,52 @@
     },
     methods: {
       // 下一步
-      nextStep(){
+      nextStep() {
         this.$emit('nextStep')
       },
       // 分数输入验证
-      inputValue(e){
-        if(typeof(Number(e))!='number'||isNaN(Number(e))){
-          this.$message.warning('请输入合法分数！')
+      inputValue(e) {
+        
+        if (typeof (Number(e)) != 'number' || isNaN(Number(e))) {
+          return this.$message.warning('请输入合法分数！')
         }
+
+        let score = 0
+        console.log(this.selectQuestionData);
+        this.selectQuestionData.forEach(item => {
+            score += (item.score - 0)
+        })
+        this.allScore = score
+        
+
       },
       // input输入
-      change(){
+      change() {
         this.$forceUpdate()
       },
       // 移除题目
       deleteQuestion(row) {
-        
         let index1 = 0
-        this.selectQuestionData.forEach((item,index)=>{
-          if(item.id == row.id){
+        this.selectQuestionData.forEach((item, index) => {
+          if (item.id == row.id) {
             index1 = index
           }
         })
-        let index2 = this.reportClass.findIndex((item)=>{
-          return item==row.category
+        let index2 = this.reportClass.findIndex((item) => {
+          return item == row.category
         })
-        console.log(index1);
-        console.log(index2);
-        if( this.reportNum[index2]<=1){
-          this.reportClass.splice(index2,1)
-        }else{
+        if (this.reportNum[index2] <= 1) {
+          this.reportClass.splice(index2, 1)
+        } else {
           this.reportNum[index2]--
         }
-        
 
-         this.drawgrade(this.reportClass,this.reportNum)
-         
-         this.selectQuestionData.splice(index1,1)
-         this.$message.success('删除成功！')
-        this.$store.commit('alertTableData',this.selectQuestionData)
+
+        this.drawgrade(this.reportClass, this.reportNum)
+
+        this.selectQuestionData.splice(index1, 1)
+        this.$message.success('删除成功！')
+        this.$store.commit('alertTableData', this.selectQuestionData)
       },
       questionChoose() {
         this.getAllTopicAndStem()
@@ -399,24 +413,24 @@
       // 添加到试卷
       addQuestion(row) {
 
-        if(this.reportClass.includes(row.category)){
-          let index = this.reportClass.findIndex((item)=>{
-          return item==row.category
-        })
+        if (this.reportClass.includes(row.category)) {
+          let index = this.reportClass.findIndex((item) => {
+            return item == row.category
+          })
           console.log(index);
           this.reportNum[index]++
-        }else{
+        } else {
           this.reportClass.push(row.category)
-           this.reportNum.push(1)
+          this.reportNum.push(1)
         }
 
-        this.drawgrade(this.reportClass,this.reportNum)
+        this.drawgrade(this.reportClass, this.reportNum)
         let rowData = row
-        rowData.score= ''
+        rowData.score = ''
         console.log(rowData);
         this.$message.success('添加成功！')
         this.selectQuestionData.push(rowData)
-        this.$store.commit('alertTableData',this.selectQuestionData)
+        this.$store.commit('alertTableData', this.selectQuestionData)
       },
       chooseItem(index) {
         this.categoryIndex = index
@@ -489,10 +503,10 @@
       },
 
       // 报表
-      drawgrade(arrTest=[],num=[]) {
-        if(this.reportClass.length==0){
-          arrTest=[]
-          num=[]
+      drawgrade(arrTest = [], num = []) {
+        if (this.reportClass.length == 0) {
+          arrTest = []
+          num = []
         }
         // 绘制图表
         let opt = {

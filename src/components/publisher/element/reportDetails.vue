@@ -152,8 +152,8 @@
               <el-table-column prop="manual_score" label="手动评分">
               </el-table-column>
               <el-table-column prop="address" label="操作">
-                <template>
-                  <el-button icon="el-icon-edit" type="text" size="small" >查看个人报告</el-button>
+                <template scope="scope">
+                  <el-button @click="lookReport(scope.row.user_id[0])" icon="el-icon-edit" type="text" size="small" >查看个人报告</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -197,6 +197,11 @@
       this.intelletiveScores()
     },
     methods: {
+      lookReport(id){
+        console.log(id);
+        window.sessionStorage.setItem('bgid',id)
+        this.$router.push('/solve/chengjibaobiao')
+      },
       getdata() {
         this.$http.get('testPaper/getTestAnalysis', {
             params: {
