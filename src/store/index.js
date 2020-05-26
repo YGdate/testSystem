@@ -11,7 +11,8 @@ export default new Vuex.Store({
         paperUserId: 0,
         paperId: 0,
         questionTile: [],
-        autoQuestionTile: []
+        autoQuestionTile: [],
+        paperQuestionID: 0,
     },
     mutations: {
         alertTableData(state, data) {
@@ -34,7 +35,11 @@ export default new Vuex.Store({
         },
         alertAutoQuestionTile(state, data) {
             state.autoQuestionTile = data
-        }
+        },
+        alertPaperQuestionId(state, data) {
+            state.paperQuestionID = data
+        },
+
     },
     actions: {
 

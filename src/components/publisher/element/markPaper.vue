@@ -129,7 +129,8 @@
         test_name: '',
         questionData: [],
         content: {},
-        allData: {}
+        allData: {},
+        paperQuestion:0
       }
     },
     computed: {
@@ -166,6 +167,7 @@
       }
     },
     created() {
+      this.paperQuestion = this.$store.state.paperQuestionID
       this.test_id = this.$store.state.paperId
       this.test_user_id = this.$store.state.paperUserId
       this.getData()
@@ -225,8 +227,7 @@
           })
           console.log(this.allData);
           this.$http.put('testPaper/updateScore', {
-              test_id: this.test_id,
-              test_user_id: this.test_user_id,
+              id: this.paperQuestion,
               score: scoreNum,
               content: this.allData
             })
@@ -277,7 +278,7 @@
         this.$http.get('testPaper/getTestPaperInfoByTestId', {
             params: {
               test_id: this.test_id,
-              test_user_id: this.test_user_id 
+              id: this.paperQuestion 
             }
           })
           .then(res => {
@@ -304,8 +305,8 @@
       getDataAuto() {
         this.$http.get('testPaper/getObject', {
             params: {
-              test_id: this.test_id,
-              test_user_id: this.test_user_id
+              
+              id: this.paperQuestion
             }
           })
           .then(res => {

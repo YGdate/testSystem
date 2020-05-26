@@ -97,7 +97,7 @@
                       <div>
                         <el-progress :width="80" type="circle" :percentage="item.value-0"></el-progress>
                       </div>
-                      <div>{{item.name}}</div>
+                      <div>{{QuestionType(item.name)}}</div>
                     </el-col>
                   </el-row>
                 </el-card>
@@ -153,7 +153,7 @@
               </el-table-column>
               <el-table-column prop="address" label="操作">
                 <template scope="scope">
-                  <el-button @click="lookReport(scope.row.user_id[0])" icon="el-icon-edit" type="text" size="small" >查看个人报告</el-button>
+                  <el-button @click="lookReport(scope.row.candidate_id)" icon="el-icon-edit" type="text" size="small" >查看个人报告</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -184,6 +184,39 @@
         current_page:1,
         total:0,
         tableData:[]
+      }
+    },
+    computed:{
+ QuestionType() {
+        return (text) => {
+          if (text == 'composition') {
+            return '作文'
+          } else if (text == 'translation') {
+            return '翻译';
+          } else if (text == 'fill') {
+            return '填空'
+          } else if (text == 'text_mistake') {
+            return '短文改错'
+          } else if (text == 'non_directional_select') {
+            return '不定向选择'
+          } else if (text == 'true_or_false') {
+            return '判断题'
+          } else if (text == 'seven_selected_five') {
+            return '七选五'
+          } else if (text == 'single_select') {
+            return '单选'
+          } else if (text == 'listening') {
+            return '听力'
+          } else if (text == 'multi_select') {
+            return '多选题'
+          } else if (text == 'fill_blank') {
+            return '完型填空'
+          } else if (text == 'read_understand') {
+            return '阅读理解'
+          } else if (text == 'choose_fill_blank') {
+            return '选词填空'
+          }
+        }
       }
     },
     created() {

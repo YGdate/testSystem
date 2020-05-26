@@ -37,7 +37,7 @@
           </el-table-column>
           <el-table-column prop="address" label="操作">
             <template scope="scope">
-             <el-button @click="scoreEdit(scope.row[0].user_id[0])" size="mini" icon="el-icon-edit">评分</el-button>
+             <el-button @click="scoreEdit(scope.row[0].user_id[0],scope.row[0].candidate_id)" size="mini" icon="el-icon-edit">评分</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -114,10 +114,12 @@ import markPaper from './markPaper'
         this.getTestScore()
         this.getNoSubmit()
       },
-      scoreEdit(id){
+      scoreEdit(id,paper){
+        console.log(paper);
         this.isshow = false
         this.userID = id
         this.$store.commit('alertPaperUserId',id)
+        this.$store.commit('alertPaperQuestionId',paper)
         this.$store.commit('alertPaperId',this.paperID)
       },
      getNoSubmit(pages = 1) {

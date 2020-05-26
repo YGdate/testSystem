@@ -328,7 +328,7 @@
         let aEle = document.createElement("a")
         aEle.download = 'paper';
         
-        aEle.href = 'http://47.113.121.50/api/word/export?ids='+id+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
+        aEle.href = this.$http.defaults.baseURL+'word/export?ids='+id+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
         aEle.click();
       },
 
@@ -341,7 +341,7 @@
         console.log(idList.join(','));
          let aEle = document.createElement("a")
         aEle.download = 'paper';
-        aEle.href = 'http://47.113.121.50/api/word/export?ids='+idList.join(',')+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
+        aEle.href =this.$http.defaults.baseURL+ 'word/export?ids='+idList.join(',')+'&token='+window.sessionStorage.getItem('token');// content为后台返回的下载地址
         aEle.click();
       },
       // 批量删除
