@@ -138,7 +138,7 @@ methods:{
       var storage = window.sessionStorage; 
       this.bbid=storage.getItem("bgid");
       let msg = await this.$http.get('report/'+this.bbid);
-      //console.log(msg)
+      console.log(msg)
       if(msg.data.code==0){
           let ms = this.$decryptData(msg.data.data);
           let k;
@@ -174,7 +174,7 @@ this.tuone(ex);
           this.allmsg = ms;
           console.log(this.allmsg)
       }else{
-        this.$message.error("获取数据失败");
+        this.$message.error(msg.data.msg);
       }
   },
   tuone:function(x){

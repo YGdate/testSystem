@@ -29,12 +29,12 @@
         <p class="headp">
             题目类型({{gsxs}})
         </p>
-        <ul class="qc">
-            <li :class="tab==tabs[0]?'lactive':''" data-aid="1" @click="qian($event.srcElement.dataset.aid)">单选题</li>
-            <li :class="tab==tabs[1]?'lactive':''" data-aid="2" @click="qian($event.srcElement.dataset.aid)">多选题</li>
-            <li :class="tab==tabs[2]?'lactive':''" data-aid="3" @click="qian($event.srcElement.dataset.aid)">七选五</li>
-            <li :class="tab==tabs[3]?'lactive':''" data-aid="4" @click="qian($event.srcElement.dataset.aid)">判断题</li>
-            <li :class="tab==tabs[4]?'lactive':''" data-aid="5" @click="qian($event.srcElement.dataset.aid)">填空题</li>
+         <ul class="qc">
+            <li :class="tab==tabs[0]?'lactive':''" data-aid="1" @click="qian($event.srcElement.dataset.aid)" v-if="show[0]">单选题</li>
+            <li :class="tab==tabs[1]?'lactive':''" data-aid="2" @click="qian($event.srcElement.dataset.aid)" v-if="show[1]">非定向选择</li>
+            <li :class="tab==tabs[2]?'lactive':''" data-aid="3" @click="qian($event.srcElement.dataset.aid)" v-if="show[2]">七选五</li>
+            <li :class="tab==tabs[3]?'lactive':''" data-aid="4" @click="qian($event.srcElement.dataset.aid)" v-if="show[3]">判断题</li>
+            <li :class="tab==tabs[4]?'lactive':''" data-aid="5" @click="qian($event.srcElement.dataset.aid)" v-if="show[4]">填空题</li>
         </ul>
     </div>
     <div class="con-center">
@@ -63,10 +63,10 @@
                     <div class="fdx zong" v-for="(item,i) in allmsg.non_directional_select" :key="i">
                         <p>{{i+1}}.{{item.topic_and_stem.title}}</p>
                          <template>
-            <el-radio v-model="sy.B[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-radio>
-            <el-radio v-model="sy.B[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-radio>
-            <el-radio v-model="sy.B[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-radio>
-            <el-radio v-model="sy.B[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-radio>
+            <el-checkbox v-model="sy.B[i]" label="A" class="xuanze">{{item.topic_and_stem.options.A}}</el-checkbox>
+            <el-checkbox v-model="sy.B[i]" label="B"  class="xuanze">{{item.topic_and_stem.options.B}}</el-checkbox>
+            <el-checkbox v-model="sy.B[i]" label="C"  class="xuanze">{{item.topic_and_stem.options.C}}</el-checkbox>
+            <el-checkbox v-model="sy.B[i]" label="D"  class="xuanze">{{item.topic_and_stem.options.D}}</el-checkbox>
                 </template>
                 <p>答案:{{item.right_ans.answer}}</p>
                 <p>解析:{{item.test_analyze}}</p>
@@ -183,7 +183,8 @@
         // 总秒数
         alltime:1800,
         // 获取的答案凹
-        sy:''
+        sy:'',
+        show:[false,false,false,false,false],
       }
     },
 methods:{
@@ -278,19 +279,41 @@ methods:{
                    let ms = this.$decryptData(msg.data.data);                
                    this.allmsg = ms;
                                       console.log(this.allmsg)
-                //单选题的处理
+                                      //单选题的处理
+                                      if(ms.single_select){
+                                           if(ms.single_select.length>0){
+ this.show[0]=true;
+                                           }
+                                         
+ 
                    for(let i=0;i<this.allmsg.single_select.length;i++){
                        this.dan[i]=''
                        this.allmsg.single_select[i].right_ans = JSON.parse(this.allmsg.single_select[i].right_ans)
                     this.allmsg.single_select[i].topic_and_stem = JSON.parse(this.allmsg.single_select[i].topic_and_stem)
                    }
-                 // 非定向选择的处理
-                for(let i=0;i<this.allmsg.non_directional_select.length;i++){
-                       this.fei[i]=''
-                    this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
-                   }
+                                      }
+                                      // 非定向选择的处理
+               if(ms.non_directional_select){
+                                                  if(ms.non_directional_select.length>0){
+ this.show[1]=true;
+                                           }
+                    
 
-                // 七选五的处理               
+       for(let i=0;i<this.allmsg.non_directional_select.length;i++){
+                       this.fei[i]=[];
+                    this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
+                      this.allmsg.non_directional_select[i].topic_and_stem = JSON.parse(this.allmsg.non_directional_select[i].topic_and_stem)
+                   }
+                
+
+               }
+                // 七选五的处理 
+                 if(ms.seven_selected_five){
+                      if(ms.seven_selected_five.length>0){
+ this.show[2]=true;
+                                           }
+                     
+              
                 let l = [];     
                  for(let i=0;i<this.allmsg.seven_selected_five.length;i++){
                      l[i]=[];
@@ -298,16 +321,30 @@ methods:{
                             l[i][g]=""
                         }
                         this.qi=l;
-                         this.allmsg.seven_selected_five[i].right_ans = JSON.parse(this.allmsg.seven_selected_five[i].right_ans)
+                        this.allmsg.seven_selected_five[i].right_ans = JSON.parse(this.allmsg.seven_selected_five[i].right_ans)
                     this.allmsg.seven_selected_five[i].topic_and_stem = JSON.parse(this.allmsg.seven_selected_five[i].topic_and_stem)
                    }
-                // 判断的处理                
+                 }
+                
+                 if(ms.true_or_false){
+ if(ms.true_or_false.length>0){
+ this.show[3]=true;
+                                           }
+
+                        // 判断的处理                
                  for(let i=0;i<this.allmsg.true_or_false.length;i++){
                        this.pan[i]='';
                          this.allmsg.true_or_false[i].right_ans = JSON.parse(this.allmsg.true_or_false[i].right_ans)
                     this.allmsg.true_or_false[i].topic_and_stem = JSON.parse(this.allmsg.true_or_false[i].topic_and_stem)
                    }
-                       // 填空的处理
+
+                 }
+                  if(ms.fill){
+                      if(ms.fill.length>0){
+ this.show[4]=true;
+                                           }
+
+                              // 填空的处理
                  for(let i=0;i<this.allmsg.fill.length;i++){
                        this.tian[i]=[];
                        this.allmsg.fill[i].right_ans = JSON.parse(this.allmsg.fill[i].right_ans)
@@ -327,6 +364,10 @@ methods:{
    
                     this.allmsg.fill[i].daan = daan;
                    }
+
+                  }
+             
+               
              }else{
                 this.$message.error("获取内容失败！")
              }

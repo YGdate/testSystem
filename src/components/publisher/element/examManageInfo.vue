@@ -33,12 +33,18 @@
             </template>
           </el-table-column>
 
-          <el-table-column  label="操作">
+          <el-table-column  label="操作"  width="200">
             <template scope="scope">
+               <el-button
+          size="mini"
+          icon="el-icon-edit"
+          @click="editInfo(scope.row.user_id[0])">审核通过</el-button>
               <el-button
           size="mini"
           icon="el-icon-delete"
+          type="warning"
           @click="deleteInfo(scope.row.user_id[0])">移除</el-button>
+          
             </template>
           </el-table-column>
         </el-table>
@@ -60,7 +66,7 @@
 
     data() {
       return {
-         tableData:[],
+        tableData:[],
         current_page:1,
         total:0,
         user_id:1
@@ -83,6 +89,25 @@
       
     },
     methods: {
+      editInfo(id){
+        this.$http.put('testPaper/UpdateCandidateStatus',{
+          test_id:this.user_id,
+          test_user_id:id
+        })
+          .then(res => {
+            if (res.data.code != 0) return this.$message.error(res.data.msg)
+            this.getdata(this.user_id,this.current_page)
+            return this.$message.success(res.data.msg)
+          }).catch(err => {
+            console.log(err);
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              showClose: true,
+              message: err.response.data.data.join('<br><br>'),
+              type: 'error'
+            });
+          })
+      },
       deleteInfo(id){
         
         this.$http.delete('testPaper/deleteApplicationManageInfo',{
