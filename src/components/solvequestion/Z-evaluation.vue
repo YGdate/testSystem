@@ -200,7 +200,11 @@
                test_id:parseInt(this.sid),
                captcha:this.zhengma             
              });
-             this.$message.success(msg.data.msg);
+            if(msg.data.code==1){
+               this.$message.error(msg.data.msg);
+             }else{
+                this.$message.success(msg.data.msg);
+             }
         }
       },
       // 普通申请的函数
@@ -209,7 +213,12 @@
           let msg = await this.$http.post('exam_operation/online_assessment/enroll',{
                test_id:parseInt(this.sid)             
              });
-             this.$message.success(msg.data.msg);
+             if(msg.data.code==1){
+               this.$message.error(msg.data.msg);
+             }else{
+                this.$message.success(msg.data.msg);
+             }
+  
       },
       // 点击申请的函数
       shenqing:function(id){

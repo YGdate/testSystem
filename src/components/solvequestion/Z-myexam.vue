@@ -98,6 +98,10 @@ methods:{
      let msg = await this.$http.get('exams?page='+page);
      if(msg.data.code==0){
 let ms = this.$decryptData(msg.data.data);
+if(ms.data.length==0){
+  this.alltest=[]
+  return false;
+}
 console.log(ms)
      this.pagecount = ms.last_page*10;
  let x = ms.data;
@@ -200,6 +204,10 @@ this.qf = 3; this.noup(1);
      let msg = await this.$http.get('exams/up?page='+page);
      if(msg.data.code==0){
 let ms = this.$decryptData(msg.data.data);
+if(ms.data.length==0){
+  this.alltest=[]
+  return false;
+}
      this.pagecount = ms.last_page*10;
  let x = ms.data;
      let len = ms.data.length;
@@ -252,8 +260,13 @@ if(dt>nt||x[i].exam_time_log.user_start_at==null){
    // 获取未提交
    async noup(page){
      let msg = await this.$http.get('exams/noup?page='+page);
+     console.log(msg)
      if(msg.data.code==0){
 let ms = this.$decryptData(msg.data.data);
+if(ms.data.length==0){
+  this.alltest=[]
+  return false;
+}
      this.pagecount = ms.last_page*10;
  let x = ms.data;
      let len = ms.data.length;
@@ -288,7 +301,6 @@ if(dt>nt||x[i].exam_time_log.user_start_at==null){
        }
      }
      this.alltest = x;
-     console.log(this.alltest2)
      //console.log(ms)
      }else{
      this.$message.error("获取数据失败！")

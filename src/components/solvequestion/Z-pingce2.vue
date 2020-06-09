@@ -369,7 +369,6 @@ methods:{
                  candidate_id:parseInt(examid),
                }
              });
-             console.log()
              if(msg.data.code==0){
                    let ms = this.$decryptData(msg.data.data);
                    var xf = ms;
@@ -539,8 +538,13 @@ for(let i=0;i<this.allmsg.composition.length;i++){
                 //     this.mp3 = this.allmsg.listening[0].topic_and_stem.accessory
                 //    console.log(this.allmsg)
              }else{
-                 console.log(msg)
-                this.$message.error("获取内容失败！")
+                 let m  = msg.data.msg;
+                this.$message.error(m)
+                // this.$message.error("即将退出")
+                // setInterval(function(){
+                //       this.$router.push("testpage")
+                // },1000)
+
              }
         },
         // 开始考试

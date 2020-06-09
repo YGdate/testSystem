@@ -266,15 +266,10 @@
             "test_start": this.formatDate(this.form.beginTime),
             "test_end": this.formatDate(this.form.endTime),
             "all_score": this.form.allScore - 0,
-
             "pass_score": this.form.passScore - 0,
-
             "test_use_time": this.timesSolve(this.form.testTime),
-
             "test_num": this.form.num - 0,
-
             "test_time": this.form.times - 0,
-
             "can_view": this.form.function-0
           }
 

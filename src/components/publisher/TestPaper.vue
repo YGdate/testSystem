@@ -20,8 +20,8 @@
           </el-col>
         </el-row>
         <!-- 手动选题 -->
-        <ChooseTest @nextStep="nextStep($event)" v-if="ischeck"></ChooseTest>
-        <InfoSet @forceUpdate="forceUpdate"  v-if="!ischeck"></InfoSet>
+        <ChooseTest @nextStep="nextStep($event)" v-show="ischeck"></ChooseTest>
+        <InfoSet @forceUpdate="forceUpdate"  v-show="!ischeck"></InfoSet>
        
       </el-col>
     </el-row>

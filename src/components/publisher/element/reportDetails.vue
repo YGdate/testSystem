@@ -27,12 +27,8 @@
               <div>{{allData.user}}</div>
             </el-col>
             <el-col :span="1">
-              <div>考试总分</div>
-              <div>{{allData.all_score}}</div>
-            </el-col>
-            <el-col :span="1">
               <div>试卷总分</div>
-              <div>{{allData.total_score}}</div>
+              <div>{{allData.all_score}}</div>
             </el-col>
             <el-col :span="1">
               <div>考试时间</div>
